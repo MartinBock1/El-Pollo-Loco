@@ -1,5 +1,6 @@
 let canvas;
 let world;
+let canvasHeight = 480;
 
 
 
