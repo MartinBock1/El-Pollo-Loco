@@ -3,6 +3,7 @@ const level1 = new Level(
         new Chicken(),
         new Chicken(),
         new Chicken(),
+        new Endboss(),
     ],
     [                                                            // Create an array of clouds, which in this case is an instance of the Cloud class
         new Cloud()
