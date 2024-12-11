@@ -1,6 +1,5 @@
 let canvas;                         // Declare the 'canvas' variable to hold the canvas element
 let world;                          // Declare the 'world' variable which will represent the game world
-let canvasHeight = 480;             // Set the canvas height to 480 pixels
 let keyboard = new Keyboard();      // Create a new Keyboard object to track the keyboard inputs
 
 // Initialize the game world and character

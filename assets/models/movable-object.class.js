@@ -7,6 +7,7 @@ class MovableObject {                       // Define the MovableObject class, w
     imageCache = {};                        // Create an object to cache images for quicker loading
     currentImage = 0;                       // Set the initial index for the current image (used in animation)
     speed = 0.15;                           // Set the speed for the moveLeft function (controls how fast the object moves left)
+    otherDirection = false;
 
     // Function to load a single image from a given path (e.g. loadImage('img/test.png');)
     loadImage(path) {                       // Create a new Image object and assign it to the img property
