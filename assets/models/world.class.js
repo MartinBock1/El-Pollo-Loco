@@ -1,7 +1,7 @@
 class World {                                                             // Define the World class, which represents the game world
     character = new Character();                                          // Initialize the character object as an instance of the Character class
+    level = level1;
     enemies = level1.enemies;
-
     clouds = level1.clouds;
 
     backgroundObjects = level1.backgroundObjects;
@@ -28,9 +28,9 @@ class World {                                                             // Def
         this.ctx.translate(this.camera_x, 0);
 
         // The order in which objects are added to the map is important for rendering!
-        this.addObjectsToMap(this.backgroundObjects);                     // Add the background objects to the map (background layers)
-        this.addObjectsToMap(this.clouds);                                // Add the clouds to the map
-        this.addObjectsToMap(this.enemies);                               // Add the enemies to the map
+        this.addObjectsToMap(this.level.backgroundObjects);                     // Add the background objects to the map (background layers)
+        this.addObjectsToMap(this.level.clouds);                                // Add the clouds to the map
+        this.addObjectsToMap(this.level.enemies);                               // Add the enemies to the map
         this.addToMap(this.character);                                    // Add the character to the map (gameplay object)
         this.ctx.translate(-this.camera_x, 0);
 
