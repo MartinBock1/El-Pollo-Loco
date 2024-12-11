@@ -26,6 +26,12 @@ class MovableObject {                       // Define the MovableObject class, w
         });
     }
 
+    placeEnemies(imagesArray) {
+        this.loadImages(imagesArray);                   // Load all walking images from the IMAGES_WALKING array
+        this.x = 200 + Math.random() * 2000;            // Set the initial horizontal position (x-coordinate) of the chicken, with a random offset
+        this.speed = 0.15 + (Math.random() * 0.4);      // Set the speed of the chicken's movement, which is a random value between 0.15 and 0.55
+    }
+
     playAnimation(images) {
         let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 0 % 6;
         let path = images[i];
