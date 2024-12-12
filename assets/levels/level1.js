@@ -5,18 +5,12 @@ const level1 = new Level(
         new Chicken(),
         new Chicken(),
         new Chicken(),
-        new ChickenSmall(), 
+        new ChickenSmall(),
         new ChickenSmall(),
         new ChickenSmall(),
         new ChickenSmall(),
         new ChickenSmall(),
         new Endboss(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
-        new Bottle(),
     ],
     [                                                            // Create an array of clouds, which in this case is an instance of the Cloud class
         new Cloud()
@@ -47,10 +41,29 @@ const level1 = new Level(
     ],
 
     [
-        // new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
-        // new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
-        // new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
-        // new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png')
+        new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png'),
+        new Bottle('./assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'),
+    ],
+
+    [
+        new Coin('./assets/img/8_coin/coin_1.png'),
+        new Coin('./assets/img/8_coin/coin_2.png'),
+        new Coin('./assets/img/8_coin/coin_1.png'),
+        new Coin('./assets/img/8_coin/coin_2.png'),
+        new Coin('./assets/img/8_coin/coin_1.png'),
+        new Coin('./assets/img/8_coin/coin_2.png'),
+        new Coin('./assets/img/8_coin/coin_1.png'),
+        new Coin('./assets/img/8_coin/coin_2.png'),
+        new Coin('./assets/img/8_coin/coin_1.png'),
+        new Coin('./assets/img/8_coin/coin_2.png'),
     ]
 
 );

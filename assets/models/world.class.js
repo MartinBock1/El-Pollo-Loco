@@ -5,6 +5,7 @@ class World {                                                             // Def
     clouds = level1.clouds;
     backgroundObjects = level1.backgroundObjects;
     bottles= level1.bottles;
+    coins = level1.coins;
 
     canvas;                                                               // Declare the canvas and context variables
     ctx;
@@ -32,6 +33,7 @@ class World {                                                             // Def
         this.addObjectsToMap(this.level.clouds);                          // Add the clouds to the map
         this.addObjectsToMap(this.level.enemies);                         // Add the enemies to the 
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.addToMap(this.character);                                    // Add the character to the map (gameplay object)
         this.ctx.translate(-this.camera_x, 0);
 
