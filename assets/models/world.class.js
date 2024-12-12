@@ -38,9 +38,8 @@ class World {                                                             // Def
         this.ctx.translate(-this.camera_x, 0);
 
         // Continuously call the draw method to create an animation loop
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
+        requestAnimationFrame(() => {
+            this.draw();
         });
     }
 
