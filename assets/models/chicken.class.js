@@ -17,7 +17,10 @@ class Chicken extends MovableObject {                               // Define th
     }
 
     animate() {                                                     // Function to animate the chicken's movement and walking images
-        this.moveLeft();                                            // Make the chicken move left continuously
+        setInterval(() => {                                         // Use setInterval to continuously update the object's position at 60 FPS (1000ms/60)
+            this.moveLeft();                                            // Make the chicken move left continuously
+        }, 1000 / 60);                                              // Update every 1/60th of a second (60 frames per second)
+
         setInterval(() => {                                         // Set up a repeating interval to change the chicken's walking image every 200ms
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);

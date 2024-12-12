@@ -6,7 +6,6 @@ class World {                                                             // Def
     backgroundObjects = level1.backgroundObjects;
     bottles= level1.bottles;
     coins = level1.coins;
-
     canvas;                                                               // Declare the canvas and context variables
     ctx;
     keyboard;                                                             // Declare the keyboard object, which will track user input

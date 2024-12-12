@@ -8,6 +8,21 @@ class MovableObject {                       // Define the MovableObject class, w
     currentImage = 0;                       // Set the initial index for the current image (used in animation)
     speed = 0.15;                           // Set the speed for the moveLeft function (controls how fast the object moves left)
     otherDirection = false;
+    speedY = 0;
+    acceleration = 2.5;
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
+    isAboveGround() {
+        return this.y < 215;
+    }
 
     // Function to load a single image from a given path (e.g. loadImage('img/test.png');)
     loadImage(path) {                       // Create a new Image object and assign it to the img property
@@ -39,13 +54,16 @@ class MovableObject {                       // Define the MovableObject class, w
         this.currentImage++;
     }
 
-    moveRight() {                           
-        console.log('Moving right');
+    moveRight() {
+        this.x += this.speed;       
     }
 
     moveLeft() {                            // Function to move the object to the left by reducing the x-coordinate
-        setInterval(() => {                 // Use setInterval to continuously update the object's position at 60 FPS (1000ms/60)
-            this.x -= this.speed;           // Decrease the x-coordinate by the object's speed to move it left
-        }, 1000 / 60);                      // Update every 1/60th of a second (60 frames per second)
+        this.x -= this.speed;               // Decrease the x-coordinate by the object's speed to move it left
+    }
+
+    jump() {
+        this.walking_sound.pause();
+        this.speedY = 30;
     }
 }
