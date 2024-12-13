@@ -1,9 +1,4 @@
-class MovableObject {                       // Define the MovableObject class, which represents an object that can move
-    x = 120;                                // Set the initial horizontal position (x-coordinate) of the object
-    y = 250;                                // Set the initial vertical position (y-coordinate) of the object
-    img;                                    // Declare the image property for storing the object’s image
-    height = 150;                           // Set the initial height of the object
-    width = 100;                            // Set the initial width of the object
+class MovableObject extends DrawableObject {                       // Define the MovableObject class, which represents an object that can move
     imageCache = {};                        // Create an object to cache images for quicker loading
     currentImage = 0;                       // Set the initial index for the current image (used in animation)
     speed = 0.15;                           // Set the speed for the moveLeft function (controls how fast the object moves left)
@@ -11,6 +6,9 @@ class MovableObject {                       // Define the MovableObject class, w
     speedY = 0;                             // Vertical speed, used to simulate gravity or jumping
     acceleration = 2.5;                     // Acceleration rate for gravity (how quickly the object falls)
     walking_sound;
+    jumping_sound;
+    energy = 100;
+    lastHit = 0;
 
     /**
      * Method to apply gravity to the object, causing it to fall
@@ -30,36 +28,7 @@ class MovableObject {                       // Define the MovableObject class, w
      */
     isAboveGround() {
         return this.y < 215;                                    // Return true if the object's y-coordinate is less than 215, indicating it is in the air
-    }
-
-    /**
-     *  Function to load a single image from a given path (e.g. loadImage('img/test.png');)
-     * */
-    loadImage(path) {
-        this.img = new Image();                                 // Create a new Image object and assign it to the img property of the object
-        this.img.src = path;                                    // Set the source of the image to the provided path (this loads the image)
-    }
-
-    /**      
-     * Function to load multiple images and store them in an image cache.
-     * @param {Array} arr - ['./img/image1.png', './img/image2.png', ...]
-     */
-    loadImages(arr) {
-        arr.forEach((path) => {                                 // Iterate over each image path in the provided array
-            let img = new Image();                              // Create a new Image object for each path
-            img.src = path;                                     // Set the source of the image to the current path
-            this.imageCache[path] = img;                        // Store the loaded image in the imageCache object, using the path as the key
-        });
-    }
-
-    /**
-     * Function to draw the object on the canvas
-     * @param {*} ctx 
-     */
-    draw(ctx) {
-        // Draw the object using the current image at its x and y position with the given width and height
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
+    }    
 
     /**
      * Function to draw a frame (outline) around the object for debugging or visualization
@@ -97,11 +66,11 @@ class MovableObject {                       // Define the MovableObject class, w
          * dass die Animation wieder beim ersten Bild startet.
          * Dies stellt sicher, dass die Animation wieder von vorne beginnt, sobald das letzte Bild erreicht ist.
          */
-        let i = this.currentImage % this.IMAGES_WALKING.length; // Get the index for the current image in the animation sequence
+        let i = this.currentImage % images.length;              // Get the index for the current image in the animation sequence
         let path = images[i];                                   // Get the current image path using the index
         this.img = this.imageCache[path];                       // Set the object's img property to the cached image at the current path
         this.currentImage++;                                    // Increment the current image index for the next frame in the animation
-    }
+    }    
 
     /**
      * Function to move the object to the right
@@ -123,17 +92,43 @@ class MovableObject {                       // Define the MovableObject class, w
     jump() {
         this.walking_sound.pause();                             // Pause the walking sound (if any)
         this.speedY = 30;                                       // Set the vertical speed to 30, causing the object to move upwards (jump)
+        this.jumpingSound();                                                    // Play the jumping animation.
     }
 
     walkingSound() {
-        this.walking_sound.play();                                              // Play the walking sound.
-        this.walking_sound.playbackRate = 2;                                    // Set the playback speed of the walking sound to 2x (faster).
+        this.walking_sound.play();                              // Play the walking sound.
+        this.walking_sound.playbackRate = 2;                    // Set the playback speed of the walking sound to 2x (faster).
     }
 
-    isColliding() {
+    jumpingSound() {
+        this.jumping_sound.play();                              // Play the jumping sound.
+        this.jumping_sound.volume = 0.1;
+    }
+
+    isColliding(mo) {
         return this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&
             this.x < mo.x &&
             this.y < mo.y + mo.height;
     }
+
+    hit() {
+        this.energy -= 5;
+        if(this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit; // difference in ms
+        timepassed = timepassed / 1000;     // difference in s
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
 }

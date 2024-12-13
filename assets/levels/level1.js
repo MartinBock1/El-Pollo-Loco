@@ -1,4 +1,8 @@
 const level1 = new Level(
+    // [
+    //     new Statusbar(),
+    // ],
+
     [                                                           
         new Chicken(),
         new Chicken(),

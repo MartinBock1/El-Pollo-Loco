@@ -4,6 +4,7 @@ class World {                                                               // D
     enemies = level1.enemies;                                               // Get the enemies from the level
     clouds = level1.clouds;                                                 // Get the clouds from the level
     backgroundObjects = level1.backgroundObjects;                           // Get the background objects from the level
+    // statusbar = level1.statusbar;
     bottles = level1.bottles;                                               // Get the bottles from the level
     coins = level1.coins;                                                   // Get the coins from the level
     canvas;                                                                 // Declare the canvas and context variables
@@ -17,31 +18,44 @@ class World {                                                               // D
         this.keyboard = keyboard;                                           // Assign the keyboard object to the class's keyboard property
         this.draw();                                                        // Call the draw method to start rendering the world
         this.setWorld();                                                    // Set the world for the character, which links the character to the world
+        this.checkCollisions();
     }
 
     /**
      * Function to set the world reference for the character object
      */
-    setWorld() {                                                            
+    setWorld() {
         this.character.world = this;                                        // Assign the current world to the character's world property
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if(this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    // console.log('Collision with Character, energy: ', this.character.energy);
+                };
+            });
+        }, 200);
     }
 
     /**
      * Function to draw the game world on the canvas
      */
-    draw() {                                                                
+    draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);    // Clear the canvas to remove the previous frame
         this.ctx.translate(this.camera_x, 0);                               // Apply a translation to the canvas, moving the camera
 
         // The order in which objects are added to the map is important for rendering!
         this.addObjectsToMap(this.level.backgroundObjects);                 // Add the background objects to the map (background layers)
+        // this.addObjectsToMap(this.level.statusbar); 
         this.addObjectsToMap(this.level.clouds);                            // Add the clouds to the map
         this.addObjectsToMap(this.level.enemies);                           // Add the enemies to the 
         this.addObjectsToMap(this.level.bottles);                           // Add the bottles to the map
         this.addObjectsToMap(this.level.coins);                             // Add the coins to the map
         this.addToMap(this.character);                                      // Add the character to the map (gameplay object)
         this.ctx.translate(-this.camera_x, 0);                              // Reverse the camera translation to maintain the world’s position
-        
+
         requestAnimationFrame(() => {                                       // Call the draw method again for the next animation frame
             this.draw();                                                    // Recursively call the draw method to create the animation loop
         });
@@ -51,7 +65,7 @@ class World {                                                               // D
      * Helper function to add multiple objects to the map by iterating over an array
      * @param {*} objects 
      */
-    addObjectsToMap(objects) {                                              
+    addObjectsToMap(objects) {
         objects.forEach(o => {                                              // Loop through each object in the array
             this.addToMap(o);                                               // Add each individual object to the map
         });
@@ -64,14 +78,14 @@ class World {                                                               // D
     addToMap(mo) {
         if (mo.otherDirection) {                                            // If the object is facing the opposite direction
             this.flipImage(mo);                                             // Flip the object horizontally
-        }     
-                                                                    
+        }
+
         mo.draw(this.ctx);                                                  // Draw the object on the canvas
         mo.drawFrame(this.ctx);                                             // Optionally draw the object's frame (debugging tool)
 
         if (mo.otherDirection) {                                            // If the object was flipped
             this.flipImageBack(mo);                                         // Flip the object back to its original orientation
-        }        
+        }
     }
 
     /**
