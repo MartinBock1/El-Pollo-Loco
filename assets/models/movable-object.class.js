@@ -129,4 +129,11 @@ class MovableObject {                       // Define the MovableObject class, w
         this.walking_sound.play();                                              // Play the walking sound.
         this.walking_sound.playbackRate = 2;                                    // Set the playback speed of the walking sound to 2x (faster).
     }
+
+    isColliding() {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height;
+    }
 }

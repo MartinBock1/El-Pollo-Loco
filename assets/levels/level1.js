@@ -13,7 +13,11 @@ const level1 = new Level(
         new Endboss(),
     ],
     [                                                            
-        new Cloud()
+        new Cloud(),
+        new Cloud(), 
+        new Cloud(),
+        new Cloud(), 
+        new Cloud(), 
     ],
     [   // Create an array of background objects, each representing a layer of the background
         new BackgroundObject('./assets/img/5_background/layers/air.png', -719),                 // insert image at x-coordinate -719
