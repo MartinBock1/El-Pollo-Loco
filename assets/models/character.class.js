@@ -47,18 +47,21 @@ class Character extends MovableObject {                         // Define a new 
      */
     animate() {
         setInterval(() => {                                                             // Set an interval to check movement every 1/60th of a second (60 FPS).
+            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {              // If no movement keys are pressed.
+                this.walking_sound.pause();                                             // Pause the walking sound (no movement).
+            }
+
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {   // If RIGHT arrow key is pressed & the character is within level bounds.
                 this.moveRight();                                                       // Move the character to the right.
                 this.otherDirection = false;                                            // Set the flag indicating the character is moving right.
-                this.walking_sound.play();                                              // Play the walking sound.
-                this.walking_sound.playbackRate = 2;                                    // Set the playback speed of the walking sound to 2x (faster).
-            } else if (this.world.keyboard.LEFT && this.x > -600) {                     // If the LEFT arrow key is pressed & the character is not off-screen.
+                this.walkingSound();  
+                
+            }  
+
+            if (this.world.keyboard.LEFT && this.x > -600) {                            // If the LEFT arrow key is pressed & the character is not off-screen.
                 this.moveLeft();                                                        // Move the character to the left.
                 this.otherDirection = true;                                             // Set the flag indicating the character is moving left.
-                this.walking_sound.play();                                              // Play the walking sound.
-                this.walking_sound.playbackRate = 2;                                    // Set the playback speed of the walking sound to 2x (faster).
-            } else {                                                                    // If no movement keys are pressed.
-                this.walking_sound.pause();                                             // Pause the walking sound (no movement).
+                this.walkingSound();  
             }
 
             if ((this.world.keyboard.UP || this.world.keyboard.SPACE)                   // If the UP arrow key or SPACE bar is pressed 

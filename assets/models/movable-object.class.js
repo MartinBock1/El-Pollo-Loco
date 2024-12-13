@@ -10,6 +10,7 @@ class MovableObject {                       // Define the MovableObject class, w
     otherDirection = false;                 // A flag to indicate if the object is moving in the opposite direction (not used in this snippet)
     speedY = 0;                             // Vertical speed, used to simulate gravity or jumping
     acceleration = 2.5;                     // Acceleration rate for gravity (how quickly the object falls)
+    walking_sound;
 
     /**
      * Method to apply gravity to the object, causing it to fall
@@ -122,5 +123,10 @@ class MovableObject {                       // Define the MovableObject class, w
     jump() {
         this.walking_sound.pause();                             // Pause the walking sound (if any)
         this.speedY = 30;                                       // Set the vertical speed to 30, causing the object to move upwards (jump)
+    }
+
+    walkingSound() {
+        this.walking_sound.play();                                              // Play the walking sound.
+        this.walking_sound.playbackRate = 2;                                    // Set the playback speed of the walking sound to 2x (faster).
     }
 }
