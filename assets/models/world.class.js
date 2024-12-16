@@ -29,6 +29,7 @@ class World {                                       // Define the World class, w
     run() {
         setInterval(() => {                         // Set an interval to run this function continuously every 200 milliseconds
             this.checkCollisions();                 // Check for collisions between the character and enemies
+            this.checkCollisionsBottles();
             this.checkThrowObjects();               // Check if the player is throwing objects (e.g., bottles)
         }, 200);                                    // Execute every 200ms (5 times per second)
     }
@@ -44,7 +45,18 @@ class World {                                       // Define the World class, w
         this.level.enemies.forEach((enemy) => {                                                 // Loop through each enemy in the current level's enemies array
             if (this.character.isColliding(enemy)) {                                            // If the character collides with an enemy
                 this.character.hit();                                                           // Make the character "hit" (take damage)
-                this.statusBarHealth.setPercentageHealth(this.character.energy);                // Update the health bar with the character's current energy
+                this.statusBarHealth.setPercentage(this.character.energy);                      // Update the status bar with the character's current energy
+            };
+        });
+    }
+
+    checkCollisionsBottles() {
+        this.level.bottles.forEach((bottle) => {                                                 
+            if (this.character.isColliding(bottle) && !bottle.collected) {// Check if character collides with bottle and bottle isn't collected                 
+                // this.character.hit();                                                           
+                // this.statusBarBottle.setPercentage(this.character.energy);   
+                this.statusBarBottle.increasePercentage(20); // Increase the bottle status bar by 20% on each collision
+                bottle.collected = true;  // Mark this bottle as collected    
             };
         });
     }

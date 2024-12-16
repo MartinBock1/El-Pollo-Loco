@@ -29,7 +29,7 @@ class DrawableObject {
     * @param {*} ctx 
     */
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Bottle) {
             ctx.beginPath();                                    // Start a new path to draw
             ctx.lineWidth = '5';                                // Set the line width for the frame (outline)
             ctx.strokeStyle = 'blue';                           // Set the stroke color to blue for the frame

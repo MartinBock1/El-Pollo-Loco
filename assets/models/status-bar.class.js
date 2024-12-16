@@ -32,10 +32,8 @@ class Statusbar extends DrawableObject {
         './assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
 
-    /**
-     * Array of image paths for bottle statusbar at different percentage levels
-     */
-    percentageHealth = 100;                                                 // Default health percentage set to 100
+    
+    // percentageHealth = 100;                                                 // Default health percentage set to 100
 
     constructor(type) {                                                     // Constructor initializes the type of statusbar and loads the appropriate images
         super();                                                            // Call the parent class constructor
@@ -55,23 +53,39 @@ class Statusbar extends DrawableObject {
                 break;
         }
         
-        this.setPercentageHealth(100);                                      // Set the initial health percentage to 100
+        if (this.type === 'coin' || this.type === 'bottle') {               // Set the initial percentage based on the type
+            this.setPercentage(0);                                          // Start with 0% for coin and bottle
+        } else {
+            this.setPercentage(100);                                        // Default to 100% for health
+        }
+    }
+
+    // Function to increase the percentage by a fixed amount each time the bottle is touched
+    increasePercentage(amount) {
+        this.percentage += amount;
+
+        // Ensure that the percentage doesn't exceed 100%
+        if (this.percentage > 100) {
+            this.percentage = 100;
+        }
+
+        this.setPercentage(this.percentage);  // Update the status bar with the new percentage
     }
     
     /**
      * Function to set the percentage and update the image based on the type of statusbar
      * @param {*} percentage 
      */
-    setPercentageHealth(percentage) {                                       
+    setPercentage(percentage) {                                       
         this.percentage = percentage;                                       // Store the given health percentage
         // Determine the appropriate image path based on the statusbar type
-        let path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndex()];  // Default to health
+        let path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndexHealth()];  // Default to health
         if (this.type === 'health') {
-            path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndex()];  // Health type
+            path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndexHealth()];  // Health type
         } else if (this.type === 'coin') {
-            path = this.IMAGES_STATUSBAR_COIN[this.resolveImageIndex()];    // Coin type
+            path = this.IMAGES_STATUSBAR_COIN[this.resolveImageIndexHealth()];    // Coin type
         } else if (this.type === 'bottle') {
-            path = this.IMAGES_STATUSBAR_BOTTLE[this.resolveImageIndex()];  // Bottle type
+            path = this.IMAGES_STATUSBAR_BOTTLE[this.resolveImageIndexBottle()];  // Bottle type
         }
         // Set the position and size of the statusbar image
         this.x = 40;                                                        // Horizontal position
@@ -80,11 +94,12 @@ class Statusbar extends DrawableObject {
         this.img = this.imageCache[path];                                   // Set the image based on the path selected
     }
 
+
     /**
      * Function to resolve the image index based on the current percentage
      * @returns 
      */
-    resolveImageIndex() {
+    resolveImageIndexHealth() {
         // Return the appropriate index based on the percentage
         if (this.percentage == 100) {
             return 5;                                                       // 100% health
@@ -98,6 +113,22 @@ class Statusbar extends DrawableObject {
             return 1;                                                       // 20%-39%
         } else {
             return 0;                                                       // 0%-19%
+        }
+    };
+
+    resolveImageIndexBottle() {        
+        if (this.percentage == 0) {
+            return 0;                                                       // 100% health
+        } else if (this.percentage == 20) {
+            return 1;                                                       // 80%-99%
+        } else if (this.percentage == 40) {
+            return 2;                                                       // 60%-79%
+        } else if (this.percentage == 60) {
+            return 3;                                                       // 40%-59%
+        } else if (this.percentage == 80) {
+            return 4;                                                       // 20%-39%
+        } else {
+            return 5;                                                       // 0%-19%
         }
     };
 }
