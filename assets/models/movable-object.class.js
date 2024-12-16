@@ -25,9 +25,13 @@ class MovableObject extends DrawableObject {                 // Define the Movab
      * @returns 'his.y < 215'
      */
     isAboveGround() {
-        return this.y < 215;                                 // Return true if the object's y-coordinate is less than 215, indicating it is in the air
-    }   
-    
+        if (this instanceof ThrowableObject) {               // ThrowableObject should allways fall
+            return true;
+        } else {
+            return this.y < 215;                             // Return true if the object's y-coordinate is less than 215, indicating it is in the air
+        }
+    }
+
     isColliding(mo) {
         return this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&
@@ -61,7 +65,7 @@ class MovableObject extends DrawableObject {                 // Define the Movab
         let path = images[i];                                // Get the current image path using the index
         this.img = this.imageCache[path];                    // Set the object's img property to the cached image at the current path
         this.currentImage++;                                 // Increment the current image index for the next frame in the animation
-    }    
+    }
 
     /**
      * Function to move the object to the right
@@ -83,7 +87,7 @@ class MovableObject extends DrawableObject {                 // Define the Movab
     jump() {
         this.walkingSound.pause();                           // Pause the walking sound (if any)
         this.speedY = 30;                                    // Set the vertical speed to 30, causing the object to move upwards (jump)
-        this.isJumpingSound ();                              // Play the jumping animation.
+        this.isJumpingSound();                              // Play the jumping animation.
     }
 
     isWalkingSound() {
@@ -98,7 +102,7 @@ class MovableObject extends DrawableObject {                 // Define the Movab
 
     hit() {
         this.energy -= 5;
-        if(this.energy < 0) {
+        if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();

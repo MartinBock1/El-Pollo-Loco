@@ -56,11 +56,11 @@ window.addEventListener('keyup', (e) => {
         keyboard.SPACE = false;
     }
     if (e.key === 'Enter') {                        // When the Enter-key is released, set the ENTER property to false
-        keyboard.ENTER = true;
+        keyboard.ENTER = false;
     }
 });
 
-window.addEventListener('mousedown', (e) => {
+window.addEventListener('mouseup', (e) => {
     if (e.button === 0) {                           // When the left Mouse-key is released, set the MOUSE_LEFT property to false
         keyboard.MOUSE_LEFT = false;
     }

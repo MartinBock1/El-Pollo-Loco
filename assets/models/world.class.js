@@ -1,39 +1,52 @@
-class World {                                                               // Define the World class, which represents the game world
-    character = new Character();                                            // Initialize the character object as an instance of the Character class
-    level = level1;                                                         // Set the level of the game (e.g., level1)
-    statusBarHealth = new Statusbar('health');  // Set type as 'health'
-    statusBarCoins = new Statusbar('coin');    // Set type as 'coin'
-    statusBarBottle = new Statusbar('bottle'); // Set type as 'bottle'
-    canvas;                                                                 // Declare the canvas and context variables
-    ctx;                                                                    // Declare the context of the canvas (used to draw objects)
-    keyboard;                                                               // Declare the keyboard object to track user input (e.g., keyboard controls)
-    camera_x = 0;                                                           // Set the initial x-coordinate for the camera (controls the camera's position)
+class World {                                       // Define the World class, which represents the game world
+    character = new Character();                    // Initialize the character object as an instance of the Character class
+    level = level1;                                 // Set the level of the game (e.g., level1)
+    canvas;                                         // Declare the canvas and context variables
+    ctx;                                            // Declare the context of the canvas (used to draw objects)
+    keyboard;                                       // Declare the keyboard object to track user input (e.g., keyboard controls)
+    camera_x = 0;                                   // Set the initial x-coordinate for the camera (controls the camera's position)
+    statusBarHealth = new Statusbar('health');      // Set type as 'health'
+    statusBarCoins = new Statusbar('coin');         // Set type as 'coin'
+    statusBarBottle = new Statusbar('bottle');      // Set type as 'bottle'
+    throwableObjects = [];
 
-    constructor(canvas) {                                                   // Constructor function to initialize the World object
-        this.ctx = canvas.getContext('2d');                                 // Get the 2D context of the canvas to draw on it
-        this.canvas = canvas;                                               // Assign the canvas element to the class's canvas property
-        this.keyboard = keyboard;                                           // Assign the keyboard object to the class's keyboard property
-        this.draw();                                                        // Call the draw method to start rendering the world
-        this.setWorld();                                                    // Set the world for the character, which links the character to the world
-        this.checkCollisions();
+    constructor(canvas) {                           // Constructor function to initialize the World object
+        this.ctx = canvas.getContext('2d');         // Get the 2D context of the canvas to draw on it
+        this.canvas = canvas;                       // Assign the canvas element to the class's canvas property
+        this.keyboard = keyboard;                   // Assign the keyboard object to the class's keyboard property
+        this.draw();                                // Call the draw method to start rendering the world
+        this.setWorld();                            // Set the world for the character, which links the character to the world
+        this.run();
     }
 
     /**
      * Function to set the world reference for the character object
      */
     setWorld() {
-        this.character.world = this;                                        // Assign the current world to the character's world property
+        this.character.world = this;                // Assign the current world to the character's world property
+    }
+
+    run() {
+        setInterval(() => {                         // Set an interval to run this function continuously every 200 milliseconds
+            this.checkCollisions();                 // Check for collisions between the character and enemies
+            this.checkThrowObjects();               // Check if the player is throwing objects (e.g., bottles)
+        }, 200);                                    // Execute every 200ms (5 times per second)
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) {                                  // If the ENTER key or the left mouse button is pressed
+            let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);    // Create a new throwable object at the character's position
+            this.throwableObjects.push(bottle);                                                 // Add the new bottle to the list of throwable objects
+        }
     }
 
     checkCollisions() {
-        setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBarHealth.setPercentageHealth(this.character.energy);
-                };
-            });
-        }, 200);
+        this.level.enemies.forEach((enemy) => {                                                 // Loop through each enemy in the current level's enemies array
+            if (this.character.isColliding(enemy)) {                                            // If the character collides with an enemy
+                this.character.hit();                                                           // Make the character "hit" (take damage)
+                this.statusBarHealth.setPercentageHealth(this.character.energy);                // Update the health bar with the character's current energy
+            };
+        });
     }
 
     /**
@@ -49,8 +62,9 @@ class World {                                                               // D
         this.addObjectsToMap(this.level.enemies);                           // Add the enemies to the 
         this.addObjectsToMap(this.level.bottles);                           // Add the bottles to the map
         this.addObjectsToMap(this.level.coins);                             // Add the coins to the map
+        this.addObjectsToMap(this.throwableObjects);                        // Add throwable objects (e.g., bottles) to the map
 
-        this.ctx.translate(-this.camera_x, 0); 
+        this.ctx.translate(-this.camera_x, 0);                              // Reverse the camera translation to restore the canvas state
         // ----- Space for fixed objects ----- //
         // Set the y-positions for each status bar before drawing
         this.statusBarHealth.y = 10;                                        // Set the Y position for health bar
@@ -59,13 +73,13 @@ class World {                                                               // D
         this.addToMap(this.statusBarHealth);                                // Draw health bar
         this.addToMap(this.statusBarCoins);                                 // Draw coin bar
         this.addToMap(this.statusBarBottle);                                // Draw bottle bar
-        this.ctx.translate(this.camera_x, 0);   
+        this.ctx.translate(this.camera_x, 0);                               // Apply the camera translation again
 
         this.addToMap(this.character);                                      // Add the character to the map (gameplay object)
         this.ctx.translate(-this.camera_x, 0);                              // Reverse the camera translation to maintain the world’s position
 
-        requestAnimationFrame(() => {                                       // Call the draw method again for the next animation frame
-            this.draw();                                                    // Recursively call the draw method to create the animation loop
+        requestAnimationFrame(() => {                                       // Request the next animation frame to keep the game loop running
+            this.draw();                                                    // Recursively call the draw method to continue rendering the game world
         });
     }
 

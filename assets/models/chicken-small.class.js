@@ -3,7 +3,10 @@ class ChickenSmall extends MovableObject {                          // Define th
     height = 60;                                                    // Set the height of the chicken
     width = 60;                                                     // Set the width of the chicken
 
-    IMAGES_WALKING = [                                              // Define an array of images for the walking animation of the chicken
+    /**
+     * Define an array of images for the walking animation of the chicken
+     */
+    IMAGES_WALKING = [                                              
         './assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         './assets/img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
         './assets/img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
@@ -18,7 +21,7 @@ class ChickenSmall extends MovableObject {                          // Define th
 
     animate() {                                                     // Function to animate the chicken's movement and walking images
         setInterval(() => {                                         // Use setInterval to continuously update the object's position at 60 FPS (1000ms/60)
-            this.moveLeft();                                            // Make the chicken move left continuously            
+            this.moveLeft();                                        // Make the chicken move left continuously            
         }, 1000 / 60);                                              // Update every 1/60th of a second (60 frames per second)
         
         setInterval(() => {                                         // Set up a repeating interval to change the chicken's walking image every 200ms

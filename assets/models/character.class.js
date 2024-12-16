@@ -4,6 +4,9 @@ class Character extends MovableObject {                         // Define a new 
     width = 80;                                                 // Set the width of the character to 80 pixels.
     speed = 5;                                                  // Set the initial speed of the character to 5 (this controls the movement speed).
 
+    /**
+     * Define an array containing the paths to the images for the idle animation.
+     */
     IMAGES_IDLE = [
         './assets/img/2_character_pepe/1_idle/idle/I-1.png',
         './assets/img/2_character_pepe/1_idle/idle/I-2.png',
@@ -17,6 +20,9 @@ class Character extends MovableObject {                         // Define a new 
         './assets/img/2_character_pepe/1_idle/idle/I-10.png',
     ];
 
+    /**
+     * Define an array containing the paths to the images for the long idle animation.
+     */
     IMAGES_LONG_IDLE = [
         './assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
         './assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -56,12 +62,18 @@ class Character extends MovableObject {                         // Define a new 
         './assets/img/2_character_pepe/3_jump/J-39.png',
     ];
 
+    /**
+     * Define an array containing the paths to the images for the hurt animation.
+     */
     IMAGES_HURT = [
         './assets/img/2_character_pepe/4_hurt/H-41.png',
         './assets/img/2_character_pepe/4_hurt/H-42.png',
         './assets/img/2_character_pepe/4_hurt/H-43.png',
     ];
 
+    /**
+     * Define an array containing the paths to the images for the dead animation.
+     */
     IMAGES_DEAD = [
         './assets/img/2_character_pepe/5_dead/D-55.png',
         './assets/img/2_character_pepe/5_dead/D-52.png',
@@ -71,7 +83,7 @@ class Character extends MovableObject {                         // Define a new 
         './assets/img/2_character_pepe/5_dead/D-56.png',
         './assets/img/2_character_pepe/5_dead/D-57.png',
     ];
-    world;                                                      // Declare a variable "world" (this is likely the game world or level).
+    world;                                                     // Declare a variable "world" (this is likely the game world or level).
     walkingSound = new Audio('./assets/audio/running.mp3');    // Create a new audio object for the walking sound.
     jumpingSound = new Audio('./assets/audio/jump.mp3');       // Create a new audio object for the walking sound.
     idleCount = 0;
@@ -94,56 +106,62 @@ class Character extends MovableObject {                         // Define a new 
      */
     animate() {
         setInterval(() => {
-            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-                if (this.idleCount < 100) {
-                    this.playAnimation(this.IMAGES_IDLE);
-                    this.idleCount++;
+            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {      // If no movement keys are pressed.
+                if (this.idleCount < 100) {                                     // If the idle count is less than 100.
+                    this.playAnimation(this.IMAGES_IDLE);                       // Play the idle animation.
+                    this.idleCount++;                                           // Increment the idle count.
                 } else {
-                    this.playAnimation(this.IMAGES_LONG_IDLE);
+                    this.playAnimation(this.IMAGES_LONG_IDLE);                  // If idle count is 100, play long idle animation.
                 }
             }
-        }, 1000 / 8);
+        }, 1000 / 8);                                                           // Execute the idle animation every 1/8th of a second (8 FPS)
 
-        setInterval(() => {                                                             // Set an interval to check movement every 1/60th of a second (60 FPS).
-            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {              // If no movement keys are pressed.
+        /**
+         * Function setInterval to check movement every 1/60th of a second (60 FPS)
+         */
+        setInterval(() => {                                                           
+            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {             // If no movement keys are pressed.
                 this.walkingSound.pause();                                             // Pause the walking sound (no movement).
             }
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {   // If RIGHT arrow key is pressed & the character is within level bounds.
-                this.moveRight();                                                       // Move the character to the right.
-                this.otherDirection = false;                                            // Set the flag indicating the character is moving right.
-                this.isWalkingSound();
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {  // If RIGHT arrow key is pressed & the character is within level bounds.
+                this.moveRight();                                                      // Move the character to the right.
+                this.otherDirection = false;                                           // Set the flag indicating the character is moving right.
+                this.isWalkingSound();                                                 // Play the walking sound.
             }
 
-            if (this.world.keyboard.LEFT && this.x > -600) {                            // If the LEFT arrow key is pressed & the character is not off-screen.
-                this.moveLeft();                                                        // Move the character to the left.
-                this.otherDirection = true;                                             // Set the flag indicating the character is moving left.
-                this.isWalkingSound();
+            if (this.world.keyboard.LEFT && this.x > -600) {                           // If the LEFT arrow key is pressed & the character is not off-screen.
+                this.moveLeft();                                                       // Move the character to the left.
+                this.otherDirection = true;                                            // Set the flag indicating the character is moving left.
+                this.isWalkingSound();                                                 // Play the walking sound.
             }
 
-            if ((this.world.keyboard.UP || this.world.keyboard.SPACE)                   // If the UP arrow key or SPACE bar is pressed 
-                && !this.isAboveGround()) {                                             // & the character is not already in the air.
-                this.jump();                                                            // Make the character jump.                
-                this.idleCount = 0;
+            if ((this.world.keyboard.UP || this.world.keyboard.SPACE)                  // If the UP arrow key or SPACE bar is pressed 
+                && !this.isAboveGround()) {                                            // & the character is not already in the air.
+                this.jump();                                                           // Make the character jump.                
+                this.idleCount = 0;                                                    // Reset the idle counter.
             }
 
             // Update the camera position to follow the character horizontally (camera stays 100px ahead of the character).
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
+        }, 1000 / 60);                                                                 // Execute this logic every 1/60th of a second (60 FPS).
 
-        setInterval(() => {                                                             // Set an interval to handle the animation frame updates.  
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {                                          // If the character is above the ground (jumping).               
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else {                                                                    // If the character is not jumping (on the ground).
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {            // If the character is moving left or right.
-                    this.playAnimation(this.IMAGES_WALKING);                            // Play the walking animation.
-                    this.idleCount = 0;
+        /**
+         * Function setInterval to handle the animation frame updates
+         */
+        setInterval(() => {                                                             
+            if (this.isDead()) {                                                       // If the character is dead.
+                this.playAnimation(this.IMAGES_DEAD);                                  // Play the dead animation.
+            } else if (this.isHurt()) {                                                // If the character is hurt.
+                this.playAnimation(this.IMAGES_HURT);                                  // Play the hurt animation.
+            } else if (this.isAboveGround()) {                                         // If the character is above the ground (jumping).               
+                this.playAnimation(this.IMAGES_JUMPING);                               // Play the jumping animation.
+            } else {                                                                   // If the character is not jumping (on the ground).
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {           // If the character is moving left or right.
+                    this.playAnimation(this.IMAGES_WALKING);                           // Play the walking animation.
+                    this.idleCount = 0;                                                // Reset the idle count
                 }
             }
-        }, 50);                                                                         // Run this check every 50 milliseconds (for smoother animation).
+        }, 50);                                                                        // Run this check every 50 milliseconds (for smoother animation).
     }
 }
