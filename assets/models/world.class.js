@@ -1,12 +1,9 @@
 class World {                                                               // Define the World class, which represents the game world
     character = new Character();                                            // Initialize the character object as an instance of the Character class
     level = level1;                                                         // Set the level of the game (e.g., level1)
-    statusBar = new Statusbar();
-    // enemies = level1.enemies;                                               // Get the enemies from the level
-    // clouds = level1.clouds;                                                 // Get the clouds from the level
-    // backgroundObjects = level1.backgroundObjects;                           // Get the background objects from the level
-    // bottles = level1.bottles;                                               // Get the bottles from the level
-    // coins = level1.coins;                                                   // Get the coins from the level
+    statusBarHealth = new Statusbar('health');  // Set type as 'health'
+    statusBarCoins = new Statusbar('coin');    // Set type as 'coin'
+    statusBarBottle = new Statusbar('bottle'); // Set type as 'bottle'
     canvas;                                                                 // Declare the canvas and context variables
     ctx;                                                                    // Declare the context of the canvas (used to draw objects)
     keyboard;                                                               // Declare the keyboard object to track user input (e.g., keyboard controls)
@@ -33,8 +30,7 @@ class World {                                                               // D
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
                     this.character.hit();
-                    this.statusBar.setPercentageHealth(this.character.energy);
-                    // this.statusBar.setPercentageCoin(this.character.energy);
+                    this.statusBarHealth.setPercentageHealth(this.character.energy);
                 };
             });
         }, 200);
@@ -56,7 +52,13 @@ class World {                                                               // D
 
         this.ctx.translate(-this.camera_x, 0); 
         // ----- Space for fixed objects ----- //
-        this.addToMap(this.statusBar); 
+        // Set the y-positions for each status bar before drawing
+        this.statusBarHealth.y = 10;                                        // Set the Y position for health bar
+        this.statusBarCoins.y = 50;                                         // Set the Y position for coin bar
+        this.statusBarBottle.y = 100;                                       // Set the Y position for bottle bar
+        this.addToMap(this.statusBarHealth);                                // Draw health bar
+        this.addToMap(this.statusBarCoins);                                 // Draw coin bar
+        this.addToMap(this.statusBarBottle);                                // Draw bottle bar
         this.ctx.translate(this.camera_x, 0);   
 
         this.addToMap(this.character);                                      // Add the character to the map (gameplay object)
