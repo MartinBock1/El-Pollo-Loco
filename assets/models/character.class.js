@@ -72,8 +72,8 @@ class Character extends MovableObject {                         // Define a new 
         './assets/img/2_character_pepe/5_dead/D-57.png',
     ];
     world;                                                      // Declare a variable "world" (this is likely the game world or level).
-    walking_sound = new Audio('./assets/audio/running.mp3');    // Create a new audio object for the walking sound.
-    jumping_sound = new Audio('./assets/audio/jump.mp3');       // Create a new audio object for the walking sound.
+    walkingSound = new Audio('./assets/audio/running.mp3');    // Create a new audio object for the walking sound.
+    jumpingSound = new Audio('./assets/audio/jump.mp3');       // Create a new audio object for the walking sound.
     idleCount = 0;
 
     // The constructor method, which is called when an instance of the Character is created.
@@ -106,19 +106,19 @@ class Character extends MovableObject {                         // Define a new 
 
         setInterval(() => {                                                             // Set an interval to check movement every 1/60th of a second (60 FPS).
             if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {              // If no movement keys are pressed.
-                this.walking_sound.pause();                                             // Pause the walking sound (no movement).
+                this.walkingSound.pause();                                             // Pause the walking sound (no movement).
             }
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {   // If RIGHT arrow key is pressed & the character is within level bounds.
                 this.moveRight();                                                       // Move the character to the right.
                 this.otherDirection = false;                                            // Set the flag indicating the character is moving right.
-                this.walkingSound();
+                this.isWalkingSound();
             }
 
             if (this.world.keyboard.LEFT && this.x > -600) {                            // If the LEFT arrow key is pressed & the character is not off-screen.
                 this.moveLeft();                                                        // Move the character to the left.
                 this.otherDirection = true;                                             // Set the flag indicating the character is moving left.
-                this.walkingSound();
+                this.isWalkingSound();
             }
 
             if ((this.world.keyboard.UP || this.world.keyboard.SPACE)                   // If the UP arrow key or SPACE bar is pressed 
@@ -145,7 +145,5 @@ class Character extends MovableObject {                         // Define a new 
                 }
             }
         }, 50);                                                                         // Run this check every 50 milliseconds (for smoother animation).
-
-
     }
 }

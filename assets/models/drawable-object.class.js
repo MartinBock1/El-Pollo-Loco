@@ -24,6 +24,20 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+    /**
+    * Function to draw a frame (outline) around the object for debugging or visualization
+    * @param {*} ctx 
+    */
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall) {
+            ctx.beginPath();                                    // Start a new path to draw
+            ctx.lineWidth = '5';                                // Set the line width for the frame (outline)
+            ctx.strokeStyle = 'blue';                           // Set the stroke color to blue for the frame
+            ctx.rect(this.x, this.y, this.width, this.height);  // Draw a rectangle around the object using its current position and size
+            ctx.stroke();                                       // Apply the stroke to the path (draw the rectangle)
+        }
+    }
+
     /**      
     * Function to load multiple images and store them in an image cache.
     * @param {Array} arr - ['./img/image1.png', './img/image2.png', ...]

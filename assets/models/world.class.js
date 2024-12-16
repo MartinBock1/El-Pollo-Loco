@@ -1,12 +1,12 @@
 class World {                                                               // Define the World class, which represents the game world
     character = new Character();                                            // Initialize the character object as an instance of the Character class
     level = level1;                                                         // Set the level of the game (e.g., level1)
-    enemies = level1.enemies;                                               // Get the enemies from the level
-    clouds = level1.clouds;                                                 // Get the clouds from the level
-    backgroundObjects = level1.backgroundObjects;                           // Get the background objects from the level
-    // statusbar = level1.statusbar;
-    bottles = level1.bottles;                                               // Get the bottles from the level
-    coins = level1.coins;                                                   // Get the coins from the level
+    statusBar = new Statusbar();
+    // enemies = level1.enemies;                                               // Get the enemies from the level
+    // clouds = level1.clouds;                                                 // Get the clouds from the level
+    // backgroundObjects = level1.backgroundObjects;                           // Get the background objects from the level
+    // bottles = level1.bottles;                                               // Get the bottles from the level
+    // coins = level1.coins;                                                   // Get the coins from the level
     canvas;                                                                 // Declare the canvas and context variables
     ctx;                                                                    // Declare the context of the canvas (used to draw objects)
     keyboard;                                                               // Declare the keyboard object to track user input (e.g., keyboard controls)
@@ -33,7 +33,8 @@ class World {                                                               // D
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
                     this.character.hit();
-                    // console.log('Collision with Character, energy: ', this.character.energy);
+                    this.statusBar.setPercentageHealth(this.character.energy);
+                    // this.statusBar.setPercentageCoin(this.character.energy);
                 };
             });
         }, 200);
@@ -48,11 +49,16 @@ class World {                                                               // D
 
         // The order in which objects are added to the map is important for rendering!
         this.addObjectsToMap(this.level.backgroundObjects);                 // Add the background objects to the map (background layers)
-        // this.addObjectsToMap(this.level.statusbar); 
         this.addObjectsToMap(this.level.clouds);                            // Add the clouds to the map
         this.addObjectsToMap(this.level.enemies);                           // Add the enemies to the 
         this.addObjectsToMap(this.level.bottles);                           // Add the bottles to the map
         this.addObjectsToMap(this.level.coins);                             // Add the coins to the map
+
+        this.ctx.translate(-this.camera_x, 0); 
+        // ----- Space for fixed objects ----- //
+        this.addToMap(this.statusBar); 
+        this.ctx.translate(this.camera_x, 0);   
+
         this.addToMap(this.character);                                      // Add the character to the map (gameplay object)
         this.ctx.translate(-this.camera_x, 0);                              // Reverse the camera translation to maintain the world’s position
 
