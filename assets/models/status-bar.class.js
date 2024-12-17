@@ -60,12 +60,14 @@ class Statusbar extends DrawableObject {
         }
     }
 
-    // Function to increase the percentage by a fixed amount each time the bottle is touched
+    /**
+     * Function to increase the percentage by a fixed amount each time the bottle is touched
+     * @param {*} amount 
+     */
     increasePercentage(amount) {
         this.percentage += amount;
-
-        // Ensure that the percentage doesn't exceed 100%
-        if (this.percentage > 100) {
+        
+        if (this.percentage > 100) {          // Ensure that the percentage doesn't exceed 100%
             this.percentage = 100;
         }
 
@@ -83,9 +85,9 @@ class Statusbar extends DrawableObject {
         if (this.type === 'health') {
             path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndexHealth()];  // Health type
         } else if (this.type === 'coin') {
-            path = this.IMAGES_STATUSBAR_COIN[this.resolveImageIndexHealth()];    // Coin type
+            path = this.IMAGES_STATUSBAR_COIN[this.resolveImageIndexReverse()];    // Coin type
         } else if (this.type === 'bottle') {
-            path = this.IMAGES_STATUSBAR_BOTTLE[this.resolveImageIndexBottle()];  // Bottle type
+            path = this.IMAGES_STATUSBAR_BOTTLE[this.resolveImageIndexReverse()];  // Bottle type
         }
         // Set the position and size of the statusbar image
         this.x = 40;                                                        // Horizontal position
@@ -116,7 +118,7 @@ class Statusbar extends DrawableObject {
         }
     };
 
-    resolveImageIndexBottle() {        
+    resolveImageIndexReverse() {        
         if (this.percentage == 0) {
             return 0;                                                       
         } else if (this.percentage == 20) {

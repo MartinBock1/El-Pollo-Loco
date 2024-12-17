@@ -10,6 +10,7 @@ class World {                                       // Define the World class, w
     statusBarBottle = new Statusbar('bottle');      // Set type as 'bottle'
     throwableObjects = [];
     collectedBottles = 0;
+    collectedCoins = 0;
 
     constructor(canvas) {                           // Constructor function to initialize the World object
         this.ctx = canvas.getContext('2d');         // Get the 2D context of the canvas to draw on it
@@ -31,14 +32,19 @@ class World {                                       // Define the World class, w
         setInterval(() => {                         // Set an interval to run this function continuously every 200 milliseconds
             this.checkCollisions();                 // Check for collisions between the character and enemies
             this.checkCollisionsBottles();
+            this.checkCollisionsCoins();
             this.checkThrowObjects();               // Check if the player is throwing objects (e.g., bottles)
         }, 200);                                    // Execute every 200ms (5 times per second)
     }
 
     checkThrowObjects() {
-        if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) {                                  // If the ENTER key or the left mouse button is pressed
-            let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);    // Create a new throwable object at the character's position
-            this.throwableObjects.push(bottle);                                                 // Add the new bottle to the list of throwable objects
+        if (this.collectedBottles > 0 && this.collectedBottles < 5) {
+            if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) {                                  // If the ENTER key or the left mouse button is pressed
+                let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);    // Create a new throwable object at the character's position
+                this.throwableObjects.push(bottle);                                                // Add the new bottle to the list of throwable objects
+                this.collectedBottles--;
+                this.statusBarBottle.setPercentage(this.collectedBottles * 20);
+            }
         }
     }
 
@@ -56,10 +62,24 @@ class World {                                       // Define the World class, w
             if (this.character.isColliding(bottle) && !bottle.collected) {  // Check if character collides with bottle and bottle isn't collected
                 this.statusBarBottle.increasePercentage(20);                // Increase the bottle status bar by 20% on each collision
                 bottle.collected = true;                                    // Mark this bottle as collected 
-                this.collectedBottles++;
-                this.level.bottles.splice(index, 1);
-                console.log(this.collectedBottles);
-                
+                if (this.collectedBottles < 5) {
+                    this.collectedBottles++;
+                    this.statusBarBottle.setPercentage(this.collectedBottles * 20);
+                    this.level.bottles.splice(index, 1);
+                }
+            };
+        });
+    }
+
+    checkCollisionsCoins() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {  // Check if character collides with bottle and bottle isn't collected
+                this.statusBarCoins.increasePercentage(20);                // Increase the bottle status bar by 20% on each collision
+                if (this.collectedCoins < 5) {
+                    this.collectedCoins++;
+                    this.statusBarCoins.setPercentage(this.collectedCoins * 20);
+                    this.level.coins.splice(index, 1);
+                }
             };
         });
     }
