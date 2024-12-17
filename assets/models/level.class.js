@@ -1,23 +1,59 @@
+/**
+ * Represents a level in the game, containing enemies, clouds, background objects, bottles, and coins.
+ * This class is responsible for organizing the various elements present in a game level and their properties.
+ * The level also defines the x-coordinate at which the level ends.
+ * 
+ * @class Level
+ */
 class Level {
-    enemies;                                                // Declares a property `enemies` to hold the list of enemies in the level
-    clouds;                                                 // Declares a property `clouds` to hold the list of clouds in the level
-    backgroundObjects;                                      // Declares a property `backgroundObjects` to hold the objects in the background of the level
-    level_end_x = 2200;                                     // Declares a property `level_end_x` to define the x-coordinate at which the level ends
-    bottles;                                                // Declares a property `bottles` to hold the list of bottles in the level
-    coins;                                                  // Declares a property `coins` to hold the list of coins in the level
-    
-    /** Constructor to initialize the `Level` class with the given parameters:      
-     * @param {*} enemies 
-     * @param {*} clouds 
-     * @param {*} backgroundObjects 
-     * @param {*} bottles 
-     * @param {*} coins 
+    /**
+     * List of enemies in the level.
+     * @type {Array}
      */
-    constructor(enemies, clouds, backgroundObjects, bottles, coins) {       
-        this.enemies = enemies;                             // Initializes the `enemies` property with the passed `enemies` parameter
-        this.bottles = bottles;                             // Initializes the `bottles` property with the passed `bottles` parameter
-        this.coins = coins;                                 // Initializes the `coins` property with the passed `coins` parameter
-        this.clouds = clouds;                               // Initializes the `clouds` property with the passed `clouds` parameter
-        this.backgroundObjects = backgroundObjects;         // Initializes the `backgroundObjects` property with the passed `backgroundObjects` parameter
+    enemies;                                                
+    /**
+     * List of clouds in the level.
+     * @type {Array}
+     */
+    clouds;                                                 
+    /**
+     * List of background objects in the level.
+     * @type {Array}
+     */
+    backgroundObjects;                                      
+    /**
+     * The x-coordinate at which the level ends.
+     * @type {number}
+     * @default 2200
+     */
+    level_end_x = 2200;                                     
+    /**
+     * List of bottles in the level.
+     * @type {Array}
+     */
+    bottles;                                                
+    /**
+     * List of coins in the level.
+     * @type {Array}
+     */
+    coins;                                                  
+    
+    /**
+     * Creates an instance of the Level class.
+     * Initializes the level with the provided enemies, clouds, background objects, bottles, and coins.
+     * The level also has a fixed x-coordinate (`level_end_x`) where the level ends.
+     * 
+     * @param {Array} enemies - The list of enemies in the level.
+     * @param {Array} clouds - The list of clouds in the level.
+     * @param {Array} backgroundObjects - The list of background objects in the level.
+     * @param {Array} bottles - The list of bottles in the level.
+     * @param {Array} coins - The list of coins in the level.
+     */
+    constructor(enemies, clouds, backgroundObjects, bottles, coins) {
+        this.enemies = enemies;
+        this.bottles = bottles;
+        this.coins = coins;
+        this.clouds = clouds;
+        this.backgroundObjects = backgroundObjects;
     }
 }

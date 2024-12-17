@@ -1,10 +1,35 @@
-class BackgroundObject extends MovableObject {      // Define the BackgroundObject class, which extends the MovableObject class
-    width = 720;                                    // Set the width of the background object
-    height = 480;                                   // Set the height of the background object
+/**
+ * Class representing a background object that extends the MovableObject class.
+ * The background object is positioned at the bottom of the canvas and is loaded with a specified image.
+ * 
+ * @class
+ * @extends MovableObject
+ */
+class BackgroundObject extends MovableObject {
+    /**
+     * The width of the background object.
+     * @type {number}
+     * @default 720
+     */
+    width = 720;
 
-    constructor(imagePath, x) {                     // Constructor function to initialize the background object with an image and position
-        super().loadImage(imagePath);               // Call the constructor of the parent class (MovableObject) and load the image from the provided path
-        this.x = x;                                 // Set the horizontal position (x-coordinate) of the background object
-        this.y = 480 - this.height;                 // Set the vertical position (y-coordinate) of the background object to be at the bottom of the canvas
+    /**
+     * The height of the background object.
+     * @type {number}
+     * @default 480
+     */
+    height = 480;
+
+    /**
+     * Creates an instance of the BackgroundObject.
+     * Initializes the background object with a specified image and position on the canvas.
+     * 
+     * @param {string} imagePath - The path to the image to be used as the background.
+     * @param {number} x - The x-coordinate (horizontal position) of the background object on the canvas.
+     */
+    constructor(imagePath, x) {
+        super().loadImage(imagePath);  
+        this.x = x;                    
+        this.y = 480 - this.height;    
     }
 }

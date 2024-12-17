@@ -58,10 +58,10 @@ const level1 = new Level(
     ],
 
     [
-        new Coin('./assets/img/8_coin/coin_1.png'),
-        new Coin('./assets/img/8_coin/coin_2.png'),
-        new Coin('./assets/img/8_coin/coin_1.png'),
-        new Coin('./assets/img/8_coin/coin_2.png'),
-        new Coin('./assets/img/8_coin/coin_1.png'),
+        // new Coin('./assets/img/8_coin/coin_1.png'),
+        // new Coin('./assets/img/8_coin/coin_2.png'),
+        // new Coin('./assets/img/8_coin/coin_1.png'),
+        // new Coin('./assets/img/8_coin/coin_2.png'),
+        // new Coin('./assets/img/8_coin/coin_1.png'),
     ]
 );

@@ -1,10 +1,17 @@
-class Keyboard {            // Define the Keyboard class to track the state of key presses
-    LEFT = false;           // Initialize LEFT key state to false, indicating it is not pressed
-    RIGHT = false;          // Initialize RIGHT key state to false, indicating it is not pressed
-    UP = false;             // Initialize UP key state to false, indicating it is not pressed
-    DOWN = false;           // Initialize DOWN key state to false, indicating it is not pressed
-    SPACE = false;          // Initialize SPACE key state to false, indicating it is not pressed
-    ENTER = false;          // Initialize ENTER key state to false, indicating it is not pressed
-    MOUSE_LEFT = false;     // Initialize MOUSE_LEFT key state to false, indicating it is not pressed
+/**
+ * Represents a keyboard input handler for tracking the state of specific keys and mouse buttons.
+ * This class keeps track of whether keys such as LEFT, RIGHT, UP, DOWN, SPACE, ENTER, and MOUSE_LEFT are pressed or not.
+ * The state of each key is represented as a boolean value (`true` for pressed, `false` for not pressed).
+ * 
+ * @class Keyboard
+ */
+class Keyboard {
+    LEFT = false;
+    RIGHT = false;
+    UP = false;
+    DOWN = false;
+    SPACE = false;
+    ENTER = false;
+    MOUSE_LEFT = false;
 }
 

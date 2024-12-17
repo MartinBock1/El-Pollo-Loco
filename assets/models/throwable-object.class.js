@@ -1,22 +1,41 @@
+/**
+ * Represents a throwable object in the game that extends the MovableObject class.
+ * This class simulates the behavior of an object being thrown, including its initial position, size, and motion.
+ * The object is thrown with an initial speed and affected by gravity, moving horizontally over time.
+ * 
+ * @class ThrowableObject
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
-
-    constructor(x, y) {                                                     // Constructor for creating a new ThrowableObject with specified x and y positions.
-        super().loadImage('./assets/img/6_salsa_bottle/salsa_bottle.png');  // Call the parent class constructor and load the image for the throwable object.
-        this.x = x;                                                         // Set the initial horizontal position (x-coordinate) of the throwable object.
-        this.y = y;                                                         // Set the initial vertical position (y-coordinate) of the throwable object.
-        this.height = 60;                                                   // Set the height of the throwable object.
-        this.width = 50;                                                    // Set the width of the throwable object.
-        this.throw();                                                       // Call the throw method to simulate the object being thrown.
+    /**
+         * Creates an instance of a ThrowableObject with the specified position.
+         * Initializes the object's image, size, position, and starts its motion.
+         * The object will move horizontally and be affected by gravity when thrown.
+         * 
+         * @param {number} x - The initial horizontal position (x-coordinate) of the throwable object.
+         * @param {number} y - The initial vertical position (y-coordinate) of the throwable object.
+         */
+    constructor(x, y) {
+        super().loadImage('./assets/img/6_salsa_bottle/salsa_bottle.png');
+        this.x = x;
+        this.y = y;
+        this.height = 60;
+        this.width = 50;
+        this.throw();
     }
 
     /**
-     * Function that handles the object's motion when thrown.
+     * Handles the motion of the object when thrown.
+     * The object starts with an initial vertical speed and is affected by gravity.
+     * The horizontal movement is updated periodically.
+     * 
+     * @method throw
      */
     throw() {
-        this.speedY = 40;           // Set the initial vertical speed (speedY) of the throwable object.
-        this.applyGravity();        // Apply gravity to the object, likely modifying the y-position to simulate falling.
-        setInterval(() => {         // Use setInterval to continuously update the object's position every 25 milliseconds (40 times per second).
-            this.x += 10;           // Increment the x-coordinate (horizontal position) by 10 pixels every interval, making the object move to the right.
-        }, 25);                     // The interval is set to 25 milliseconds (40 frames per second), ensuring smooth movement.
+        this.speedY = 40;
+        this.applyGravity();
+        setInterval(() => {
+            this.x += 10;
+        }, 25);
     }
 }
