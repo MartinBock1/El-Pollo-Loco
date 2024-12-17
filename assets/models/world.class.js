@@ -9,6 +9,7 @@ class World {                                       // Define the World class, w
     statusBarCoins = new Statusbar('coin');         // Set type as 'coin'
     statusBarBottle = new Statusbar('bottle');      // Set type as 'bottle'
     throwableObjects = [];
+    collectedBottles = 0;
 
     constructor(canvas) {                           // Constructor function to initialize the World object
         this.ctx = canvas.getContext('2d');         // Get the 2D context of the canvas to draw on it
@@ -42,21 +43,23 @@ class World {                                       // Define the World class, w
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {                                                 // Loop through each enemy in the current level's enemies array
-            if (this.character.isColliding(enemy)) {                                            // If the character collides with an enemy
-                this.character.hit();                                                           // Make the character "hit" (take damage)
-                this.statusBarHealth.setPercentage(this.character.energy);                      // Update the status bar with the character's current energy
+        this.level.enemies.forEach((enemy) => {                             // Loop through each enemy in the current level's enemies array
+            if (this.character.isColliding(enemy)) {                        // If the character collides with an enemy
+                this.character.hit();                                       // Make the character "hit" (take damage)
+                this.statusBarHealth.setPercentage(this.character.energy);  // Update the status bar with the character's current energy
             };
         });
     }
 
     checkCollisionsBottles() {
-        this.level.bottles.forEach((bottle) => {                                                 
-            if (this.character.isColliding(bottle) && !bottle.collected) {// Check if character collides with bottle and bottle isn't collected                 
-                // this.character.hit();                                                           
-                // this.statusBarBottle.setPercentage(this.character.energy);   
-                this.statusBarBottle.increasePercentage(20); // Increase the bottle status bar by 20% on each collision
-                bottle.collected = true;  // Mark this bottle as collected    
+        this.level.bottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle) && !bottle.collected) {  // Check if character collides with bottle and bottle isn't collected
+                this.statusBarBottle.increasePercentage(20);                // Increase the bottle status bar by 20% on each collision
+                bottle.collected = true;                                    // Mark this bottle as collected 
+                this.collectedBottles++;
+                this.level.bottles.splice(index, 1);
+                console.log(this.collectedBottles);
+                
             };
         });
     }

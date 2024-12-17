@@ -7,6 +7,6 @@ class Bottle extends MovableObject {                    // Define a new class "B
     constructor(imagePath) {                            // Constructor function that takes imagePath as an argument                  
         super().loadImage(imagePath);                   // Call the parent class constructor and load the image specified by the path
         this.x = -500 + Math.random() * 2000;           // Set the x-coordinate of the bottle randomly between -500 and 1500
-        this.collected = false;  // Initially, the bottle has not been collected
+        this.collected = false;                         // Initially, the bottle has not been collected
     }
 }

@@ -118,17 +118,17 @@ class Statusbar extends DrawableObject {
 
     resolveImageIndexBottle() {        
         if (this.percentage == 0) {
-            return 0;                                                       // 100% health
+            return 0;                                                       
         } else if (this.percentage == 20) {
-            return 1;                                                       // 80%-99%
+            return 1;                                                       
         } else if (this.percentage == 40) {
-            return 2;                                                       // 60%-79%
+            return 2;                                                       
         } else if (this.percentage == 60) {
-            return 3;                                                       // 40%-59%
+            return 3;                                                       
         } else if (this.percentage == 80) {
-            return 4;                                                       // 20%-39%
+            return 4;                                                       
         } else {
-            return 5;                                                       // 0%-19%
+            return 5;                                                       
         }
     };
 }
