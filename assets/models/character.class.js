@@ -4,10 +4,10 @@ class Character extends MovableObject {
     width = 80;
     speed = 5;
     offset = {
-        top: -80,
-        bottom: 170,
-        left: 10,
-        right: 20,
+        top: 80,       // 80px vom oberen Rahmen zu Pepe,
+        bottom: 10,    // 10px vom unteren Rahmen zu Pepe,
+        left: 10,      // 10px vom linken Rahmen zu Pepe,
+        right: 20,     // 20px vom rechten Rahmen zu Pepe,
     };
 
     IMAGES_IDLE = [

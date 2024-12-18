@@ -2,7 +2,12 @@ class ChickenSmall extends MovableObject {                          // Define th
     y = 370;                                                        // Set the vertical position (y-coordinate) of the chicken
     height = 60;                                                    // Set the height of the chicken
     width = 60;                                                     // Set the width of the chicken
-
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    };
     /**
      * Define an array of images for the walking animation of the chicken
      */

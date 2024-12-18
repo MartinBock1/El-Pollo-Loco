@@ -27,44 +27,44 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();
+            this.checkCollisions();            
+        }, 50);
+
+        setInterval(() => {
             this.checkCollisionsBottles();
             this.checkCollisionsCoins();
             this.checkThrowObjects();
         }, 200);
+
     }
 
     checkThrowObjects() {
-        if (this.collectedBottles > 0 && this.collectedBottles < 5) {
+        if (this.collectedBottles > 0 && this.collectedBottles <= 5) {
             if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) {
                 let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.collectedBottles--;
                 this.statusBarBottle.setPercentage(this.collectedBottles * 20);
-                // console.log(this.collectedBottles);
             }
         }
     }
 
     // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {                             // Loop through each enemy in the current level's enemies array
-    //         if (this.character.isColliding(enemy)) {                        // If the character collides with an enemy
-    //             this.character.hit();                                       // Make the character "hit" (take damage)
-    //             this.statusBarHealth.setPercentage(this.character.energy);  // Update the status bar with the character's current energy
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (this.character.isColliding(enemy)) {
+    //             this.character.hit();
+    //             this.statusBarHealth.setPercentage(this.character.energy);
     //         };
     //     });
     // }   
-    
+
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
-                console.log("Character Y:", this.character.y);
-                console.log("Character speedY:", this.character.speedY); 
-                console.log("Enemy Y (Chicken) Y:", enemy.y);
-                if (this.character.isJumpingOnEnemy(enemy)) {                    
+            if (this.character.isColliding(enemy)) {          
+                if (this.character.isAboveGround() && this.character.speedY <= 0) {
                     this.level.enemies.splice(index, 1);
-                } else {                    
-                    this.character.hit();
+                } else {
+                    this.character.hit(); 
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
             }
@@ -139,6 +139,7 @@ class World {
 
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
+        mo.drawOffsetFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

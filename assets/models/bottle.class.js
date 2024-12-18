@@ -33,10 +33,10 @@ class Bottle extends MovableObject {
      */
     speed = 0;  
     offset = {
-        top: -60,
-        bottom: 170,
+        top: 10,
+        bottom: 10,
         left: 20,
-        right: 15,
+        right: 20,
     };                                       
 
     /**
