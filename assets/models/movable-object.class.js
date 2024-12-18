@@ -13,6 +13,7 @@ class MovableObject extends DrawableObject {
         right: 0,
         bottom: 0
     };
+    char_x;
 
     applyGravity() {
         setInterval(() => {
@@ -30,13 +31,6 @@ class MovableObject extends DrawableObject {
             return this.y < 215;                             
         }
     }
-
-    // isColliding(mo) {
-    //     return this.x + this.width > mo.x &&
-    //         this.y + this.height > mo.y &&
-    //         this.x < mo.x &&
-    //         this.y < mo.y + mo.height;
-    // }  
 
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&

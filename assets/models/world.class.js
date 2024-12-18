@@ -27,7 +27,7 @@ class World {
 
     run() {
         setInterval(() => {
-            this.checkCollisions();            
+            this.checkCollisions();
         }, 50);
 
         setInterval(() => {
@@ -60,11 +60,13 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {          
+            if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround() && this.character.speedY <= 0) {
-                    this.level.enemies.splice(index, 1);
+                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                        this.level.enemies.splice(index, 1);
+                    }
                 } else {
-                    this.character.hit(); 
+                    this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 }
             }
@@ -83,7 +85,7 @@ class World {
                 }
             };
         });
-    }    
+    }
 
     checkCollisionsCoins() {
         this.level.coins.forEach((coin, index) => {
@@ -96,7 +98,7 @@ class World {
                 }
             };
         });
-    }    
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

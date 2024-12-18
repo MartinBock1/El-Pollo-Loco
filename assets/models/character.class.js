@@ -2,7 +2,7 @@ class Character extends MovableObject {
     y = 235;
     height = 200;
     width = 80;
-    speed = 5;
+    speed = 20;
     offset = {
         top: 80,       // 80px vom oberen Rahmen zu Pepe,
         bottom: 10,    // 10px vom unteren Rahmen zu Pepe,
@@ -141,5 +141,6 @@ class Character extends MovableObject {
                 }
             }
         }, 50)
+        
     }
 }

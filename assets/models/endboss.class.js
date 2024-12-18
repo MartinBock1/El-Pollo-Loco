@@ -1,12 +1,16 @@
-class Endboss extends MovableObject {                     // Define a new class called "Endboss" that extends the MovableObject class.
-    height = 400;                                         // Set the height of the endboss to 400 pixels.
-    width = 250;                                          // Set the width of the endboss to 250 pixels.
-    y = 60;       
+class Endboss extends MovableObject {
+    height = 400;
+    width = 250;
+    y = 60;  
+    offset = {
+        top: 150,
+        bottom: 20,
+        left: 40,
+        right: 40,
+    };     
 
-    /**
-     * Define an array of images for the walking animation of the chicken
-     */
-    IMAGES_WALKING = [                                              
+
+    IMAGES_ALERT = [                                              
         './assets/img/4_enemie_boss_chicken/2_alert/G5.png',
         './assets/img/4_enemie_boss_chicken/2_alert/G6.png',
         './assets/img/4_enemie_boss_chicken/2_alert/G7.png',
@@ -17,19 +21,43 @@ class Endboss extends MovableObject {                     // Define a new class 
         './assets/img/4_enemie_boss_chicken/2_alert/G12.png',
     ];
 
+    IMAGES_WALKING = [
+        './assets/img/4_enemie_boss_chicken/1_walk/G1.png',
+        './assets/img/4_enemie_boss_chicken/1_walk/G2.png',
+        './assets/img/4_enemie_boss_chicken/1_walk/G3.png',
+        './assets/img/4_enemie_boss_chicken/1_walk/G4.png'
+    ];
+
     constructor() {                                                 
-        super().loadImage(this.IMAGES_WALKING[0]);      // Call the parent class constructor and load the first walking image as the initial image.
-        this.loadImages(this.IMAGES_WALKING);           // Load all images in the IMAGES_WALKING array for the walking animation.  
-        this.x = 2500;                                  // Set the initial horizontal position (x-coordinate) of the endboss to 2500 pixels (start position).  
-        this.animate();                                 // Call the animate method to start the animation.                   
+        super().loadImage(this.IMAGES_ALERT[0]);
+        this.loadImages(this.IMAGES_ALERT); 
+        this.loadImages(this.IMAGES_WALKING); 
+        this.x = 2500;
+        this.animate();      
     }
 
-    /**
-     * Function animate for continuous updates
-     */
-    animate() {                                                                         
-        setInterval(() => {                             // Set an interval to execute the animation logic every 200 illiseconds.                      
-            this.playAnimation(this.IMAGES_WALKING);    // Call playAnimation method to play the walking animation using the images in IMAGES_WALKING.
-        }, 200);                                        // The animation frame updates every 200 milliseconds (5 frames per second).
+    // animate() {                                                                         
+    //     setInterval(() => {                 
+    //         this.playAnimation(this.IMAGES_ALERT);
+    //     }, 200);
+    
+
+    animate() {     
+        let alertInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_ALERT);
+        }, 200);
+        
+        // setTimeout(() => {
+        //     clearInterval(alertInterval);
+
+        //     setInterval(() => {
+        //         this.moveLeft();
+        //     }, 1000 / 60);
+            
+        //     setInterval(() => {
+        //         this.playAnimation(this.IMAGES_WALKING);
+        //     }, 200);
+
+        // }, 5000); // 5 Sek warten
     }
 }
