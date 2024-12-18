@@ -51,9 +51,19 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 30;
         this.applyGravity();
-        setInterval(() => {
+        let throwInterval = setInterval(() => {
             this.x += 10;
             this.playAnimation(this.IMAGE_BOTTLE_ROTATION);
+
+            // Konsolenausgabe der aktuellen x-Position der Flasche
+            console.log('Flasche X-Position:', this.x, this.y);
+            // Überprüfe, ob die Flasche den Bildschirm verlassen hat (z.B. bei einer Breite von 2200px)
+            if (this.y > 500 && this.y < 700) {
+                clearInterval(throwInterval); // Beende das Intervall, wenn die Flasche den Bildschirm verlässt
+                console.log('Flasche hat den Bildschirm verlassen.');
+            }
+            
         }, 25);
     }
 }
+    
