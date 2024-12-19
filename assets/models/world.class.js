@@ -8,6 +8,7 @@ class World {
     statusBarHealth = new Statusbar('health');
     statusBarCoins = new Statusbar('coin');
     statusBarBottle = new Statusbar('bottle');
+    statusBarEndboss = new Statusbar('endboss'); // Endboss-Statusbar erstellen
     throwableObjects = [];
     collectedBottles = 0;
     collectedCoins = 0;
@@ -119,6 +120,9 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottle);
+        this.statusBarEndboss.x = this.canvas.width - this.statusBarEndboss.width - 40;  // Position am rechten Rand
+        this.statusBarEndboss.y = 10;  // Beliebige y-Position, z.B. 10 Pixel von oben
+        this.addToMap(this.statusBarEndboss);  // Statusbar zum Canvas hinzufügen
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
