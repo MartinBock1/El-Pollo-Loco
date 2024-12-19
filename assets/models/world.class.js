@@ -32,6 +32,7 @@ class World {
         }, 50);
 
         setInterval(() => {
+            this.checkCollisionsWithThrownBottles();
             this.checkCollisionsBottles();
             this.checkCollisionsCoins();
             this.checkThrowObjects();
@@ -49,15 +50,26 @@ class World {
             }
         }
     }
+   
+    checkCollisionsWithThrownBottles() {
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach(enemy => {
+                if (this.isCollidingWithEnemy(bottle, enemy)) {
+                    if (enemy instanceof Endboss) {
+                        enemy.isEnbossHit();  // Endboss wird getroffen
+                        console.log('Endboss wurde getroffen!');
+                        enemy.animate();
+                    }                    
+                    this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+                }
+            });
+        });
+    }
 
-    // checkCollisions() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (this.character.isColliding(enemy)) {
-    //             this.character.hit();
-    //             this.statusBarHealth.setPercentage(this.character.energy);
-    //         };
-    //     });
-    // }   
+    // Hilfsmethode, um zu prüfen, ob das geworfene Objekt mit einem Feind kollidiert
+    isCollidingWithEnemy(bottle, enemy) {
+        return bottle.isColliding(enemy);  // Kollisionslogik von MovableObject verwenden
+    }
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
@@ -145,7 +157,7 @@ class World {
 
         mo.draw(this.ctx);
         // mo.drawFrame(this.ctx);
-        mo.drawOffsetFrame(this.ctx);
+        // mo.drawOffsetFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

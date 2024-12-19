@@ -65,13 +65,13 @@ class Endboss extends MovableObject {
         this.x = 2500;
         this.animate();
     }
-    
+
     animate() {
         let alertInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);      
+            this.playAnimation(this.IMAGES_ALERT);
             checkCondition();
         }, 200);
-        
+
         let checkCondition = () => {
             if (world.character.x > this.flagPoint && !this.flagContact) {
                 clearInterval(alertInterval);
@@ -80,20 +80,34 @@ class Endboss extends MovableObject {
                 console.log("flagContact: ", this.flagContact);
                 console.log(world.character.x, "x vom Character wird erkannt");
 
-                this.startTimeout();            
+                this.startTimeout();
             }
         };
+
+        this.startHitAnimation();
     }
 
     startTimeout() {
         setTimeout(() => {
             setInterval(() => {
-                this.moveLeft();
-            }, 1000 / 60);
-            
-            setInterval(() => {
                 this.playAnimation(this.IMAGES_WALKING);
             }, 200);
-        }, 1000); 
-    }    
+
+            setInterval(() => {
+                this.moveLeft();
+            }, 1000 / 60);
+        }, 1000);
+    }
+
+    startHitAnimation() {
+        // Überprüfen, ob der Boss getroffen wurde und animieren
+        setInterval(() => {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            }
+        }, 50);
+    }
+
 }

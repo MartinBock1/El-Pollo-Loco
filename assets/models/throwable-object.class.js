@@ -35,7 +35,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 40;
+        this.speedY = 30;
         this.applyGravity();
         let throwInterval = setInterval(() => {
             this.x += 10;
@@ -48,7 +48,7 @@ class ThrowableObject extends MovableObject {
                     console.log('Endboss wurde getroffen!');
 
                     // Nach dem Treffer die Flasche zerstören
-                    clearInterval(throwInterval); // Stoppe die Flasche
+                    clearInterval(throwInterval); 
                     this.playAnimation(this.IMAGE_BOTTLE_SPLASH);
                 }
             });
