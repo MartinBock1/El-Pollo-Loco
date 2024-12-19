@@ -23,17 +23,10 @@ class ThrowableObject extends MovableObject {
         './assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ];
 
-    /**
-         * Creates an instance of a ThrowableObject with the specified position.
-         * Initializes the object's image, size, position, and starts its motion.
-         * The object will move horizontally and be affected by gravity when thrown.
-         * 
-         * @param {number} x - The initial horizontal position (x-coordinate) of the throwable object.
-         * @param {number} y - The initial vertical position (y-coordinate) of the throwable object.
-         */
     constructor(x, y) {
         super().loadImage('./assets/img/6_salsa_bottle/salsa_bottle.png');
-        this.loadImages(this.IMAGE_BOTTLE_ROTATION); 
+        this.loadImages(this.IMAGE_BOTTLE_ROTATION);
+        this.loadImages(this.IMAGE_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
         this.height = 60;
@@ -41,28 +34,24 @@ class ThrowableObject extends MovableObject {
         this.throw();
     }
 
-    /**
-     * Handles the motion of the object when thrown.
-     * The object starts with an initial vertical speed and is affected by gravity.
-     * The horizontal movement is updated periodically.
-     * 
-     * @method throw
-     */
     throw() {
-        this.speedY = 30;
+        this.speedY = 40;
         this.applyGravity();
         let throwInterval = setInterval(() => {
             this.x += 10;
             this.playAnimation(this.IMAGE_BOTTLE_ROTATION);
 
-            // Konsolenausgabe der aktuellen x-Position der Flasche
-            console.log('Flasche X-Position:', this.x, this.y);
-            // Überprüfe, ob die Flasche den Bildschirm verlassen hat (z.B. bei einer Breite von 2200px)
-            if (this.y > 500 && this.y < 700) {
-                clearInterval(throwInterval); // Beende das Intervall, wenn die Flasche den Bildschirm verlässt
-                console.log('Flasche hat den Bildschirm verlassen.');
-            }            
-        }, 25);
+            // Überprüfen, ob die Flasche den Endboss trifft
+            world.level.enemies.forEach(enemy => {
+                if (this.isColliding(enemy) && enemy instanceof Endboss) {
+
+                    console.log('Endboss wurde getroffen!');
+
+                    // Nach dem Treffer die Flasche zerstören
+                    clearInterval(throwInterval); // Stoppe die Flasche
+                    this.playAnimation(this.IMAGE_BOTTLE_SPLASH);
+                }
+            });
+        }, 20);
     }
 }
-    

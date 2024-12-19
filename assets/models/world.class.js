@@ -120,9 +120,9 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottle);
-        this.statusBarEndboss.x = this.canvas.width - this.statusBarEndboss.width - 40;  // Position am rechten Rand
-        this.statusBarEndboss.y = 10;  // Beliebige y-Position, z.B. 10 Pixel von oben
-        this.addToMap(this.statusBarEndboss);  // Statusbar zum Canvas hinzufügen
+        this.statusBarEndboss.x = this.canvas.width - this.statusBarEndboss.width - 40;
+        this.statusBarEndboss.y = 10;
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);

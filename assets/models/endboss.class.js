@@ -53,9 +53,10 @@ class Endboss extends MovableObject {
 
     flagContact = false;
     flagPoint = 2100;
+    health = 100;
 
     constructor() {
-        super().loadImage(this.IMAGES_ALERT[0]);
+        super().loadImage('./assets/img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ATTACK);
@@ -79,7 +80,7 @@ class Endboss extends MovableObject {
                 console.log("flagContact: ", this.flagContact);
                 console.log(world.character.x, "x vom Character wird erkannt");
 
-                this.startTimeout(alertInterval);            
+                this.startTimeout();            
             }
         };
     }
@@ -94,5 +95,5 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }, 200);
         }, 1000); 
-    }
+    }    
 }
