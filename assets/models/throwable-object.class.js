@@ -61,8 +61,7 @@ class ThrowableObject extends MovableObject {
             if (this.y > 500 && this.y < 700) {
                 clearInterval(throwInterval); // Beende das Intervall, wenn die Flasche den Bildschirm verlässt
                 console.log('Flasche hat den Bildschirm verlassen.');
-            }
-            
+            }            
         }, 25);
     }
 }

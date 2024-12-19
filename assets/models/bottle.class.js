@@ -34,9 +34,9 @@ class Bottle extends MovableObject {
     speed = 0;  
     offset = {
         top: 10,
-        bottom: 10,
+        bottom: 5,
         left: 20,
-        right: 20,
+        right: 10,
     };                                       
 
     /**

@@ -6,7 +6,7 @@ let keyboard = new Keyboard();      // Create a new Keyboard object to track the
 function init() {
     canvas = document.getElementById('canvas');     // Get the canvas element by its ID and assign it to the 'canvas' variable
     world = new World(canvas, keyboard);            // Create a new World object passing the canvas and keyboard objects
-    world.level.enemies.push(new Endboss());
+    // world.level.enemies.push(new Endboss());
 
     console.log('My Character is:', world.character);
 }

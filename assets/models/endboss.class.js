@@ -27,70 +27,72 @@ class Endboss extends MovableObject {
         './assets/img/4_enemie_boss_chicken/1_walk/G3.png',
         './assets/img/4_enemie_boss_chicken/1_walk/G4.png'
     ];
+
+    IMAGES_ATTACK = [
+        './assets/img/4_enemie_boss_chicken/3_attack/G13.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G14.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G15.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G16.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G17.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G18.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G19.png',
+        './assets/img/4_enemie_boss_chicken/3_attack/G20.png',
+    ];
+
+    IMAGES_HURT = [
+        './assets/img/4_enemie_boss_chicken/4_hurt/G21.png',
+        './assets/img/4_enemie_boss_chicken/4_hurt/G22.png',
+        './assets/img/4_enemie_boss_chicken/4_hurt/G23.png',
+    ];
+
+    IMAGES_DEAD = [
+        './assets/img/4_enemie_boss_chicken/5_dead/G24.png',
+        './assets/img/4_enemie_boss_chicken/5_dead/G25.png',
+        './assets/img/4_enemie_boss_chicken/5_dead/G26.png',
+    ];
+
     flagContact = false;
-    flagPoint = 2000;
+    flagPoint = 2100;
 
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = 2500;
         this.animate();
     }
-
-    // animate() {                                                                         
-    //     setInterval(() => {                 
-    //         this.playAnimation(this.IMAGES_ALERT);
-    //     }, 200);
-    // }
-
+    
     animate() {
         let alertInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);
+            this.playAnimation(this.IMAGES_ALERT);      
+            checkCondition();
         }, 200);
-
-        // darf erst nach der ersten Animation begonnen werden!
-        setTimeout(() => {
-            clearInterval(alertInterval);
+        
+        let checkCondition = () => {
             if (world.character.x > this.flagPoint && !this.flagContact) {
+                clearInterval(alertInterval);
                 this.flagContact = true;
-                console.log(this.flagContact);
+
+                console.log("flagContact: ", this.flagContact);
                 console.log(world.character.x, "x vom Character wird erkannt");
 
-                // Bewege den Boss nach links
-                setInterval(() => {
-                    this.moveLeft();
-                }, 1000 / 60);
-
-                // Animation des Bosses
-                setInterval(() => {
-                    this.playAnimation(this.IMAGES_WALKING);
-                }, 200);
+                this.startTimeout(alertInterval);            
             }
-
-        }, 5000); // 5 Sekunden warten
+        };
     }
 
-    // animate() {
-    //     let i = 0;
-    //     setInterval(() => {
-    //         if (i < this.IMAGES_ALERT.length) {
-    //             this.playAnimation(this.IMAGES_ALERT);
-    //         } else {
-    //             this.playAnimation(this.IMAGES_WALKING);
-    //             // this.moveLeft();
-    //         }
-    //         i++;
-
-    //         if (world.character.x > this.flagPoint && !this.flagContact) {
-    //             i = 0;
-    //             this.flagContact = true;
-    //             console.log(world.character.x, "x vom Character wird erkannt");
-    //             setInterval(() => {
-    //                 this.moveLeft();
-    //             }, 1000 / 60);
-    //         }
-    //     }, 1000 / 5);
-
-    // }
+    startTimeout() {
+        setTimeout(() => {
+            setInterval(() => {
+                this.moveLeft();
+            }, 1000 / 60);
+            
+            setInterval(() => {
+                this.playAnimation(this.IMAGES_WALKING);
+            }, 200);
+        }, 1000); 
+    }
 }

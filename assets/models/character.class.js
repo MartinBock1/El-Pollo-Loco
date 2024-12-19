@@ -2,9 +2,9 @@ class Character extends MovableObject {
     y = 235;
     height = 200;
     width = 80;
-    speed = 20;
+    speed = 5;
     offset = {
-        top: 80,       // 80px vom oberen Rahmen zu Pepe,
+        top: 100,      // 100px vom oberen Rahmen zu Pepe,
         bottom: 10,    // 10px vom unteren Rahmen zu Pepe,
         left: 10,      // 10px vom linken Rahmen zu Pepe,
         right: 20,     // 20px vom rechten Rahmen zu Pepe,
@@ -110,7 +110,7 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 this.isWalkingSound();
-                console.log(this.x);
+                // console.log(this.x);
             }
 
             if (this.world.keyboard.LEFT && this.x > -600) {

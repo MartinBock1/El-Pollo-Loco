@@ -3,10 +3,10 @@ class Coin extends MovableObject {                  // Define a new class "Coin"
     width = 80;                                     // Set the width of the coin to 80
     speed = 0;                                      // Initialize the speed of the coin to 0 (coin doesn't move by default)
     offset = {
-        top: 20,
-        bottom: 20,
-        left: 20,
-        right: 20,
+        top: 25,
+        bottom: 25,
+        left: 25,
+        right: 25,
     };
 
     constructor(imagePath) {                        // Constructor function that takes imagePath as an argument
