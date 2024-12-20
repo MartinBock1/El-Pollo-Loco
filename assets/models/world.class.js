@@ -54,22 +54,16 @@ class World {
     checkCollisionsWithThrownBottles() {
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach(enemy => {
-                if (this.isCollidingWithEnemy(bottle, enemy)) {
+                if (bottle.isColliding(enemy)) {
                     if (enemy instanceof Endboss) {
-                        enemy.isEnbossHit();  // Endboss wird getroffen
-                        console.log('Endboss wurde getroffen!');
+                        enemy.isEndbossHit();  
                         enemy.animate();
                     }                    
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }
             });
         });
-    }
-
-    // Hilfsmethode, um zu prüfen, ob das geworfene Objekt mit einem Feind kollidiert
-    isCollidingWithEnemy(bottle, enemy) {
-        return bottle.isColliding(enemy);  // Kollisionslogik von MovableObject verwenden
-    }
+    }   
 
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {

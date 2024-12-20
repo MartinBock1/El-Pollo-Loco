@@ -6,6 +6,9 @@ class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    gameSound = new Audio('./assets/audio/music.mp3');
+
+    
 
     loadImage(path) {
         this.img = new Image();
@@ -15,6 +18,7 @@ class DrawableObject {
     draw(ctx) {
         // Draw the object using the current image at its x and y position with the given width and height
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        
     }
 
     drawFrame(ctx) {

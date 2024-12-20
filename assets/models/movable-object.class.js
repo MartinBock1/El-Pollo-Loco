@@ -3,8 +3,13 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    gameSound;
     walkingSound;
     jumpingSound;
+    throwingSound;
+    bottleCrashSound;
+    chickenHitSound;
+    winSound;
     energy = 100;
     lastHit = 0;
     offset = {
@@ -73,6 +78,11 @@ class MovableObject extends DrawableObject {
         this.isJumpingSound();
     }
 
+    isGameSound() {
+        this.gameSound.play();
+        this.gameSound.volume = 0.05;
+    }
+
     isWalkingSound() {
         this.walkingSound.play();
         this.walkingSound.playbackRate = 2;
@@ -81,6 +91,26 @@ class MovableObject extends DrawableObject {
     isJumpingSound() {
         this.jumpingSound.play();
         this.jumpingSound.volume = 0.1;
+    }
+
+    isThrowingSound() {
+        this.throwingSound.play();
+        this.throwingSound.volume = 0.1;
+    }
+
+    isBottleCrashSound() {
+        this.bottleCrashSound.play();
+        this.bottleCrashSound.volume = 1;
+    }
+
+    isChickenHitSound() {
+        this.chickenHitSound.play();
+        this.chickenHitSound.volume = 1;
+    }
+
+    isWinSound() {
+        this.winSound.play();
+        this.winSound.volume = 1;
     }
 
     hit() {
@@ -92,7 +122,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isEnbossHit() {
+    isEndbossHit() {
         this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
