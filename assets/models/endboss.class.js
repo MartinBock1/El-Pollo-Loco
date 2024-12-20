@@ -1,6 +1,7 @@
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
+    x = 2500;
     y = 60;
     offset = {
         top: 150,
@@ -64,28 +65,45 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 2500;
+        // this.x = 2500;
         this.animate();
     }
 
     animate() {
-        
+        let isWalking = true;
+
         let alertInterval = setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);
+            if (world.character.x > this.flagPoint) {
+                this.playAnimation(this.IMAGES_ALERT);
+                setTimeout(() => {
+                    isWalking = false;
+                }, 5000);
+            }
         }, 200);
 
         let walkInterval = setInterval(() => {
-            if (world.character.x > this.flagPoint) {
+            if (!isWalking) {
                 clearInterval(alertInterval);
                 this.playAnimation(this.IMAGES_WALKING);
+                
             }
         }, 200);
 
         let moveInterval = setInterval(() => {
-            if (world.character.x > this.flagPoint) {
+            if (!isWalking) {
+                clearInterval(alertInterval);
                 this.moveLeft();
+
             }
         }, 1000 / 60);
+
+        // let attacInterval = setInterval(() => {
+        //     if (world.character.x > this.flagPoint) {
+        //         clearInterval(alertInterval);
+        //         this.playAnimation(this.IMAGES_ATTACK);
+        //     }
+        // }, 200);        
+
 
         this.soundPlayed = false;
         let hurtInterval = setInterval(() => {
@@ -93,7 +111,7 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 if (!this.soundPlayed) {
                     this.isChickenHitSound();
-                    this.soundPlayed = true;                    
+                    this.soundPlayed = true;
                 }
             }
         }, 50);
@@ -102,6 +120,7 @@ class Endboss extends MovableObject {
         let deadInterval = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                // console.log(world.level.enemies[0].currentImage);
                 clearInterval(alertInterval);
                 clearInterval(walkInterval);
                 clearInterval(moveInterval);
@@ -113,5 +132,7 @@ class Endboss extends MovableObject {
                 }
             }
         }, 50);
+
+
     }
 }
