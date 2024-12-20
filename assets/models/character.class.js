@@ -141,7 +141,6 @@ class Character extends MovableObject {
                     this.idleCount = 0;
                 }
             }
-        }, 50)
-        
+        }, 50)        
     }
 }

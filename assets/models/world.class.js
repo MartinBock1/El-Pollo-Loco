@@ -37,7 +37,6 @@ class World {
             this.checkCollisionsCoins();
             this.checkThrowObjects();
         }, 150);
-
     }
 
     checkThrowObjects() {
@@ -58,7 +57,7 @@ class World {
                     if (enemy instanceof Endboss) {
                         enemy.isEndbossHit();  
                         enemy.animate();
-                        // this.statusBarHealth.setPercentage(this.enemy.energy);
+                        this.statusBarEndboss.setPercentage(enemy.energy);
                     }                    
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }
@@ -98,10 +97,10 @@ class World {
     checkCollisionsCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
-                this.statusBarCoins.increasePercentage(20);
-                if (this.collectedCoins < 5) {
+                this.statusBarCoins.increasePercentage(10);
+                if (this.collectedCoins < 10) {
                     this.collectedCoins++;
-                    this.statusBarCoins.setPercentage(this.collectedCoins * 20);
+                    this.statusBarCoins.setPercentage(this.collectedCoins * 10);
                     this.level.coins.splice(index, 1);
                 }
             };
