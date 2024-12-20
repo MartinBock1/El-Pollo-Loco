@@ -72,7 +72,6 @@ class Endboss extends MovableObject {
         
         let alertInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_ALERT);
-            // this.flagContact = true;
         }, 200);
 
         let walkInterval = setInterval(() => {

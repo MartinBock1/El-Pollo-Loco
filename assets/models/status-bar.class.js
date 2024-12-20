@@ -55,7 +55,6 @@ class Statusbar extends DrawableObject {
                 this.loadImages(this.IMAGES_STATUSBAR_HEALTH);
                 break;
         }
-        // this.loadImages(this.IMAGES_STATUSBAR_ENDBOSS);
 
         if (this.type === 'coin' || this.type === 'bottle') {
             this.setPercentage(0);

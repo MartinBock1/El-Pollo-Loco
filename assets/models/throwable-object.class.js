@@ -46,8 +46,7 @@ class ThrowableObject extends MovableObject {
                 this.isThrowingSound();
                 this.soundPlayed = true;  // Verhindert das erneute Abspielen des Sounds
             }
-
-            // Überprüfen, ob die Flasche den Endboss trifft
+            
             world.level.enemies.forEach(enemy => {
                 if (this.isColliding(enemy) && enemy instanceof Endboss) {
 

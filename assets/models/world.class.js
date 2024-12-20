@@ -36,7 +36,7 @@ class World {
             this.checkCollisionsBottles();
             this.checkCollisionsCoins();
             this.checkThrowObjects();
-        }, 200);
+        }, 150);
 
     }
 
@@ -58,6 +58,7 @@ class World {
                     if (enemy instanceof Endboss) {
                         enemy.isEndbossHit();  
                         enemy.animate();
+                        // this.statusBarHealth.setPercentage(this.enemy.energy);
                     }                    
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }
@@ -84,11 +85,11 @@ class World {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle) && !bottle.collected) {
                 this.statusBarBottle.increasePercentage(20);
-                bottle.collected = true;
                 if (this.collectedBottles < 5) {
                     this.collectedBottles++;
                     this.statusBarBottle.setPercentage(this.collectedBottles * 20);
                     this.level.bottles.splice(index, 1);
+                    bottle.collected = true;
                 }
             };
         });
@@ -113,9 +114,9 @@ class World {
         // The order in which objects are added to the map is important for rendering!
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
         // ----- Space for fixed objects ----- //

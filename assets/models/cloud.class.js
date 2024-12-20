@@ -2,13 +2,13 @@ class Cloud extends MovableObject {
     y = 50;
     width = 500;
     height = 250;
-
-    constructor() {
-        super().loadImage('./assets/img/5_background/layers/4_clouds/1.png');
-        this.loadImage('./assets/img/5_background/layers/4_clouds/2.png');
-        this.x = -500 + Math.random() * 2500;
+    
+    constructor(imagePath, x, y) {
+        super().loadImage(imagePath);
+        this.x = x;
+        this.y = y - this.height;
         this.animate();
-    }    
+    } 
 
     animate() {    
         setInterval(() => {
@@ -20,10 +20,9 @@ class Cloud extends MovableObject {
     /**
      * Function update the position of the images to create a continuous effect
      */
-    updateImages() {
-        
-        if (this.x + this.width < 0) {
-            this.x = 2500; 
+    updateImages() {        
+        if (this.x < -800) {
+            this.x = 2700; 
         }
     }
 }
