@@ -4,10 +4,10 @@ class Character extends MovableObject {
     width = 80;
     speed = 5;
     offset = {
-        top: 100,      // 100px vom oberen Rahmen zu Pepe,
-        bottom: 10,    // 10px vom unteren Rahmen zu Pepe,
-        left: 10,      // 10px vom linken Rahmen zu Pepe,
-        right: 20,     // 20px vom rechten Rahmen zu Pepe,
+        top: 100,
+        bottom: 10,
+        left: 10,
+        right: 20,
     };
 
     IMAGES_IDLE = [
@@ -101,7 +101,7 @@ class Character extends MovableObject {
             }
         }, 1000 / 8);
 
-        setInterval(() => {                                                           
+        setInterval(() => {
             if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                 this.walkingSound.pause();
             }
@@ -121,19 +121,27 @@ class Character extends MovableObject {
 
             if ((this.world.keyboard.UP || this.world.keyboard.SPACE)
                 && !this.isAboveGround()) {
-                this.jump();              
+                this.jump();
                 this.idleCount = 0;
+            }
+
+            if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
+                this.world.keyboard.RIGHT && this.world.keyboard.SPACE ||
+                this.world.keyboard.LEFT && this.world.keyboard.UP ||
+                this.world.keyboard.RIGHT && this.world.keyboard.UP
+            ) {
+                this.walkingSound.pause();
             }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        setInterval(() => {                                                             
+        setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {               
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -141,6 +149,6 @@ class Character extends MovableObject {
                     this.idleCount = 0;
                 }
             }
-        }, 50)        
+        }, 50);
     }
 }

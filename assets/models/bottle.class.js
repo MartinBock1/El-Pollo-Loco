@@ -7,35 +7,35 @@
  * @class Bottle
  * @extends MovableObject
  */
-class Bottle extends MovableObject {                    
+class Bottle extends MovableObject {
     /**
      * The vertical position (y-coordinate) of the bottle on the canvas.
      * This is a fixed value representing the initial height of the bottle.
      * @type {number}
      * @default 360
      */
-    y = 360;                                            
+    y = 360;
     /**
      * The height of the bottle.
      * This defines the height of the image representing the bottle.
      * @type {number}
      * @default 60
-     */                                  
-    height = 60;                                        
+     */
+    height = 60;
     /**
      * The width of the bottle.
      * This defines the width of the image representing the bottle.
      * @type {number}
      * @default 60
-     */                                       
-    width = 60;                                        
+     */
+    width = 60;
     /**
      * The speed of the bottle, initially set to 0, meaning the bottle does not move.
      * A value greater than 0 would allow for movement, but the bottle does not have speed by default.
      * @type {number}
      * @default 0
      */
-    speed = 0;  
+    speed = 0;
     /**
      * The offset of the bottle for collision detection, defining how far the bottle can be detected
      * on each side (top, bottom, left, right) from its center.
@@ -51,7 +51,11 @@ class Bottle extends MovableObject {
         bottom: 5,
         left: 20,
         right: 10,
-    };                                       
+    };
+    IMAGES_BOTTLES = [
+        './assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
+        './assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
+    ];
 
     /**
      * Creates an instance of the Bottle object.
@@ -62,9 +66,17 @@ class Bottle extends MovableObject {
      * @description The image for the bottle is loaded and the x-coordinate is assigned a random value within a range.
      * The y-coordinate is fixed at 360, and the `collected` state is set to false, meaning the bottle is not collected initially.
      */
-    constructor(imagePath) {                                           
-        super().loadImage(imagePath);                   
-        this.x = -500 + Math.random() * 2000;           
-        this.collected = false;                         
-    }    
+    constructor() {
+        super().loadImage('./assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
+        this.loadImages(this.IMAGES_BOTTLES);
+        this.animate();
+        this.x = -500 + Math.random() * 2000;
+        this.collected = false;
+    }
+
+    animate() {
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_BOTTLES);
+        }, 1000 / 3);
+    }
 }

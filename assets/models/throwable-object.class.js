@@ -33,6 +33,11 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        if (world.character.otherDirection) {
+            this.speedX = -10;
+        } else {
+            this.speedX = 10;
+        }
         this.throw();
     }
 
@@ -40,18 +45,15 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         let throwInterval = setInterval(() => {
-            this.x += 10;
+            this.x += this.speedX;
             this.playAnimation(this.IMAGE_BOTTLE_ROTATION);
             if (!this.soundPlayed) {
                 this.isThrowingSound();
-                this.soundPlayed = true;  // Verhindert das erneute Abspielen des Sounds
+                this.soundPlayed = true;
             }
             
             world.level.enemies.forEach(enemy => {
                 if (this.isColliding(enemy) && enemy instanceof Endboss) {
-
-                    // console.log('Endboss wurde getroffen!');
-
                     clearInterval(throwInterval);
                     this.playAnimation(this.IMAGE_BOTTLE_SPLASH);
                     this.isBottleCrashSound();

@@ -9,6 +9,7 @@ class MovableObject extends DrawableObject {
     throwingSound;
     bottleCrashSound;
     chickenHitSound;
+    chickenFriedSound;
     winSound;
     energy = 100;
     lastHit = 0;
@@ -106,6 +107,11 @@ class MovableObject extends DrawableObject {
     isChickenHitSound() {
         this.chickenHitSound.play();
         this.chickenHitSound.volume = 1;
+    }
+
+    isChickenFriedSound() {
+        this.chickenFriedSound.play();
+        this.chickenFriedSound.volume = 1;
     }
 
     isWinSound() {

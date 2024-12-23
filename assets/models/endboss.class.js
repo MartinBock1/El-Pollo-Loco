@@ -9,7 +9,7 @@ class Endboss extends MovableObject {
         left: 40,
         right: 40,
     };
-
+    speed = 3;
 
     IMAGES_ALERT = [
         './assets/img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -53,10 +53,11 @@ class Endboss extends MovableObject {
     ];
 
     flagContact = false;
-    flagPoint = 2000;
+    flagPoint = 2100;
     health = 100;
     chickenHitSound = new Audio('./assets/audio/chicken-hit.mp3');
-    winSound = new Audio('./assets/audio/win.mp3');
+    chickenFriedSound = new Audio('./assets/audio/chicken-fried.mp3');
+    hadFirstContact = false;
 
     constructor() {
         super().loadImage('./assets/img/4_enemie_boss_chicken/2_alert/G5.png');
@@ -65,74 +66,64 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        // this.x = 2500;
         this.animate();
     }
 
     animate() {
-        let isWalking = true;
+        let i = 0;
 
-        let alertInterval = setInterval(() => {
-            if (world.character.x > this.flagPoint) {
+        setInterval(() => {
+            if (i < 10) {
                 this.playAnimation(this.IMAGES_ALERT);
-                setTimeout(() => {
-                    isWalking = false;
-                }, 5000);
-            }
-        }, 200);
-
-        let walkInterval = setInterval(() => {
-            if (!isWalking) {
-                clearInterval(alertInterval);
+            } else {
                 this.playAnimation(this.IMAGES_WALKING);
-                
+            }
+            i++;
+            
+
+            if (world.character.x > this.flagPoint && !this.hadFirstContact) {
+                i = 0;
+                this.hadFirstContact = true;
             }
         }, 200);
 
         let moveInterval = setInterval(() => {
-            if (!isWalking) {
-                clearInterval(alertInterval);
-                this.moveLeft();
+            if (this.hadFirstContact) {
+                setTimeout(() => {
+                    this.moveLeft();
+                }, 2000);
 
             }
         }, 1000 / 60);
 
-        // let attacInterval = setInterval(() => {
-        //     if (world.character.x > this.flagPoint) {
-        //         clearInterval(alertInterval);
-        //         this.playAnimation(this.IMAGES_ATTACK);
-        //     }
-        // }, 200);        
-
-
         this.soundPlayed = false;
         let hurtInterval = setInterval(() => {
             if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
                 if (!this.soundPlayed) {
                     this.isChickenHitSound();
                     this.soundPlayed = true;
                 }
+                this.playAnimation(this.IMAGES_HURT);
+                this.playAnimation(this.IMAGES_ATTACK)
+            } else {
+                this.soundPlayed = false;
             }
-        }, 50);
+        }, 200);
 
-        this.winSoundPlayed = false;
+        this.chickenFriedSoundPlayed = false;
         let deadInterval = setInterval(() => {
             if (this.isDead()) {
+                this.speed = 0;
                 this.playAnimation(this.IMAGES_DEAD);
-                // console.log(world.level.enemies[0].currentImage);
-                clearInterval(alertInterval);
-                clearInterval(walkInterval);
                 clearInterval(moveInterval);
                 clearInterval(hurtInterval);
                 this.loadImage('./assets/img/4_enemie_boss_chicken/5_dead/G26.png');
-                if (!this.winSoundPlayed) {
-                    this.isWinSound();
-                    this.winSoundPlayed = true;
+
+                if (!this.chickenFriedSoundPlayed) {
+                    this.isChickenFriedSound();
+                    this.chickenFriedSoundPlayed = true;
                 }
             }
-        }, 50);
-
-
+        }, 200);
     }
 }

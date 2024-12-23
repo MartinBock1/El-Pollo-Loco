@@ -8,10 +8,11 @@ class World {
     statusBarHealth = new Statusbar('health');
     statusBarCoins = new Statusbar('coin');
     statusBarBottle = new Statusbar('bottle');
-    statusBarEndboss = new Statusbar('endboss'); // Endboss-Statusbar erstellen
+    statusBarEndboss = new Statusbar('endboss');
     throwableObjects = [];
     collectedBottles = 0;
     collectedCoins = 0;
+    lastThrowTime = 0;
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -41,11 +42,12 @@ class World {
 
     checkThrowObjects() {
         if (this.collectedBottles > 0 && this.collectedBottles <= 5) {
-            if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) {
+            if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT && (new Date().getTime() - this.lastThrowTime) > 500) {
                 let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.collectedBottles--;
                 this.statusBarBottle.setPercentage(this.collectedBottles * 20);
+                this.lastThrowTime = new Date().getTime();
             }
         }
     }
@@ -56,7 +58,6 @@ class World {
                 if (bottle.isColliding(enemy)) {
                     if (enemy instanceof Endboss) {
                         enemy.isEndbossHit();  
-                        enemy.animate();
                         this.statusBarEndboss.setPercentage(enemy.energy);
                     }                    
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
