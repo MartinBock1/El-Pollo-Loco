@@ -14,7 +14,7 @@ class Bottle extends MovableObject {
      * @type {number}
      * @default 360
      */
-    y = 360;
+    y = 365;
     /**
      * The height of the bottle.
      * This defines the height of the image representing the bottle.
@@ -44,7 +44,7 @@ class Bottle extends MovableObject {
      * @property {number} bottom - The bottom offset of the bottle.
      * @property {number} left - The left offset of the bottle.
      * @property {number} right - The right offset of the bottle.
-     * @default { top: 10, bottom: 5, left: 20, right: 10 }
+     * @default {top:10,bottom:5,left:20,right:10}
      */
     offset = {
         top: 10,
@@ -52,6 +52,7 @@ class Bottle extends MovableObject {
         left: 20,
         right: 10,
     };
+
     IMAGES_BOTTLES = [
         './assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         './assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png',

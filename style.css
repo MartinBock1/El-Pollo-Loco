@@ -1,6 +1,4 @@
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    Globals
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*----------------------------------------   Globals   ----------------------------------------*/
 * {
    box-sizing: border-box;
    margin: 0;
@@ -9,9 +7,9 @@
 
 body {
    background-color: #05171e;
-   background-image: url('./assets/img/Praerie.jpg');
-   background-position: top;
-  background-size: cover;
+   background-image: url("./assets/img/Praerie.jpg");
+   background-position: center;
+   background-size: cover;
    color: #fefefe;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
    min-height: 100vh;
@@ -26,8 +24,6 @@ body {
 }
 
 .container {
-   padding-left: 20px;
-   padding-right: 20px;
    display: flex;
    align-items: center;
 }
@@ -35,9 +31,9 @@ body {
 h1 {
    text-align: center;
    font-size: 40px;
+   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
    margin-block-start: 0;
-   padding-top: 20px;
-   font-family: "Rye";
+   font-family: "Rye", Arial, Helvetica, sans-serif;
    color: yellow;
 }
 
@@ -47,18 +43,20 @@ h1 {
 
 canvas {
    background-color: black;
-   border: 10px solid brown;
-   border-radius: 30px;
+   border: 30px ridge brown;
+   border-radius: 50px;
+   box-shadow: 0 0 15px 5px rgba(123, 75, 58, 0.7); 
+   display: block;
 }
 
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    Header
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*----------------------------------------   Header   ----------------------------------------*/
 header {
-   background-color: #0d2d33;
+   background-color: brown;
    text-align: left;
    align-content: center;
    height: 80px;
+   display: flex;
+   align-items: center;
 }
 
 header img {
@@ -66,18 +64,14 @@ header img {
    margin-left: 20px;
 }
 
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    Main Content
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*-------------------------------------   Main Content   -------------------------------------*/
 main {
    flex: 1;
 }
 
-/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    Footer
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*----------------------------------------   Footer   ----------------------------------------*/
 footer {
-   background-color: #0d3331;
+   background-color: brown;
    position: relative;
    bottom: 0;
    left: 0;

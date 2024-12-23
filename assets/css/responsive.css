@@ -1,0 +1,31 @@
+@media only screen and (max-width: 720px) {
+   canvas {
+      width: 100%;
+      border: 10px ridge brown;
+      border-radius: 20px;
+   }
+
+   header {
+      display: none;
+   }
+
+   footer {
+      display: none;
+   }
+}
+
+@media only screen and (max-height: 480px) {
+   canvas {
+      height: 100vh;
+      border: 10px ridge brown;
+      border-radius: 20px;
+   }
+
+   header {
+      display: none;
+   }
+
+   footer {
+      display: none;
+   }
+}

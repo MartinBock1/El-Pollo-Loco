@@ -42,7 +42,7 @@ class World {
 
     checkThrowObjects() {
         if (this.collectedBottles > 0 && this.collectedBottles <= 5) {
-            if (this.keyboard.ENTER || this.keyboard.MOUSE_LEFT && (new Date().getTime() - this.lastThrowTime) > 500) {
+            if ((this.keyboard.ENTER || this.keyboard.MOUSE_LEFT) && (new Date().getTime() - this.lastThrowTime) > 500) {
                 let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.collectedBottles--;
