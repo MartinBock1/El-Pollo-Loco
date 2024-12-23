@@ -80,7 +80,6 @@ class Endboss extends MovableObject {
             }
             i++;
             
-
             if (world.character.x > this.flagPoint && !this.hadFirstContact) {
                 i = 0;
                 this.hadFirstContact = true;

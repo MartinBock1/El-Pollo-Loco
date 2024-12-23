@@ -75,6 +75,7 @@ class Character extends MovableObject {
     world;
     walkingSound = new Audio('./assets/audio/running.mp3');
     jumpingSound = new Audio('./assets/audio/jump.mp3');
+    
     idleCount = 0;
 
     constructor() {

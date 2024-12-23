@@ -1,8 +1,28 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let startScreen;
 
 function init() {
+    // Verstecke das Startbild
+    startScreen = document.getElementById('start-screen');
+    startScreen.style.display = 'flex';
+
+    // Warten auf den Klick auf den Button, um das Spiel zu starten
+    document.getElementById('start-button').addEventListener('click', startGame);
+
+    // canvas = document.getElementById('canvas');
+    // world = new World(canvas, keyboard);
+    // world.level.enemies.push(new Endboss());
+
+    // console.log('My Character is:', world.character);
+}
+
+function startGame() {
+    // Verstecke das Startbild
+    startScreen.style.display = 'none';
+
+    // Initialisiere das Spiel
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.level.enemies.push(new Endboss());
@@ -18,7 +38,7 @@ function fullscreen() {
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {   // for IE11 (remove June 15, 2022)
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
         element.msRequestFullscreen();
     } else if (element.webkitRequestFullscreen) {  // iOS Safari
         element.webkitRequestFullscreen();

@@ -13,6 +13,7 @@ class World {
     collectedBottles = 0;
     collectedCoins = 0;
     lastThrowTime = 0;
+    chickenCrushSound = new Audio('./assets/audio/chicken-crush.mp3');
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -71,6 +72,8 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround() && this.character.speedY <= 0) {
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                        this.chickenCrushSound.play();
+                        this.chickenCrushSound.volume = 0.1;
                         this.level.enemies.splice(index, 1);
                     }
                 } else {
