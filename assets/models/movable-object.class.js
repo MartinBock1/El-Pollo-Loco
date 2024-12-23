@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
     gameSound;
     walkingSound;
     jumpingSound;
+    pepeHurtSound;
+    pepeDeathSound;
     throwingSound;
     bottleCrashSound;
     chickenHitSound;
@@ -92,6 +94,16 @@ class MovableObject extends DrawableObject {
     isJumpingSound() {
         this.jumpingSound.play();
         this.jumpingSound.volume = 0.1;
+    }
+
+    isPepeHurtSound() {
+        this.pepeHurtSound.play();
+        this.pepeHurtSound.volume = 0.1;
+    }
+
+    isPepeDeathSound() {
+        this.pepeDeathSound.play();
+        this.pepeDeathSound.volume = 0.1;
     }
 
     isThrowingSound() {

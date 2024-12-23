@@ -107,11 +107,29 @@ main {
 }
 
 .info-screen {
-   width: 100%;
-   background-color: black;
-   height: 50px;
+   width: 95%;
+   background-color: brown;
+   height: 80px;
+   border-radius: 40px;
 }
 
+.controlls {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   font-size: 20px;
+   color: yellow;
+}
+
+.controlls div {
+   align-items: center;
+}
+
+.controlls img {
+   width: 16px;
+   height: 16px;
+}
 /*----------------------------------------   Footer   ----------------------------------------*/
 footer {
    background-color: brown;

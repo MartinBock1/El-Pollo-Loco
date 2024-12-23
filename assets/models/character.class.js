@@ -75,6 +75,8 @@ class Character extends MovableObject {
     world;
     walkingSound = new Audio('./assets/audio/running.mp3');
     jumpingSound = new Audio('./assets/audio/jump.mp3');
+    pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
+    pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
     
     idleCount = 0;
 
@@ -137,10 +139,16 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
+        this.soundPlayed = false;
         setInterval(() => {
             if (this.isDead()) {
+                if (!this.soundPlayed) {
+                    this.isPepeDeathSound()
+                    this.soundPlayed = true;
+                }                
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
+                this.isPepeHurtSound()
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
@@ -153,3 +161,4 @@ class Character extends MovableObject {
         }, 50);
     }
 }
+        
