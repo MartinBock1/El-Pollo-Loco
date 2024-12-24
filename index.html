@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./assets/icons/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/fonts.css">
+    <link rel="stylesheet" href="assets/css/hud.css">
+    <link rel="stylesheet" href="assets/css/button.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <title>El Pollo Loco</title>
 </head>
@@ -20,21 +22,42 @@
 
     <main class="container maxContent ">
         <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="hud">
+            <div class="panel">
+                <div class="panel-wrapper">
+                    <button id="btnLeft">
+                        <img src="./assets/icons/chevron_left.png" alt="">
+                    </button>
+                    <button id="btnRight">
+                        <img src="./assets/icons/chevron_right.png" alt="">
+                    </button>
+                </div>
+                <div class="panel-wrapper">
+                    <button id="btnJump">
+                        <img src="./assets/icons/jump.png" alt="">
+                    </button>
+                    <button id="btnThrow">
+                        <img src="./assets/icons/throw.png" alt="">
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="info-screen" id="info-screen">
             <div class="controlls">
                 <div>
-                    walk =<img src="./assets/icons/arrow_left.png" alt="Arrow Left"> / <img src="./assets/icons/arrow_right.png" alt="Arrow Right">| a/d
+                    walk =<img src="./assets/icons/arrow_left.png" alt="Arrow Left"> / <img
+                        src="./assets/icons/arrow_right.png" alt="Arrow Right">| a/d
                 </div>
                 <div>
-                    Jump = <img src="./assets/icons/arrow_up.png" alt="Arrow Up"> | w | space  
+                    Jump = <img src="./assets/icons/arrow_up.png" alt="Arrow Up"> | w | space
                 </div>
                 <div>
-                    Throw Bottles =  Enter | Mouse Left 
+                    Throw Bottles = Enter | Mouse Left
                 </div>
             </div>
-
-
         </div>
+
         <div id="start-screen" class="start-screen">
             <img src="./assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen" id="start-image">
             <button id="start-button" class="start-button" onclick="initLevel()">Spiel starten</button>

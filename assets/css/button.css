@@ -1,0 +1,31 @@
+.start-button {
+   padding: 15px 30px;
+   font-size: 18px;
+   background-color: #ffcc00;
+   border: none;
+   cursor: pointer;
+   font-family: "Arial", sans-serif;
+   border-radius: 5px;
+}
+
+.start-button:hover {
+   background-color: #e6b800;
+}
+
+.panel button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    background-color: black;
+}
+
+.panel img {
+    width: 20px;
+    height: 20px;
+}
+
+#btnLeft, #btnRight, #btnJump, #btnThrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

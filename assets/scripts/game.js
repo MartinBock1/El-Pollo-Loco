@@ -4,25 +4,14 @@ let keyboard = new Keyboard();
 let startScreen;
 
 function init() {
-    // Verstecke das Startbild
     startScreen = document.getElementById('start-screen');
     startScreen.style.display = 'flex';
-
-    // Warten auf den Klick auf den Button, um das Spiel zu starten
     document.getElementById('start-button').addEventListener('click', startGame);
-
-    // canvas = document.getElementById('canvas');
-    // world = new World(canvas, keyboard);
-    // world.level.enemies.push(new Endboss());
-
-    // console.log('My Character is:', world.character);
+    bindBtsPressEvents();
 }
 
 function startGame() {
-    // Verstecke das Startbild
     startScreen.style.display = 'none';
-
-    // Initialisiere das Spiel
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.level.enemies.push(new Endboss());
@@ -56,7 +45,7 @@ function exitFullscreen() {
 window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'd') {
         keyboard.RIGHT = true;
-    }   
+    }
     if (e.key === 'ArrowLeft' || e.key === 'a') {
         keyboard.LEFT = true;
     }
@@ -93,7 +82,7 @@ window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowDown' || e.key === 's') {
         keyboard.DOWN = false;
     }
-    if (e.key === ' ') { 
+    if (e.key === ' ') {
         keyboard.SPACE = false;
     }
     if (e.key === 'Enter') {
@@ -106,3 +95,46 @@ window.addEventListener('mouseup', (e) => {
         keyboard.MOUSE_LEFT = false;
     }
 });
+
+
+function bindBtsPressEvents() {    
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.ENTER = true;
+    });
+
+    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.ENTER = false;
+    });
+}

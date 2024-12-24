@@ -1,15 +1,22 @@
-@media only screen and (max-width: 780px) {
+@media only screen and (max-width: 760px) {
    canvas {
       width: 100%;
       border: 10px ridge brown;
       border-radius: 20px;
+      position: relative;
+   }
+   #hud {
+      position: absolute;
+      bottom: 0;
+      width: 80%;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
    }
 
-   header {
-      display: none;
-   }
-
-   footer {
+   header, footer {
       display: none;
    }
 }
@@ -21,11 +28,18 @@
       border-radius: 20px;
    }
 
-   header {
-      display: none;
+   #hud {
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      width: 80%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
    }
 
-   footer {
+   header, footer {
       display: none;
    }
 }
