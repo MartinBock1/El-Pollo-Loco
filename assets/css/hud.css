@@ -4,6 +4,12 @@
     display: none;
 }
 
+.panel-top {
+    display: flex;
+    justify-content:center;
+    width: 80%;
+}
+
 .panel {
     display: flex;
     justify-content:space-between;

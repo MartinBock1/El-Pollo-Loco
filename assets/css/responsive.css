@@ -1,4 +1,4 @@
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 780px) {
    canvas {
       width: 100%;
       border: 10px ridge brown;
@@ -16,7 +16,8 @@
       align-items: center;
    }
 
-   header, footer {
+   header,
+   footer {
       display: none;
    }
 }
@@ -29,17 +30,22 @@
    }
 
    #hud {
-      height: 50px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      height: 100%;
       position: absolute;
       bottom: 0;
       width: 80%;
       color: white;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      flex-direction: column;
    }
 
-   header, footer {
+   header,
+   footer,
+   .info-screen {
       display: none;
    }
 }

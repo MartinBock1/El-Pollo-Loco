@@ -23,6 +23,16 @@
     <main class="container maxContent ">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="hud">
+            <div class="panel-top">
+                <div class="panel-wrapper">
+                    <button id="btnLeft">
+                        <img src="./assets/icons/play_game.png" alt="">
+                    </button>
+                    <button id="btnRight">
+                        <img src="./assets/icons/volume_off.png" alt="">
+                    </button>
+                </div>                
+            </div>
             <div class="panel">
                 <div class="panel-wrapper">
                     <button id="btnLeft">
@@ -46,21 +56,23 @@
         <div class="info-screen" id="info-screen">
             <div class="controlls">
                 <div>
-                    walk =<img src="./assets/icons/arrow_left.png" alt="Arrow Left"> / <img
-                        src="./assets/icons/arrow_right.png" alt="Arrow Right">| a/d
+                    walk = <img src="./assets/icons/arrow_left.png" alt="Arrow Left"> / <img
+                        src="./assets/icons/arrow_right.png" alt="Arrow Right">
+                        <br>
+                    walk = a / d                        
                 </div>
                 <div>
-                    Jump = <img src="./assets/icons/arrow_up.png" alt="Arrow Up"> | w | space
+                    Jump = space
                 </div>
                 <div>
-                    Throw Bottles = Enter | Mouse Left
+                    Throw Bottles = Enter
                 </div>
             </div>
         </div>
 
         <div id="start-screen" class="start-screen">
             <img src="./assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen" id="start-image">
-            <button id="start-button" class="start-button" onclick="initLevel()">Spiel starten</button>
+            <button id="start-button" class="start-button" onclick="initLevel()">Start Game</button>
         </div>
     </main>
 

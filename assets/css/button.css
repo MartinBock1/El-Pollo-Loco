@@ -12,14 +12,14 @@
    background-color: #e6b800;
 }
 
-.panel button {
+.panel-wrapper button {
     width: 30px;
     height: 30px;
     border-radius: 50px;
     background-color: black;
 }
 
-.panel img {
+.panel-wrapper img {
     width: 20px;
     height: 20px;
 }
