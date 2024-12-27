@@ -4,7 +4,8 @@
       border: 10px ridge brown;
       border-radius: 20px;
       position: relative;
-   }
+   }   
+
    #hud {
       position: absolute;
       bottom: 0;
@@ -16,8 +17,22 @@
       align-items: center;
    }
 
+   #orientation-hint {
+      display: none;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 18px;
+      z-index: 110;
+   }
+
    header,
-   footer {
+   footer,
+   .info-screen {
       display: none;
    }
 }
@@ -27,6 +42,10 @@
       height: 100vh;
       border: 10px ridge brown;
       border-radius: 20px;
+   }
+
+   #start-image {
+      height: 80%;
    }
 
    #hud {

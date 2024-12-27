@@ -21,6 +21,9 @@
     </header>
 
     <main class="container maxContent ">
+        <div id="orientation-hint">
+            Please rotate your device to landscape mode!
+        </div>
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="hud">
             <div class="panel-top">
@@ -74,7 +77,7 @@
 
         <div id="start-screen" class="start-screen">
             <img src="./assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen" id="start-image">
-            <button id="start-button" class="start-button" onclick="initLevel()">Start Game</button>
+            <button id="start-button" class="start-button" onclick="initLevel()" disabled>Start Game</button>
         </div>
     </main>
 

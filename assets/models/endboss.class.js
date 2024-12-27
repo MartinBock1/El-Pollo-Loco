@@ -123,7 +123,6 @@ class Endboss extends MovableObject {
                     this.chickenFriedSoundPlayed = true;
                 }
                 setTimeout(() => {
-                    // clearInterval(deadInterval);
                     winGame();
                 }, 4000);
             }

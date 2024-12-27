@@ -79,8 +79,9 @@ class Character extends MovableObject {
     pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
     pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
     idleCount = 0;
-    gameOver = false;  // Diese Variable wird gesetzt, wenn das Spiel endet
-    gameWon = false;    // Diese Variable wird gesetzt, wenn das Spiel gewonnen wird
+    gameOver = false;
+    gameWon = false;
+    intervalIds = [];
 
     constructor() {
         super().loadImage('./assets/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -107,6 +108,7 @@ class Character extends MovableObject {
                     }
                 }
             }
+            intervalIds.push(interval1);
         }, 1000 / 8);
 
         let interval2 = setInterval(() => {
@@ -143,6 +145,7 @@ class Character extends MovableObject {
 
                 this.world.camera_x = -this.x + 100;
             }
+            intervalIds.push(interval2);
         }, 1000 / 60);
 
         this.soundPlayed = false;
@@ -175,6 +178,7 @@ class Character extends MovableObject {
                     this.idleCount = 0;
                 }
             }
+            intervalIds.push(interval3);
         }, 50);
     }
 

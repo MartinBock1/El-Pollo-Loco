@@ -2,9 +2,31 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let startScreen;
+let startButton;
+let orientationHint;
+let backgroundMusic = new Audio('./assets/audio/music.mp3');
+let intervalIds = [];
+
+function checkOrientation() {
+    let orientationHint = document.getElementById('orientation-hint');
+    let startButton = document.getElementById('start-button');
+    
+    if (window.innerHeight > window.innerWidth) {
+        orientationHint.style.display = 'flex';
+        startButton.disabled = true;
+    } else {
+        orientationHint.style.display = 'none';
+        startButton.disabled = false;
+    }
+}
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
 
 function init() {
+    checkOrientation();
+    orientationHint = document.getElementById('orientation-hint');
     startScreen = document.getElementById('start-screen');
+    startButton = document.getElementById('start-button');
     startScreen.style.display = 'flex';
     document.getElementById('start-button').addEventListener('click', startGame);
     bindBtsPressEvents();
@@ -15,6 +37,9 @@ function startGame() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.level.enemies.push(new Endboss());
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+    backgroundMusic.volume = 0.03;
 
     console.log('My Character is:', world.character);
 }
@@ -42,7 +67,6 @@ function exitFullscreen() {
     }
 }
 
-// Methode um das "Game Over" anzuzeigen
 function showGameOver() {
     let gameOverScreen = document.createElement('div');
     gameOverScreen.classList.add('game-over-screen');
@@ -51,9 +75,11 @@ function showGameOver() {
         <button class="start-button" onclick="restartGame()">Play Again</button>
     `;
     document.body.appendChild(gameOverScreen);
-    // Wenn das Spiel verloren ist, stoppe das Schnarchen
     world.character.gameOver = true;
-    world.character.stopAllSounds();  // Stopp alle Sounds, einschließlich Schnarchen
+    world.character.stopAllSounds();
+    backgroundMusic.pause();
+
+    console.log('IntervalIds Character ', intervalIds);
 }
 
 function winGame() {
@@ -64,9 +90,9 @@ function winGame() {
         <button class="start-button" onclick="restartGame()">Play Again</button>
     `;
     document.body.appendChild(winGameScreen);
-    // Wenn das Spiel gewonnen wurde, stoppe das Schnarchen
     world.character.gameWon = true;
-    world.character.stopAllSounds();  // Stopp alle Sounds, einschließlich Schnarchen
+    world.character.stopAllSounds();
+    backgroundMusic.pause();
 }
 
 function restartGame() {
