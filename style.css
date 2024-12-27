@@ -11,7 +11,8 @@ body {
    background-position: center;
    background-size: cover;
    color: #fefefe;
-   font-family: Verdana, Tahoma, sans-serif;
+   /* font-family: Verdana, Tahoma, sans-serif; */
+   font-family: "Rye", Arial, Helvetica, sans-serif;
    min-height: 100vh;
    display: flex;
    flex-direction: column;
@@ -35,7 +36,7 @@ h1 {
    font-size: 40px;
    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
    margin-block-start: 0;
-   font-family: "Rye", Arial, Helvetica, sans-serif;
+   /* font-family: "Rye", Arial, Helvetica, sans-serif; */
    color: yellow;
 }
 
@@ -94,9 +95,9 @@ main {
    display: flex;
    justify-content: space-around;
    width: 95%;
-   background-color: brown;
+   background-color: black;
    height: 50px;
-   border-radius: 40px;
+   border-radius: 10px;
 }
 
 .controlls {
@@ -125,6 +126,7 @@ footer {
    right: 0;
    height: 80px;
    align-content: center;
+   font-family: Verdana, Tahoma, sans-serif;
 }
 
 footer a {

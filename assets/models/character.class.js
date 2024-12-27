@@ -73,6 +73,7 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/5_dead/D-57.png',
     ];
     world;
+    snoringSound = new Audio('./assets/audio/snoring.mp3');
     walkingSound = new Audio('./assets/audio/running.mp3');
     jumpingSound = new Audio('./assets/audio/jump.mp3');
     pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
@@ -100,6 +101,7 @@ class Character extends MovableObject {
                     this.idleCount++;
                 } else {
                     this.playAnimation(this.IMAGES_LONG_IDLE);
+                        this.isSnoringSound();
                 }
             }
         }, 1000 / 8);
@@ -113,7 +115,6 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 this.isWalkingSound();
-                // console.log(this.x);
             }
 
             if (this.world.keyboard.LEFT && this.x > -600) {

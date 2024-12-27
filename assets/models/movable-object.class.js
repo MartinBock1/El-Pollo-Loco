@@ -4,6 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     gameSound;
+    snoringSound;
     walkingSound;
     jumpingSound;
     pepeHurtSound;
@@ -84,6 +85,11 @@ class MovableObject extends DrawableObject {
     isGameSound() {
         this.gameSound.play();
         this.gameSound.volume = 0.05;
+    }
+
+    isSnoringSound() {
+        this.snoringSound.play();
+        this.snoringSound.volume = 0.07;
     }
 
     isWalkingSound() {
