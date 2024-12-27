@@ -122,6 +122,10 @@ class Endboss extends MovableObject {
                     this.isChickenFriedSound();
                     this.chickenFriedSoundPlayed = true;
                 }
+                setTimeout(() => {
+                    // clearInterval(deadInterval);
+                    winGame();
+                }, 4000);
             }
         }, 200);
     }

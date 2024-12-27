@@ -79,6 +79,8 @@ class Character extends MovableObject {
     pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
     pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
     idleCount = 0;
+    gameOver = false;  // Diese Variable wird gesetzt, wenn das Spiel endet
+    gameWon = false;    // Diese Variable wird gesetzt, wenn das Spiel gewonnen wird
 
     constructor() {
         super().loadImage('./assets/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -94,7 +96,7 @@ class Character extends MovableObject {
 
     animate() {
         let interval1 = setInterval(() => {
-            if (!this.isDead()) {
+            if (!this.isDead() && !this.gameOver && !this.gameWon) {
                 if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                     if (this.idleCount < 100) {
                         this.playAnimation(this.IMAGES_IDLE);
@@ -155,7 +157,13 @@ class Character extends MovableObject {
                 clearInterval(interval2);
                 clearInterval(interval3);
                 this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
-                this.stopAllSounds();
+                setTimeout(() => {
+                    if (this.isDead()) {
+                        showGameOver();
+                    } else if (this.gameWon) {
+                        winGame();
+                    }
+                }, 500);
             } else if (this.isHurt()) {
                 this.isPepeHurtSound();
                 this.playAnimation(this.IMAGES_HURT);

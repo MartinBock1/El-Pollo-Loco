@@ -42,3 +42,33 @@ function exitFullscreen() {
     }
 }
 
+// Methode um das "Game Over" anzuzeigen
+function showGameOver() {
+    let gameOverScreen = document.createElement('div');
+    gameOverScreen.classList.add('game-over-screen');
+    gameOverScreen.innerHTML = `
+        <img src="./assets/img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="Game Over">
+        <button class="start-button" onclick="restartGame()">Play Again</button>
+    `;
+    document.body.appendChild(gameOverScreen);
+    // Wenn das Spiel verloren ist, stoppe das Schnarchen
+    world.character.gameOver = true;
+    world.character.stopAllSounds();  // Stopp alle Sounds, einschließlich Schnarchen
+}
+
+function winGame() {
+    let winGameScreen = document.createElement('div');
+    winGameScreen.classList.add('game-over-screen');
+    winGameScreen.innerHTML = `
+        <img src="./assets/img/9_intro_outro_screens/win/won_2.png" alt="You Win">
+        <button class="start-button" onclick="restartGame()">Play Again</button>
+    `;
+    document.body.appendChild(winGameScreen);
+    // Wenn das Spiel gewonnen wurde, stoppe das Schnarchen
+    world.character.gameWon = true;
+    world.character.stopAllSounds();  // Stopp alle Sounds, einschließlich Schnarchen
+}
+
+function restartGame() {
+    location.reload();
+}
