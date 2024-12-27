@@ -52,6 +52,11 @@ canvas {
    display: block;
 }
 
+.center {
+display: flex;
+align-items: center;
+}
+
 /*----------------------------------------   Header   ----------------------------------------*/
 header {
    background-color: brown;
@@ -96,7 +101,7 @@ main {
    justify-content: space-around;
    width: 95%;
    background-color: black;
-   height: 50px;
+   height: 60px;
    border-radius: 10px;
 }
 
@@ -109,13 +114,15 @@ main {
    color: yellow;
 }
 
-.controlls div {
-   align-items: center;
-}
-
-.controlls img {
+.arrow {
    width: 16px;
    height: 16px;
+}
+
+.fullscreen {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
 }
 
 /*----------------------------------------   Footer   ----------------------------------------*/
