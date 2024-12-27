@@ -81,7 +81,6 @@ class Character extends MovableObject {
     idleCount = 0;
     gameOver = false;
     gameWon = false;
-    intervalIds = [];
 
     constructor() {
         super().loadImage('./assets/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -96,7 +95,7 @@ class Character extends MovableObject {
     }
 
     animate() {
-        let interval1 = setInterval(() => {
+        setStopableInterval(() => {
             if (!this.isDead() && !this.gameOver && !this.gameWon) {
                 if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                     if (this.idleCount < 100) {
@@ -108,10 +107,10 @@ class Character extends MovableObject {
                     }
                 }
             }
-            intervalIds.push(interval1);
         }, 1000 / 8);
+        // console.log('ID vom Interval ist ', interval1);
 
-        let interval2 = setInterval(() => {
+        setStopableInterval(() => {
             if (!this.isDead()) {
                 if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
                     this.walkingSound.pause();
@@ -144,21 +143,17 @@ class Character extends MovableObject {
                 }
 
                 this.world.camera_x = -this.x + 100;
-            }
-            intervalIds.push(interval2);
+            }            
         }, 1000 / 60);
 
         this.soundPlayed = false;
-        let interval3 = setInterval(() => {
+        setStopableInterval(() => {
             if (this.isDead()) {
                 if (!this.soundPlayed) {
                     this.isPepeDeathSound();
                     this.soundPlayed = true;
                 }
                 this.playAnimation(this.IMAGES_DEAD);
-                clearInterval(interval1);
-                clearInterval(interval2);
-                clearInterval(interval3);
                 this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
                 setTimeout(() => {
                     if (this.isDead()) {
@@ -178,7 +173,6 @@ class Character extends MovableObject {
                     this.idleCount = 0;
                 }
             }
-            intervalIds.push(interval3);
         }, 50);
     }
 

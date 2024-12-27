@@ -13,7 +13,6 @@ class DrawableObject {
     }
 
     draw(ctx) {
-        // Draw the object using the current image at its x and y position with the given width and height
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);        
     }
 
@@ -28,7 +27,7 @@ class DrawableObject {
     }
 
     drawOffsetFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss || this instanceof Coin || this instanceof Bottle) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Coin || this instanceof Bottle) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'red';
@@ -48,5 +47,4 @@ class DrawableObject {
             this.imageCache[path] = img;
         });
     }
-
 }

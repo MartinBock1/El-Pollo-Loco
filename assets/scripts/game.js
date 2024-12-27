@@ -10,7 +10,7 @@ let intervalIds = [];
 function checkOrientation() {
     let orientationHint = document.getElementById('orientation-hint');
     let startButton = document.getElementById('start-button');
-    
+
     if (window.innerHeight > window.innerWidth) {
         orientationHint.style.display = 'flex';
         startButton.disabled = true;
@@ -42,6 +42,7 @@ function startGame() {
     backgroundMusic.volume = 0.03;
 
     console.log('My Character is:', world.character);
+    console.log('IntervalIds Character ', intervalIds);
 }
 
 function fullscreen() {
@@ -67,34 +68,42 @@ function exitFullscreen() {
     }
 }
 
+function setStopableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+}
+
 function showGameOver() {
     let gameOverScreen = document.createElement('div');
     gameOverScreen.classList.add('game-over-screen');
     gameOverScreen.innerHTML = `
-        <img src="./assets/img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="Game Over">
-        <button class="start-button" onclick="restartGame()">Play Again</button>
-    `;
+                                    <img src="./assets/img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="Game Over">
+                                    <button class="start-button" onclick="restartGame()">Play Again</button>
+                                `;
     document.body.appendChild(gameOverScreen);
     world.character.gameOver = true;
-    world.character.stopAllSounds();
     backgroundMusic.pause();
-
-    console.log('IntervalIds Character ', intervalIds);
+    stopIntervalIds();
 }
 
 function winGame() {
     let winGameScreen = document.createElement('div');
     winGameScreen.classList.add('game-over-screen');
     winGameScreen.innerHTML = `
-        <img src="./assets/img/9_intro_outro_screens/win/won_2.png" alt="You Win">
-        <button class="start-button" onclick="restartGame()">Play Again</button>
-    `;
+                                    <img src="./assets/img/9_intro_outro_screens/win/won_2.png" alt="You Win">
+                                    <button class="start-button" onclick="restartGame()">Play Again</button>
+                               `;
     document.body.appendChild(winGameScreen);
     world.character.gameWon = true;
-    world.character.stopAllSounds();
     backgroundMusic.pause();
+    stopIntervalIds();
 }
 
 function restartGame() {
     location.reload();
+}
+
+function stopIntervalIds() {
+    intervalIds.forEach(clearInterval);
+    console.log('All IntervalIds ', intervalIds);
 }

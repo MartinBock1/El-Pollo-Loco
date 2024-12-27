@@ -13,7 +13,6 @@ function initLevel() {
             // new ChickenSmall(),
             // new ChickenSmall(),
             // new ChickenSmall(),
-            // new Endboss(),
         ],
         [
             new Cloud('./assets/img/5_background/layers/4_clouds/1.png', -300, 280),

@@ -72,7 +72,7 @@ class Endboss extends MovableObject {
     animate() {
         let i = 0;
 
-        setInterval(() => {
+        setStopableInterval(() => {
             if (i < 10) {
                 this.playAnimation(this.IMAGES_ALERT);
             } else {
@@ -86,17 +86,16 @@ class Endboss extends MovableObject {
             }
         }, 200);
 
-        let moveInterval = setInterval(() => {
+        setStopableInterval(() => {
             if (this.hadFirstContact) {
                 setTimeout(() => {
                     this.moveLeft();
                 }, 2000);
-
             }
         }, 1000 / 60);
 
         this.soundPlayed = false;
-        let hurtInterval = setInterval(() => {
+        setStopableInterval(() => {
             if (this.isHurt()) {
                 if (!this.soundPlayed) {
                     this.isChickenHitSound();
@@ -110,12 +109,10 @@ class Endboss extends MovableObject {
         }, 200);
 
         this.chickenFriedSoundPlayed = false;
-        let deadInterval = setInterval(() => {
+        setStopableInterval(() => {
             if (this.isDead()) {
                 this.speed = 0;
                 this.playAnimation(this.IMAGES_DEAD);
-                clearInterval(moveInterval);
-                clearInterval(hurtInterval);
                 this.loadImage('./assets/img/4_enemie_boss_chicken/5_dead/G26.png');
 
                 if (!this.chickenFriedSoundPlayed) {

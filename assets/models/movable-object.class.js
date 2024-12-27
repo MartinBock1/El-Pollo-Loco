@@ -23,9 +23,11 @@ class MovableObject extends DrawableObject {
         bottom: 0
     };
     char_x;
+    intervalIds = [];
+    index = 1;
 
     applyGravity() {
-        setInterval(() => {
+        setStopableInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -50,8 +52,8 @@ class MovableObject extends DrawableObject {
     
     placeEnemies(imagesArray) {
         this.loadImages(imagesArray);
-        this.x = 200 + Math.random() * 2000;
-        this.speed = 0.15 + (Math.random() * 0.4);
+        this.x = 300 + Math.random() * 2000;
+        this.speed = 0.2 + (Math.random() * 0.8);
     }
 
     playAnimation(images) {
@@ -65,7 +67,7 @@ class MovableObject extends DrawableObject {
         let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];
-        this.currentImage++;
+        this.currentImage++;        
     }
 
     moveRight() {

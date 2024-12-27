@@ -29,11 +29,11 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        setStopableInterval(() => {
             this.checkCollisions();
         }, 50);
 
-        setInterval(() => {
+        setStopableInterval(() => {
             this.checkCollisionsWithThrownBottles();
             this.checkCollisionsBottles();
             this.checkCollisionsCoins();
