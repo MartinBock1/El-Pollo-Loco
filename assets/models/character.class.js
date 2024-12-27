@@ -78,7 +78,6 @@ class Character extends MovableObject {
     jumpingSound = new Audio('./assets/audio/jump.mp3');
     pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
     pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
-    
     idleCount = 0;
 
     constructor() {
@@ -94,62 +93,71 @@ class Character extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
-            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-                if (this.idleCount < 100) {
-                    this.playAnimation(this.IMAGES_IDLE);
-                    this.idleCount++;
-                } else {
-                    this.playAnimation(this.IMAGES_LONG_IDLE);
+        let interval1 = setInterval(() => {
+            if (!this.isDead()) {
+                if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
+                    if (this.idleCount < 100) {
+                        this.playAnimation(this.IMAGES_IDLE);
+                        this.idleCount++;
+                    } else {
+                        this.playAnimation(this.IMAGES_LONG_IDLE);
                         this.isSnoringSound();
+                    }
                 }
             }
         }, 1000 / 8);
 
-        setInterval(() => {
-            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-                this.walkingSound.pause();
-            }
+        let interval2 = setInterval(() => {
+            if (!this.isDead()) {
+                if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
+                    this.walkingSound.pause();
+                }
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.isWalkingSound();
-            }
+                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                    this.moveRight();
+                    this.otherDirection = false;
+                    this.isWalkingSound();
+                }
 
-            if (this.world.keyboard.LEFT && this.x > -600) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.isWalkingSound();
-            }
+                if (this.world.keyboard.LEFT && this.x > -600) {
+                    this.moveLeft();
+                    this.otherDirection = true;
+                    this.isWalkingSound();
+                }
 
-            if ((this.world.keyboard.UP || this.world.keyboard.SPACE)
-                && !this.isAboveGround()) {
-                this.jump();
-                this.idleCount = 0;
-            }
+                if ((this.world.keyboard.UP || this.world.keyboard.SPACE)
+                    && !this.isAboveGround()) {
+                    this.jump();
+                    this.idleCount = 0;
+                }
 
-            if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
-                this.world.keyboard.RIGHT && this.world.keyboard.SPACE ||
-                this.world.keyboard.LEFT && this.world.keyboard.UP ||
-                this.world.keyboard.RIGHT && this.world.keyboard.UP
-            ) {
-                this.walkingSound.pause();
-            }
+                if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
+                    this.world.keyboard.RIGHT && this.world.keyboard.SPACE ||
+                    this.world.keyboard.LEFT && this.world.keyboard.UP ||
+                    this.world.keyboard.RIGHT && this.world.keyboard.UP
+                ) {
+                    this.walkingSound.pause();
+                }
 
-            this.world.camera_x = -this.x + 100;
+                this.world.camera_x = -this.x + 100;
+            }
         }, 1000 / 60);
 
         this.soundPlayed = false;
-        setInterval(() => {
+        let interval3 = setInterval(() => {
             if (this.isDead()) {
                 if (!this.soundPlayed) {
-                    this.isPepeDeathSound()
+                    this.isPepeDeathSound();
                     this.soundPlayed = true;
-                }                
+                }
                 this.playAnimation(this.IMAGES_DEAD);
+                clearInterval(interval1);
+                clearInterval(interval2);
+                clearInterval(interval3);
+                this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
+                this.stopAllSounds();
             } else if (this.isHurt()) {
-                this.isPepeHurtSound()
+                this.isPepeHurtSound();
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
@@ -160,6 +168,19 @@ class Character extends MovableObject {
                 }
             }
         }, 50);
+    }    
+
+    stopAllSounds() {
+        this.snoringSound.pause();
+        this.walkingSound.pause();
+        this.jumpingSound.pause();
+        this.pepeHurtSound.pause();
+        this.pepeDeathSound.pause();
+        // Reset sounds to start position if needed
+        this.snoringSound.currentTime = 0;
+        this.walkingSound.currentTime = 0;
+        this.jumpingSound.currentTime = 0;
+        this.pepeHurtSound.currentTime = 0;
+        this.pepeDeathSound.currentTime = 0;
     }
 }
-        
