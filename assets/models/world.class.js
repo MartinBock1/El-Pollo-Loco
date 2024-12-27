@@ -55,12 +55,14 @@ class World {
    
     checkCollisionsWithThrownBottles() {
         this.throwableObjects.forEach((bottle) => {
-            this.level.enemies.forEach(enemy => {
+            this.level.enemies.forEach((enemy, index) => {
                 if (bottle.isColliding(enemy)) {
                     if (enemy instanceof Endboss) {
                         enemy.isEndbossHit();  
                         this.statusBarEndboss.setPercentage(enemy.energy);
-                    }                    
+                    } else if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                        this.level.enemies.splice(index, 1);
+                    }                   
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }
             });

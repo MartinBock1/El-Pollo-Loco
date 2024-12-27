@@ -168,7 +168,7 @@ class Character extends MovableObject {
                 }
             }
         }, 50);
-    }    
+    }
 
     stopAllSounds() {
         this.snoringSound.pause();

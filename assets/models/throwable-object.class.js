@@ -42,7 +42,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 20;
         this.applyGravity();
         let throwInterval = setInterval(() => {
             this.x += this.speedX;
@@ -53,7 +53,7 @@ class ThrowableObject extends MovableObject {
             }
             
             world.level.enemies.forEach(enemy => {
-                if (this.isColliding(enemy) && enemy instanceof Endboss) {
+                if (this.isColliding(enemy) && (enemy instanceof Endboss || enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
                     clearInterval(throwInterval);
                     this.playAnimation(this.IMAGE_BOTTLE_SPLASH);
                     this.isBottleCrashSound();
