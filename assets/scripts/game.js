@@ -8,6 +8,28 @@ let backgroundMusic = new Audio('./assets/audio/music.mp3');
 let intervalIds = [];
 let isMuted = false;
 
+// Hole die Elemente
+let impressumButton = document.getElementById("impressum-button");
+let impressumOverlay = document.getElementById("impressum-overlay");
+let closeImpressumButton = document.getElementById("close-impressum");
+
+// Eventlistener für den Impressum-Button
+impressumButton.addEventListener("click", function () {
+    impressumOverlay.style.display = "flex"; // Zeigt das Overlay an
+});
+
+// Eventlistener für den Schließen-Button
+closeImpressumButton.addEventListener("click", function () {
+    impressumOverlay.style.display = "none"; // Versteckt das Overlay
+});
+
+// Optional: Klick auf den Overlay-Hintergrund schließt das Overlay
+impressumOverlay.addEventListener("click", function (event) {
+    if (event.target === impressumOverlay) {
+        impressumOverlay.style.display = "none"; // Versteckt das Overlay, wenn auf den Hintergrund geklickt wird
+    }
+});
+
 function checkOrientation() {
     let orientationHint = document.getElementById('orientation-hint');
     let startButton = document.getElementById('start-button');

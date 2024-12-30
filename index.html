@@ -33,8 +33,8 @@
                     <button id="">
                         <img src="./assets/icons/play_game.png" alt="">
                     </button>
-                    <button id="">
-                        <img id="mute-responsive" src="./assets/icons/volume_off.png" alt="Mute Icon">
+                    <button id="mute-responsive">
+                        <img src="./assets/icons/volume_off.png" alt="Mute Icon">
                     </button>
                 </div>                
             </div>
@@ -84,7 +84,25 @@
 
         <div id="start-screen" class="start-screen">
             <img src="./assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen" id="start-image">
-            <button id="start-button" class="start-button" onclick="initLevel()" disabled>Start Game</button>
+            <div class="start-scree-buttons">
+                <button id="start-button" class="start-button" onclick="initLevel()" disabled>
+                    Start Game
+                </button>                
+                <button id="impressum-button" class="impressum-button">
+                    Impressum
+                </button>
+            </div>
+        </div>
+        
+        <div id="impressum-overlay" class="overlay">
+            <div class="overlay-content">
+                <h2>Impressum</h2>
+                <p>Martin Bock<br>Adresse: Musterstraße 123, 12345 Musterstadt<br>Telefon: 0123 4567890<br>Email:
+                    martin@example.com</p>
+                <button id="close-impressum">
+                    Schließen
+                </button>
+            </div>
         </div>
     </main>
 

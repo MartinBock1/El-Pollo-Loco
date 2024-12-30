@@ -35,3 +35,33 @@
    align-items: center;
    justify-content: center;
 }
+
+.impressum-button {
+   padding: 15px 30px;
+   font-size: 18px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   cursor: pointer;
+   font-family: "Arial", sans-serif;
+   border-radius: 5px;
+}
+
+.impressum-button:hover {
+   background-color: #0056b3;
+}
+
+#close-impressum {
+   margin-top: 20px;
+   padding: 10px 20px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   font-family: "Arial", sans-serif;
+}
+
+#close-impressum:hover {
+   background-color: #0056b3;
+}
