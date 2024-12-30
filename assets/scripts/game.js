@@ -8,26 +8,16 @@ let backgroundMusic = new Audio('./assets/audio/music.mp3');
 let intervalIds = [];
 let isMuted = false;
 
-// Hole die Elemente
 let impressumButton = document.getElementById("impressum-button");
 let impressumOverlay = document.getElementById("impressum-overlay");
 let closeImpressumButton = document.getElementById("close-impressum");
 
-// Eventlistener für den Impressum-Button
 impressumButton.addEventListener("click", function () {
     impressumOverlay.style.display = "flex"; // Zeigt das Overlay an
 });
 
-// Eventlistener für den Schließen-Button
 closeImpressumButton.addEventListener("click", function () {
     impressumOverlay.style.display = "none"; // Versteckt das Overlay
-});
-
-// Optional: Klick auf den Overlay-Hintergrund schließt das Overlay
-impressumOverlay.addEventListener("click", function (event) {
-    if (event.target === impressumOverlay) {
-        impressumOverlay.style.display = "none"; // Versteckt das Overlay, wenn auf den Hintergrund geklickt wird
-    }
 });
 
 function checkOrientation() {
@@ -61,20 +51,19 @@ function init() {
 function toggleMute() {
     isMuted = !isMuted;
     if (isMuted) {
-        stopAllSounds();
+        stopMusic();
     } else {
-        unmuteAllSounds();
+        restartMusic();
     }
 }
 
-function stopAllSounds() {
+function stopMusic() {
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
 }
 
-function unmuteAllSounds() {
+function restartMusic() {
     backgroundMusic.play();
-    backgroundMusic.volume = 0.03;
 }
 
 function startGame() {
@@ -118,23 +107,23 @@ function setStopableInterval(fn, time) {
 }
 
 function showGameOver() {
+    stopMusic();
+    stopIntervalIds();
     let gameOverScreen = document.createElement('div');
     gameOverScreen.classList.add('game-over-screen');
     gameOverScreen.innerHTML = showGameOverTemplate();
     document.body.appendChild(gameOverScreen);
     world.character.gameOver = true;
-    stopAllSounds();
-    stopIntervalIds();
 }
 
 function winGame() {
+    stopMusic();
+    stopIntervalIds();
     let winGameScreen = document.createElement('div');
     winGameScreen.classList.add('game-over-screen');
     winGameScreen.innerHTML = winGameTemplate();
     document.body.appendChild(winGameScreen);
     world.character.gameWon = true;
-    stopAllSounds();
-    stopIntervalIds();
 }
 
 function restartGame() {

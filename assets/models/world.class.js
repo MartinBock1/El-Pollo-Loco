@@ -127,8 +127,18 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
-        // ----- Space for fixed objects ----- //
-        // Set the y-positions for each status bar before drawing
+        // ----- Space for fixed objects ----- //              
+        this.drawStatusBars()
+        this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+
+        requestAnimationFrame(() => {
+            this.draw();
+        });
+    }
+
+    drawStatusBars() {
         this.statusBarHealth.y = 10;
         this.statusBarCoins.y = 50;
         this.statusBarBottle.y = 100;
@@ -138,13 +148,6 @@ class World {
         this.statusBarEndboss.x = this.canvas.width - this.statusBarEndboss.width - 40;
         this.statusBarEndboss.y = 10;
         this.addToMap(this.statusBarEndboss);
-        this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
-
-        requestAnimationFrame(() => {
-            this.draw();
-        });
     }
 
     addObjectsToMap(objects) {

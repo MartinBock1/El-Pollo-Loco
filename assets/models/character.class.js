@@ -9,7 +9,6 @@ class Character extends MovableObject {
         left: 10,
         right: 20,
     };
-
     IMAGES_IDLE = [
         './assets/img/2_character_pepe/1_idle/idle/I-1.png',
         './assets/img/2_character_pepe/1_idle/idle/I-2.png',
@@ -22,7 +21,6 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/1_idle/idle/I-9.png',
         './assets/img/2_character_pepe/1_idle/idle/I-10.png',
     ];
-
     IMAGES_LONG_IDLE = [
         './assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
         './assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -35,7 +33,6 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/1_idle/long_idle/I-19.png',
         './assets/img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
-
     IMAGES_WALKING = [
         './assets/img/2_character_pepe/2_walk/W-21.png',
         './assets/img/2_character_pepe/2_walk/W-22.png',
@@ -44,7 +41,6 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/2_walk/W-25.png',
         './assets/img/2_character_pepe/2_walk/W-26.png',
     ];
-
     IMAGES_JUMPING = [
         './assets/img/2_character_pepe/3_jump/J-31.png',
         './assets/img/2_character_pepe/3_jump/J-32.png',
@@ -56,13 +52,11 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/3_jump/J-38.png',
         './assets/img/2_character_pepe/3_jump/J-39.png',
     ];
-
     IMAGES_HURT = [
         './assets/img/2_character_pepe/4_hurt/H-41.png',
         './assets/img/2_character_pepe/4_hurt/H-42.png',
         './assets/img/2_character_pepe/4_hurt/H-43.png',
     ];
-
     IMAGES_DEAD = [
         './assets/img/2_character_pepe/5_dead/D-55.png',
         './assets/img/2_character_pepe/5_dead/D-52.png',
@@ -73,14 +67,13 @@ class Character extends MovableObject {
         './assets/img/2_character_pepe/5_dead/D-57.png',
     ];
     world;
+    jumpingSound = new Audio('./assets/audio/jump.mp3');
+    looseSound = new Audio('./assets/audio/loose.mp3');
+    pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
+    pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
     snoringSound = new Audio('./assets/audio/snoring.mp3');
     walkingSound = new Audio('./assets/audio/running.mp3');
-    jumpingSound = new Audio('./assets/audio/jump.mp3');
-    pepeHurtSound = new Audio('./assets/audio/pepe-hurt.mp3');
-    pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
     idleCount = 0;
-    gameOver = false;
-    gameWon = false;    
 
     constructor() {
         super().loadImage('./assets/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -92,7 +85,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.animate();
-    }    
+    }
 
     animate() {
         setStopableInterval(() => {
@@ -119,7 +112,7 @@ class Character extends MovableObject {
 
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                     this.moveRight();
-                    this.otherDirection = false;                    
+                    this.otherDirection = false;
                     if (!isMuted) {
                         this.isWalkingSound();
                     }
@@ -148,7 +141,7 @@ class Character extends MovableObject {
                 }
 
                 this.world.camera_x = -this.x + 100;
-            }            
+            }
         }, 1000 / 60);
 
         this.soundPlayed = false;
@@ -161,14 +154,10 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
                 setTimeout(() => {
-                    // if (this.isDead()) {
-                    //     showGameOver();
-                    // } else if (this.gameWon) {
-                    //     winGame();
-                    // }
                     showGameOver();
+                    this.isLooseSound();
                 }, 500);
-            } else if (this.isHurt()) {                
+            } else if (this.isHurt()) {
                 if (!isMuted) {
                     this.isPepeHurtSound();
                 }

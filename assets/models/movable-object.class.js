@@ -3,16 +3,16 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    gameSound;
-    snoringSound;
-    walkingSound;
-    jumpingSound;
-    pepeHurtSound;
-    pepeDeathSound;
-    throwingSound;
     bottleCrashSound;
-    chickenHitSound;
     chickenFriedSound;
+    chickenHitSound;
+    jumpingSound;
+    looseSound;
+    pepeDeathSound;
+    pepeHurtSound;
+    snoringSound;
+    throwingSound;
+    walkingSound;
     winSound;
     energy = 100;
     lastHit = 0;
@@ -85,11 +85,6 @@ class MovableObject extends DrawableObject {
         }        
     }
 
-    isGameSound() {
-        this.gameSound.play();
-        this.gameSound.volume = 0.05;
-    }
-
     isSnoringSound() {
         this.snoringSound.play();
         this.snoringSound.volume = 0.07;
@@ -133,11 +128,16 @@ class MovableObject extends DrawableObject {
     isChickenFriedSound() {
         this.chickenFriedSound.play();
         this.chickenFriedSound.volume = 1;
+    }   
+    
+    isLooseSound() {
+        this.looseSound.play();
+        this.looseSound.volume = 0.5;
     }
 
     isWinSound() {
         this.winSound.play();
-        this.winSound.volume = 1;
+        this.winSound.volume = 0.5;
     }
 
     hit() {
