@@ -42,7 +42,6 @@ function startGame() {
     backgroundMusic.volume = 0.03;
 
     console.log('My Character is:', world.character);
-    console.log('IntervalIds Character ', intervalIds);
 }
 
 function fullscreen() {
@@ -76,10 +75,7 @@ function setStopableInterval(fn, time) {
 function showGameOver() {
     let gameOverScreen = document.createElement('div');
     gameOverScreen.classList.add('game-over-screen');
-    gameOverScreen.innerHTML = `
-                                    <img src="./assets/img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="Game Over">
-                                    <button class="start-button" onclick="restartGame()">Play Again</button>
-                                `;
+    gameOverScreen.innerHTML = showGameOverTemplate();
     document.body.appendChild(gameOverScreen);
     world.character.gameOver = true;
     backgroundMusic.pause();
@@ -89,10 +85,7 @@ function showGameOver() {
 function winGame() {
     let winGameScreen = document.createElement('div');
     winGameScreen.classList.add('game-over-screen');
-    winGameScreen.innerHTML = `
-                                    <img src="./assets/img/9_intro_outro_screens/win/won_2.png" alt="You Win">
-                                    <button class="start-button" onclick="restartGame()">Play Again</button>
-                               `;
+    winGameScreen.innerHTML = winGameTemplate();
     document.body.appendChild(winGameScreen);
     world.character.gameWon = true;
     backgroundMusic.pause();
