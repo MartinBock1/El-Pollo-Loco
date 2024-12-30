@@ -60,8 +60,11 @@ class World {
                     if (enemy instanceof Endboss) {
                         enemy.isEndbossHit();  
                         this.statusBarEndboss.setPercentage(enemy.energy);
-                    } else if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
-                        this.level.enemies.splice(index, 1);
+                    } else if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {   
+                        enemy.die();    
+                        setTimeout(() => {                            
+                            this.level.enemies.splice(index, 1); 
+                        }, 700);                              
                     }                   
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }

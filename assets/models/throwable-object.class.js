@@ -47,7 +47,7 @@ class ThrowableObject extends MovableObject {
         let throwInterval = setInterval(() => {
             this.x += this.speedX;
             this.playAnimation(this.IMAGE_BOTTLE_ROTATION);
-            if (!this.soundPlayed) {
+            if (!this.soundPlayed && !isMuted) {
                 this.isThrowingSound();
                 this.soundPlayed = true;
             }
@@ -56,7 +56,9 @@ class ThrowableObject extends MovableObject {
                 if (this.isColliding(enemy) && (enemy instanceof Endboss || enemy instanceof Chicken || enemy instanceof ChickenSmall)) {
                     clearInterval(throwInterval);
                     this.playAnimation(this.IMAGE_BOTTLE_SPLASH);
-                    this.isBottleCrashSound();
+                    if (!isMuted) {
+                        this.isBottleCrashSound();
+                    }                    
                 }
             });
         }, 20);

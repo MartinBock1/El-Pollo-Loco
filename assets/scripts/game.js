@@ -6,6 +6,7 @@ let startButton;
 let orientationHint;
 let backgroundMusic = new Audio('./assets/audio/music.mp3');
 let intervalIds = [];
+let isMuted = false;
 
 function checkOrientation() {
     let orientationHint = document.getElementById('orientation-hint');
@@ -19,6 +20,7 @@ function checkOrientation() {
         startButton.disabled = false;
     }
 }
+
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 
@@ -29,7 +31,28 @@ function init() {
     startButton = document.getElementById('start-button');
     startScreen.style.display = 'flex';
     document.getElementById('start-button').addEventListener('click', startGame);
+    document.getElementById('mute').addEventListener('click', toggleMute);
+    document.getElementById('mute-responsive').addEventListener('click', toggleMute);
     bindBtsPressEvents();
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    if (isMuted) {
+        stopAllSounds();
+    } else {
+        unmuteAllSounds();
+    }
+}
+
+function stopAllSounds() {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+}
+
+function unmuteAllSounds() {
+    backgroundMusic.play();
+    backgroundMusic.volume = 0.03;
 }
 
 function startGame() {
@@ -39,7 +62,7 @@ function startGame() {
     world.level.enemies.push(new Endboss());
     backgroundMusic.loop = true;
     backgroundMusic.play();
-    backgroundMusic.volume = 0.03;
+    backgroundMusic.volume = 0.02;
 
     console.log('My Character is:', world.character);
 }
@@ -78,7 +101,7 @@ function showGameOver() {
     gameOverScreen.innerHTML = showGameOverTemplate();
     document.body.appendChild(gameOverScreen);
     world.character.gameOver = true;
-    backgroundMusic.pause();
+    stopAllSounds();
     stopIntervalIds();
 }
 
@@ -88,7 +111,7 @@ function winGame() {
     winGameScreen.innerHTML = winGameTemplate();
     document.body.appendChild(winGameScreen);
     world.character.gameWon = true;
-    backgroundMusic.pause();
+    stopAllSounds();
     stopIntervalIds();
 }
 

@@ -24,7 +24,9 @@
         <div id="orientation-hint">
             Please rotate your device to landscape mode!
         </div>
+
         <canvas id="canvas" width="720" height="480"></canvas>
+
         <div id="hud">
             <div class="panel-top">
                 <div class="panel-wrapper">
@@ -32,7 +34,7 @@
                         <img src="./assets/icons/play_game.png" alt="">
                     </button>
                     <button id="">
-                        <img src="./assets/icons/volume_off.png" alt="">
+                        <img id="mute-responsive" src="./assets/icons/volume_off.png" alt="Mute Icon">
                     </button>
                 </div>                
             </div>
@@ -71,6 +73,11 @@
                 <div>
                     <div class="center">fullscreen = <img class="fullscreen" src="./assets/icons/fullscreen_icon.png" alt="Fullscreen Icon" onclick="fullscreen()"></div>
                     <div class="center">fullscreen off = Esc</div>
+                </div>
+                <div>
+                    <div class="center">mute = <img id="mute" class="mute" src="./assets/icons/volume_off.png"
+                            alt="Mute Icon"></div>
+                    <!-- <div class="center">fullscreen off = Esc</div> -->
                 </div>
             </div>
         </div>

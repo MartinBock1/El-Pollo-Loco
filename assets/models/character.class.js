@@ -80,7 +80,7 @@ class Character extends MovableObject {
     pepeDeathSound = new Audio('./assets/audio/pepe-death.mp3');
     idleCount = 0;
     gameOver = false;
-    gameWon = false;
+    gameWon = false;    
 
     constructor() {
         super().loadImage('./assets/img/2_character_pepe/1_idle/idle/I-1.png');
@@ -92,7 +92,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.animate();
-    }
+    }    
 
     animate() {
         setStopableInterval(() => {
@@ -103,12 +103,13 @@ class Character extends MovableObject {
                         this.idleCount++;
                     } else {
                         this.playAnimation(this.IMAGES_LONG_IDLE);
-                        this.isSnoringSound();
+                        if (!isMuted) {
+                            this.isSnoringSound();
+                        }
                     }
                 }
             }
         }, 1000 / 8);
-        // console.log('ID vom Interval ist ', interval1);
 
         setStopableInterval(() => {
             if (!this.isDead()) {
@@ -118,14 +119,18 @@ class Character extends MovableObject {
 
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                     this.moveRight();
-                    this.otherDirection = false;
-                    this.isWalkingSound();
+                    this.otherDirection = false;                    
+                    if (!isMuted) {
+                        this.isWalkingSound();
+                    }
                 }
 
                 if (this.world.keyboard.LEFT && this.x > -600) {
                     this.moveLeft();
                     this.otherDirection = true;
-                    this.isWalkingSound();
+                    if (!isMuted) {
+                        this.isWalkingSound();
+                    }
                 }
 
                 if ((this.world.keyboard.UP || this.world.keyboard.SPACE)
@@ -149,21 +154,24 @@ class Character extends MovableObject {
         this.soundPlayed = false;
         setStopableInterval(() => {
             if (this.isDead()) {
-                if (!this.soundPlayed) {
+                if (!this.soundPlayed && !isMuted) {
                     this.isPepeDeathSound();
                     this.soundPlayed = true;
                 }
                 this.playAnimation(this.IMAGES_DEAD);
                 this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
                 setTimeout(() => {
-                    if (this.isDead()) {
-                        showGameOver();
-                    } else if (this.gameWon) {
-                        winGame();
-                    }
+                    // if (this.isDead()) {
+                    //     showGameOver();
+                    // } else if (this.gameWon) {
+                    //     winGame();
+                    // }
+                    showGameOver();
                 }, 500);
-            } else if (this.isHurt()) {
-                this.isPepeHurtSound();
+            } else if (this.isHurt()) {                
+                if (!isMuted) {
+                    this.isPepeHurtSound();
+                }
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
@@ -174,19 +182,5 @@ class Character extends MovableObject {
                 }
             }
         }, 50);
-    }
-
-    stopAllSounds() {
-        this.snoringSound.pause();
-        this.walkingSound.pause();
-        this.jumpingSound.pause();
-        this.pepeHurtSound.pause();
-        this.pepeDeathSound.pause();
-        // Reset sounds to start position if needed
-        this.snoringSound.currentTime = 0;
-        this.walkingSound.currentTime = 0;
-        this.jumpingSound.currentTime = 0;
-        this.pepeHurtSound.currentTime = 0;
-        this.pepeDeathSound.currentTime = 0;
     }
 }

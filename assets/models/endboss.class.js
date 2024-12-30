@@ -1,7 +1,7 @@
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
-    x = 2300;
+    x = 2400;
     y = 60;
     offset = {
         top: 150,
@@ -97,7 +97,7 @@ class Endboss extends MovableObject {
         this.soundPlayed = false;
         setStopableInterval(() => {
             if (this.isHurt()) {
-                if (!this.soundPlayed) {
+                if (!this.soundPlayed && !isMuted) {
                     this.isChickenHitSound();
                     this.soundPlayed = true;
                 }
@@ -115,7 +115,7 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.loadImage('./assets/img/4_enemie_boss_chicken/5_dead/G26.png');
 
-                if (!this.chickenFriedSoundPlayed) {
+                if (!this.chickenFriedSoundPlayed && !isMuted) {
                     this.isChickenFriedSound();
                     this.chickenFriedSoundPlayed = true;
                 }

@@ -22,9 +22,8 @@ class MovableObject extends DrawableObject {
         right: 0,
         bottom: 0
     };
-    char_x;
     intervalIds = [];
-    index = 1;
+    index = 1;    
 
     applyGravity() {
         setStopableInterval(() => {
@@ -81,7 +80,9 @@ class MovableObject extends DrawableObject {
     jump() {
         this.walkingSound.pause();
         this.speedY = 30;
-        this.isJumpingSound();
+        if (!isMuted) {
+            this.isJumpingSound();
+        }        
     }
 
     isGameSound() {
@@ -165,5 +166,5 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
-    }
+    }     
 }
