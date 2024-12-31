@@ -143,8 +143,6 @@ function startGame() {
     backgroundMusic.loop = true;
     backgroundMusic.play();
     backgroundMusic.volume = 0.02;
-
-    console.log('My Character is:', world.character);
 }
 
 /**
@@ -228,5 +226,4 @@ function restartGame() {
  */
 function stopIntervalIds() {
     intervalIds.forEach(clearInterval);
-    console.log('All IntervalIds ', intervalIds);
 }

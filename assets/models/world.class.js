@@ -162,7 +162,9 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround() && this.character.speedY <= 0) {
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
-                        this.chickenCrushSound.play();
+                        if (!isMuted) {
+                            this.chickenCrushSound.play();
+                        }
                         this.chickenCrushSound.volume = 0.1;
                         this.level.enemies.splice(index, 1);
                     }

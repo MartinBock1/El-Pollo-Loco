@@ -2,7 +2,7 @@
 @media only screen and (max-device-height: 1024px) and (min-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
    #hud {
       padding-top: 15px;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
       height: 47%;
       position: absolute;
       bottom: 26%;
@@ -38,7 +38,7 @@
 @media only screen and (max-device-height: 820px) and (min-device-width: 1180px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
    #hud {
       padding-top: 15px;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
       height: 58%;
       position: absolute;
       bottom: 20%;
@@ -167,7 +167,7 @@
 
    #hud {
       padding-top: 15px;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
       height: 100%;
       position: absolute;
       bottom: 0;
