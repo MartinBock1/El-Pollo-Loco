@@ -15,6 +15,7 @@ class Bottle extends MovableObject {
      * @default 360
      */
     y = 365;
+
     /**
      * The height of the bottle.
      * This defines the height of the image representing the bottle.
@@ -22,6 +23,7 @@ class Bottle extends MovableObject {
      * @default 60
      */
     height = 60;
+
     /**
      * The width of the bottle.
      * This defines the width of the image representing the bottle.
@@ -29,6 +31,7 @@ class Bottle extends MovableObject {
      * @default 60
      */
     width = 60;
+
     /**
      * The speed of the bottle, initially set to 0, meaning the bottle does not move.
      * A value greater than 0 would allow for movement, but the bottle does not have speed by default.
@@ -36,6 +39,7 @@ class Bottle extends MovableObject {
      * @default 0
      */
     speed = 0;
+
     /**
      * The offset of the bottle for collision detection, defining how far the bottle can be detected
      * on each side (top, bottom, left, right) from its center.
@@ -53,6 +57,11 @@ class Bottle extends MovableObject {
         right: 10,
     };
 
+    /**
+         * Array of image paths for the bottle animation.
+         * These images are used for creating an animation effect.
+         * @type {string[]}
+         */
     IMAGES_BOTTLES = [
         './assets/img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         './assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png',
@@ -63,7 +72,7 @@ class Bottle extends MovableObject {
      * Initializes the bottle with an image, sets its horizontal position randomly within a specified range,
      * and assigns a fixed vertical position. The bottle is initially set as not collected.
      * 
-     * @param {string} imagePath - The path to the image file used for the bottle.
+     * @constructor
      * @description The image for the bottle is loaded and the x-coordinate is assigned a random value within a range.
      * The y-coordinate is fixed at 360, and the `collected` state is set to false, meaning the bottle is not collected initially.
      */
@@ -75,6 +84,14 @@ class Bottle extends MovableObject {
         this.collected = false;
     }
 
+    /**
+     * Animates the bottle by cycling through the images defined in `IMAGES_BOTTLES`.
+     * This method sets an interval to play the animation at a rate of 3 frames per second.
+     * 
+     * @method animate
+     * @description The animation function repeatedly changes the image of the bottle to create an animation effect.
+     * The interval is cleared automatically after the animation has been played.
+     */
     animate() {
         setStopableInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLES);            

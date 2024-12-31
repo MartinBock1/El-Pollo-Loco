@@ -1,32 +1,46 @@
 /**
- * Represents a keyboard input handler for tracking the state of specific keys and mouse buttons.
- * This class keeps track of whether keys such as LEFT, RIGHT, UP, DOWN, SPACE, ENTER, and MOUSE_LEFT are pressed or not.
+ * Class representing the keyboard input states.
+ * This class tracks the state of various keys and mouse buttons used for controlling the game.
  * The state of each key is represented as a boolean value (`true` for pressed, `false` for not pressed).
  * 
  * @class Keyboard
  */
 class Keyboard {
+    /**
+     * @type {boolean} - Indicates if the left arrow key or 'a' key is pressed.
+     */
     LEFT = false;
+
+    /**
+    * @type {boolean} - Indicates if the right arrow key or 'd' key is pressed.
+    */
     RIGHT = false;
-    UP = false;
-    DOWN = false;
+
+    /**
+     * @type {boolean} - Indicates if the spacebar key is pressed.
+     */
     SPACE = false;
+
+    /**
+     * @type {boolean} - Indicates if the Enter key is pressed.
+     */
     ENTER = false;
+
+    /**
+     * @type {boolean} - Indicates if the left mouse button is pressed.
+     */
     MOUSE_LEFT = false;
 }
 
+/**
+ * Event listener for keyboard keydown events to track when a key is pressed.
+ */
 window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'd') {
         keyboard.RIGHT = true;
     }
     if (e.key === 'ArrowLeft' || e.key === 'a') {
         keyboard.LEFT = true;
-    }
-    if (e.key === 'ArrowUp' || e.key === 'w') {
-        keyboard.UP = true;
-    }
-    if (e.key === 'ArrowDown' || e.key === 's') {
-        keyboard.DOWN = true;
     }
     if (e.key === ' ') {
         keyboard.SPACE = true;
@@ -36,24 +50,24 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+/**
+ * Event listener for mouse button press events to track mouse input.
+ */
 window.addEventListener('mousedown', (e) => {
     if (e.button === 0) {
         keyboard.MOUSE_LEFT = true;
     }
 });
 
+/**
+ * Event listener for keyboard keyup events to track when a key is released.
+ */
 window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'd') {
         keyboard.RIGHT = false;
     }
     if (e.key === 'ArrowLeft' || e.key === 'a') {
         keyboard.LEFT = false;
-    }
-    if (e.key === 'ArrowUp' || e.key === 'w') {
-        keyboard.UP = false;
-    }
-    if (e.key === 'ArrowDown' || e.key === 's') {
-        keyboard.DOWN = false;
     }
     if (e.key === ' ') {
         keyboard.SPACE = false;
@@ -63,12 +77,19 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
+/**
+ * Event listener for mouse button release events to track mouse input.
+ */
 window.addEventListener('mouseup', (e) => {
     if (e.button === 0) {
         keyboard.MOUSE_LEFT = false;
     }
 });
 
+/**
+ * Binds touch events to on-screen buttons for mobile controls.
+ * This allows tracking the state of the on-screen buttons (left, right, jump, throw).
+ */
 function bindBtsPressEvents() {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();

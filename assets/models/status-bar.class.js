@@ -1,4 +1,12 @@
+/**
+ * Class representing a status bar in the game (e.g., health, coin, bottle, endboss).
+ * The status bar visually displays the player's progress in the game, such as health, collected coins, and more.
+ */
 class Statusbar extends DrawableObject {
+    /**
+     * Array of image paths representing the health status (0-100%).
+     * @type {Array<string>}
+     */
     IMAGES_STATUSBAR_HEALTH = [
         './assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         './assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
@@ -8,6 +16,10 @@ class Statusbar extends DrawableObject {
         './assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png',
     ];
 
+    /**
+     * Array of image paths representing the coin status (0-100%).
+     * @type {Array<string>}
+     */
     IMAGES_STATUSBAR_COIN = [
         './assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
         './assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
@@ -17,6 +29,10 @@ class Statusbar extends DrawableObject {
         './assets/img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png',
     ];
 
+    /**
+     * Array of image paths representing the bottle status (0-100%).
+     * @type {Array<string>}
+     */
     IMAGES_STATUSBAR_BOTTLE = [
         './assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/green/0.png',
         './assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/green/20.png',
@@ -26,6 +42,10 @@ class Statusbar extends DrawableObject {
         './assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
 
+    /**
+     * Array of image paths representing the endboss status (0-100%).
+     * @type {Array<string>}
+     */
     IMAGES_STATUSBAR_ENDBOSS = [
         './assets/img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
         './assets/img/7_statusbars/2_statusbar_endboss/blue/blue20.png',
@@ -35,6 +55,10 @@ class Statusbar extends DrawableObject {
         './assets/img/7_statusbars/2_statusbar_endboss/blue/blue100.png',
     ];
 
+    /**
+     * Creates an instance of the Statusbar class.
+     * @param {string} type - The type of the status bar ('health', 'coin', 'bottle', 'endboss').
+     */
     constructor(type) {
         super();
         this.type = type;
@@ -63,6 +87,11 @@ class Statusbar extends DrawableObject {
         }
     }
 
+    /**
+     * Increases the percentage of the status bar by the specified amount.
+     * Ensures that the percentage does not exceed 100.
+     * @param {number} amount - The amount to increase the percentage by.
+     */
     increasePercentage(amount) {
         this.percentage += amount;
 
@@ -72,6 +101,11 @@ class Statusbar extends DrawableObject {
         this.setPercentage(this.percentage);
     }
 
+    /**
+     * Sets the percentage value of the status bar and updates the visual representation.
+     * The image changes based on the percentage value and the type of status bar.
+     * @param {number} percentage - The percentage value to set (0-100).
+     */
     setPercentage(percentage) {
         this.percentage = percentage;        
         let path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndexHealth()];
@@ -91,6 +125,10 @@ class Statusbar extends DrawableObject {
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Resolves the image index for the health status bar based on the current percentage.
+     * @returns {number} - The index of the image to be used for the health status bar.
+     */
     resolveImageIndexHealth() {
         if (this.percentage == 100) {
             return 5;
@@ -107,6 +145,10 @@ class Statusbar extends DrawableObject {
         }
     };
 
+    /**
+     * Resolves the image index for the reverse status bars (coin, bottle) based on the current percentage.
+     * @returns {number} - The index of the image to be used for the reverse status bars.
+     */
     resolveImageIndexReverse() {
         if (this.percentage < 20) {
             return 0;

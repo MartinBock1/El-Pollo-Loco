@@ -10,28 +10,33 @@ class Level {
      * List of enemies in the level.
      * @type {Array}
      */
-    enemies;                                                
+    enemies;   
+                                                
     /**
      * List of clouds in the level.
      * @type {Array}
      */
-    clouds;                                                 
+    clouds;   
+
     /**
      * List of background objects in the level.
      * @type {Array}
      */
-    backgroundObjects;                                      
+    backgroundObjects;   
+
     /**
      * The x-coordinate at which the level ends.
      * @type {number}
      * @default 2200
      */
-    level_end_x = 2200;                                     
+    level_end_x = 2200;   
+
     /**
      * List of bottles in the level.
      * @type {Array}
      */
-    bottles;                                                
+    bottles;          
+                                          
     /**
      * List of coins in the level.
      * @type {Array}
