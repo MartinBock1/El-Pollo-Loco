@@ -178,6 +178,12 @@ class Character extends MovableObject {
     idleCount = 0;
 
     /**
+     * Flag indicating whether the game over screen has been triggered.
+     * @type {boolean}
+     */
+    gameOverTriggered = false;
+
+    /**
      * Creates a new character object and initializes the images and sounds.
      */
     constructor() {
@@ -262,10 +268,14 @@ class Character extends MovableObject {
                 }
                 this.playAnimation(this.IMAGES_DEAD);
                 this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
-                setTimeout(() => {
-                    showGameOver();
-                    this.isLooseSound();
-                }, 500);
+                if (!this.gameOverTriggered) {
+                    this.gameOverTriggered = true;
+                    setTimeout(() => {
+                        showGameOver();
+                        this.isLooseSound();
+                    }, 500);
+                }
+                
             } else if (this.isHurt()) {
                 if (!isMuted) {
                     this.isPepeHurtSound();

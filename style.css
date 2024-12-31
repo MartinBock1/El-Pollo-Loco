@@ -144,7 +144,7 @@ main {
 }
 
 .game-over-screen img {
-   width: 80%;
+   height: 80%;
    max-width: 700px;
    margin-bottom: 20px;
 }

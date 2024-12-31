@@ -147,6 +147,12 @@ class Endboss extends MovableObject {
     ];
 
     /**
+     * Flag indicating whether the game over screen has been triggered.
+     * @type {boolean}
+     */
+    gameOverTriggered = false;
+
+    /**
      * Creates an instance of the end boss, loading images and initializing animations.
      */
     constructor() {
@@ -213,10 +219,13 @@ class Endboss extends MovableObject {
                     this.isChickenFriedSound();
                     this.chickenFriedSoundPlayed = true;
                 }
-                setTimeout(() => {
-                    winGame();
-                    this.isWinSound();
-                }, 4000);
+                if (!this.gameOverTriggered) {
+                    this.gameOverTriggered = true;
+                    setTimeout(() => {
+                        winGame();
+                        this.isWinSound();
+                    }, 4000);
+                }
             }
         }, 200);
     }
