@@ -2,18 +2,23 @@
     padding-left: 10px;
     padding-right: 10px;
     display: none;
+    border: 1px solid yellow;
 }
+
+
 
 .panel-top {
     display: flex;
     justify-content:center;
     width: 80%;
+    margin-top: 10px;
 }
 
 .panel {
     display: flex;
     justify-content:space-between;
     width: 80%;
+    margin-bottom: 10px;
 }
 
 .panel-wrapper {

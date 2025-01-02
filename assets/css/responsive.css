@@ -1,17 +1,20 @@
-/* ------------------------------------------------------------ iPad Pro ------------------------------------------------------------*/
-@media only screen and (max-device-height: 1024px) and (min-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
-   #hud {
-      padding-top: 15px;
-      padding-bottom: 10px;
-      height: 47%;
-      position: absolute;
-      bottom: 26%;
-      width: 60%;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
+#orientation-hint {
+   display: none;
+   position: fixed;
+   left: 50%;
+   transform: translateX(-50%);
+   background-color: rgba(0, 0, 0, 0.9);
+   color: white;
+   padding: 10px;
+   border-radius: 5px;
+   font-size: 18px;
+   z-index: 110;
+}
+
+/* ------------------------------------------------  For all Tablets   ------------------------------------------------ */
+@media only screen and (max-device-width: 1024px) and (max-device-height: 1370px) and (orientation: portrait) {
+   .panel-wrapper {
+      display: none;
    }
 
    .info-screen {
@@ -19,35 +22,18 @@
    }
 }
 
-@media only screen and (max-device-width: 1024px) and (min-device-height: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
-   #orientation-hint {
-      display: none;
-      position: fixed;
+@media only screen and (max-device-height: 1024px) and (max-device-width: 1370px) and (orientation: landscape) {
+   #hud {
+      height: 500px;
+      width: 720px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      position: absolute;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 18px;
-      z-index: 110;
-   }
-}
-
-/* ------------------------------------------------------------ iPad Air ------------------------------------------------------------*/
-@media only screen and (max-device-height: 820px) and (min-device-width: 1180px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1.5) {
-   #hud {
-      padding-top: 15px;
-      padding-bottom: 10px;
-      height: 58%;
-      position: absolute;
-      bottom: 20%;
-      width: 70%;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
+      transform: translate(-50%, -50%);
    }
 
    .info-screen {
@@ -55,56 +41,9 @@
    }
 }
 
-@media only screen and (max-device-width: 820px) and (min-device-height: 1180px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1.5) {
-   #orientation-hint {
-      display: none;
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 18px;
-      z-index: 110;
-   }
-}
-
-/* ------------------------------------------------------------ iPad mini ------------------------------------------------------------*/
-@media only screen and (max-device-height: 768px) and (min-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
-   #hud {
-      padding-top: 15px;
-      padding-bottom: 15px;
-      height: 63%;
-      position: absolute;
-      bottom: 17%;
-      width: 80%;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
-   }
-
-   .info-screen {
-      display: none;
-   }
-}
-
-/* ------------------------------------------------------------ Nest Hub ------------------------------------------------------------*/
 @media only screen and (max-device-height: 600px) and (min-device-width: 1024px) and (orientation: landscape) {
    #hud {
-      padding-top: 15px;
-      padding-bottom: 15px;
-      height: 80%;
-      position: absolute;
-      bottom: 10%;
       width: 80%;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
    }
 
    header,
@@ -114,8 +53,18 @@
    }
 }
 
-/* ---------------------------------------------------------- Mobile Phones ----------------------------------------------------------*/
-@media only screen and (max-width: 780px) {
+/* ---------------------------------------------------  Surface Duo  --------------------------------------------------- */
+@media only screen and (max-height: 540px) and (max-width: 720px) and (orientation: landscape) {
+
+   header,
+   footer,
+   .info-screen {
+      display: none;
+   }
+}
+
+/* --------------------------------------------------  Mobile Devices  -------------------------------------------------- */
+@media only screen and (max-width: 780px) and (orientation: portrait) {
    canvas {
       width: 100%;
       border: 10px ridge brown;
@@ -123,28 +72,8 @@
       position: relative;
    }
 
-   #hud {
-      position: absolute;
-      bottom: 0;
-      width: 80%;
-      color: white;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-   }
-
-   #orientation-hint {
+   .panel-wrapper {
       display: none;
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 18px;
-      z-index: 110;
    }
 
    header,
@@ -154,9 +83,9 @@
    }
 }
 
-@media only screen and (max-height: 480px) {
+@media only screen and (max-height: 480px) and (orientation: landscape) {
    canvas {
-      height: 100vh;
+      height: calc(100vh - 5px);
       border: 10px ridge brown;
       border-radius: 20px;
    }
@@ -166,13 +95,8 @@
    }
 
    #hud {
-      padding-top: 15px;
-      padding-bottom: 10px;
       height: 100%;
-      position: absolute;
-      bottom: 0;
       width: 80%;
-      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -186,24 +110,28 @@
    }
 }
 
-@media only screen and (max-height: 344px) {
-#hud {
-      padding-top: 15px;
-      padding-bottom: 15px;
-      height: 100%;
-      position: absolute;
-      bottom: 0;
-      width: 60%;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: column;
+@media only screen and (max-height: 375px) and (orientation: landscape) {
+   .panel {
+      width: 90%;
+   }
+}
+
+@media only screen and (max-height: 360px) and (orientation: landscape) {
+   #hud {
+      width: 70%;
    }
 
-   header,
-   footer,
-   .info-screen {
-      display: none;
+   .panel {
+      width: 90%;
+   }
+}
+
+@media only screen and (max-height: 344px) and (orientation: landscape) {
+   #hud {
+      width: 60%;
+   }
+
+   .panel {
+      width: 100%;
    }
 }
