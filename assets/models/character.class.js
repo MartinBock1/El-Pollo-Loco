@@ -199,10 +199,14 @@ class Character extends MovableObject {
     }
 
     /**
-     * Starts the animation loop for the character's actions.
-     * Responsible for idle, walking, jumping, hurt, and dead animations.
-     */
+    * Starts the animation loop for the character's actions.
+    * Responsible for idle, walking, jumping, hurt, and dead animations.
+    */
     animate() {
+        /**
+        * Interval for handling idle and long idle animation.
+        * When no movement keys are pressed, the character alternates between idle and long idle.
+         */
         setStopableInterval(() => {
             if (!this.isDead() && !this.gameOver && !this.gameWon) {
                 if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
@@ -219,6 +223,11 @@ class Character extends MovableObject {
             }
         }, 1000 / 8);
 
+        /**
+        * Interval for handling the movement and walking animations.
+        * If the character is moving (pressing LEFT or RIGHT), the walking animation plays.
+        * The jumping action is handled separately.
+        */
         setStopableInterval(() => {
             if (!this.isDead()) {
                 if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
@@ -243,7 +252,8 @@ class Character extends MovableObject {
 
                 if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                     this.jump();
-                    this.idleCount = 0;                    
+                    this.idleCount = 0;
+                    this.currentImage = 0;
                 }
 
                 if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
@@ -255,8 +265,13 @@ class Character extends MovableObject {
                 this.world.camera_x = -this.x + 100;
             }
         }, 1000 / 60);
-
+        
         this.soundPlayed = false;
+        /**
+        * Interval for handling the character's death and hurt animations.
+        * If the character is dead, the death animation plays, and the game over screen is triggered.
+        * If the character is hurt, the hurt animation plays.
+        */       
         setStopableInterval(() => {
             if (this.isDead()) {
                 if (!this.soundPlayed && !isMuted) {
@@ -272,20 +287,30 @@ class Character extends MovableObject {
                         this.isLooseSound();
                     }, 500);
                 }
-                
+
             } else if (this.isHurt()) {
                 if (!isMuted) {
                     this.isPepeHurtSound();
                 }
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);                  
-            } else {                
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.idleCount = 0;
+            } else {
+                if (!this.isAboveGround()) {
+                    if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                        this.playAnimation(this.IMAGES_WALKING);
+                        this.idleCount = 0;
+                    }
                 }
             }
         }, 50);
+
+        /**
+        * Interval for handling the jumping animation.
+        * If the character is above ground (i.e., jumping), the jump animation plays.
+        */
+        setStopableInterval(() => {
+            if (this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_JUMPING);
+            }
+        }, 1000 / 9);
     }
 }

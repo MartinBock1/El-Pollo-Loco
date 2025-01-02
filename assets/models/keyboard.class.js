@@ -25,11 +25,6 @@ class Keyboard {
      * @type {boolean} - Indicates if the Enter key is pressed.
      */
     ENTER = false;
-
-    /**
-     * @type {boolean} - Indicates if the left mouse button is pressed.
-     */
-    // MOUSE_LEFT = false;
 }
 
 /**
@@ -51,15 +46,6 @@ window.addEventListener('keydown', (e) => {
 });
 
 /**
- * Event listener for mouse button press events to track mouse input.
- */
-// window.addEventListener('mousedown', (e) => {
-//     if (e.button === 0) {
-//         keyboard.MOUSE_LEFT = true;
-//     }
-// });
-
-/**
  * Event listener for keyboard keyup events to track when a key is released.
  */
 window.addEventListener('keyup', (e) => {
@@ -76,15 +62,6 @@ window.addEventListener('keyup', (e) => {
         keyboard.ENTER = false;
     }
 });
-
-/**
- * Event listener for mouse button release events to track mouse input.
- */
-// window.addEventListener('mouseup', (e) => {
-//     if (e.button === 0) {
-//         keyboard.MOUSE_LEFT = false;
-//     }
-// });
 
 /**
  * Binds touch events to on-screen buttons for mobile controls.
