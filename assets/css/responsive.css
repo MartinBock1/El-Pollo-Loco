@@ -85,7 +85,7 @@
 
 @media only screen and (max-height: 480px) and (orientation: landscape) {
    canvas {
-      height: calc(100vh - 5px);
+      height: calc(100dvh - 5px);
       border: 10px ridge brown;
       border-radius: 20px;
    }

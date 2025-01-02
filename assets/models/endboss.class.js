@@ -189,7 +189,9 @@ class Endboss extends MovableObject {
         setStopableInterval(() => {
             if (this.hadFirstContact) {
                 setTimeout(() => {
-                    this.moveLeft();
+                    if (this.x >= world.character.x) {
+                        this.moveLeft();
+                    }
                 }, 2000);
             }
         }, 1000 / 60);

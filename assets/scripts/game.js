@@ -101,6 +101,7 @@ function init() {
     document.getElementById('start-button').addEventListener('click', startGame);
     document.getElementById('mute').addEventListener('click', toggleMute);
     document.getElementById('mute-responsive').addEventListener('click', toggleMute);
+    updateMuteIcon();
     bindBtsPressEvents();
 }
 
@@ -114,6 +115,26 @@ function toggleMute() {
         stopMusic();
     } else {
         restartMusic();
+    }
+    updateMuteIcon();
+}
+
+/**
+ * Updates the mute icon based on the current mute state.
+ * This function checks the `isMuted` variable and updates the mute icon accordingly.
+ * The mute icon will display either a "volume_off" icon (muted) or a "volume_mute" icon (unmuted).
+ * The icon is updated for both the regular and responsive versions of the mute button.
+ */
+function updateMuteIcon() {
+    let muteIcon = document.getElementById('mute');
+    let muteIconResponsive = document.getElementById('mute-responsive');
+
+    if (isMuted) {
+        muteIcon.src = './assets/icons/volume_off.png';
+        muteIconResponsive.src = './assets/icons/volume_off.png';
+    } else {
+        muteIcon.src = './assets/icons/volume_mute.png';
+        muteIconResponsive.src = './assets/icons/volume_mute.png';
     }
 }
 
@@ -215,10 +236,26 @@ function winGame() {
 }
 
 /**
- * Restarts the game by reloading the page.
+ * Restarts the game without reloading the page.
+ * - Resets the game state including the world, enemies, and game status.
+ * - Removes any active game over or win screens.
+ * - Displays the start screen to allow the player to restart the game.
  */
-function restartGame() {
-    location.reload();
+function restartGame() {    
+    stopMusic();    
+    world = new World(canvas, keyboard);
+    world.level.enemies = [];
+    world.character.gameOver = false;
+    world.character.gameWon = false;
+    let gameOverScreen = document.querySelector('.game-over-screen');
+    if (gameOverScreen) {
+        gameOverScreen.remove();
+    }
+    let winGameScreen = document.querySelector('.game-over-screen');
+    if (winGameScreen) {
+        winGameScreen.remove();
+    }
+    startScreen.style.display = 'flex';    
 }
 
 /**

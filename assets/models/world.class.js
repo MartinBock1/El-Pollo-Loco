@@ -103,7 +103,7 @@ class World {
     run() {
         setStopableInterval(() => {
             this.checkCollisions();
-        }, 50);
+        }, 30);
 
         setStopableInterval(() => {
             this.checkCollisionsWithThrownBottles();
