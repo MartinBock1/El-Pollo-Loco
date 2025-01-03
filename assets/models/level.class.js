@@ -29,7 +29,9 @@ class Level {
      * @type {number}
      * @default 2200
      */
-    level_end_x = 2200;   
+    level_end_x = 2800;   
+
+    level_start_x = -550;
 
     /**
      * List of bottles in the level.

@@ -217,6 +217,10 @@ class Character extends MovableObject {
         setStopableInterval(() => {
             this.walkCharacter();
             this.jumpCharacter();
+
+            if (this.x <= world.level.level_start_x) {
+                this.x = world.level.level_start_x;
+            }
         }, 1000 / 60);
 
         this.soundPlayed = false;
@@ -309,7 +313,7 @@ class Character extends MovableObject {
     * @returns {boolean} True if the character can move left, false otherwise.
     */
     canMoveLeft() {
-        return this.world.keyboard.LEFT && this.x > -600;
+        return this.world.keyboard.LEFT && this.x > world.level.level_start_x;
     }
 
     /**

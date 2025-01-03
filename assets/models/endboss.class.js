@@ -20,7 +20,7 @@ class Endboss extends MovableObject {
      * The x-coordinate of the end boss.
      * @type {number}
      */
-    x = 2400;
+    x = 2870;
 
     /**
      * The y-coordinate of the end boss.
@@ -47,13 +47,13 @@ class Endboss extends MovableObject {
      * The speed at which the end boss moves.
      * @type {number}
      */
-    speed = 3;
+    speed = 2.5;
 
     /**
      * The point at which the end boss starts animation.
      * @type {number}
      */
-    flagPoint = 1800;
+    flagPoint = 2300;
 
     /**
      * The health of the end boss.
@@ -228,7 +228,7 @@ class Endboss extends MovableObject {
     */
     moveLeft() {
         setTimeout(() => {
-            if (this.x >= world.character.x) {
+            if (this.x >= world.character.x && this.x >= world.character.world.level.level_start_x) {
                 super.moveLeft();
             }
         }, 2000);
