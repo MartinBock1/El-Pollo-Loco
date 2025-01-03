@@ -55,6 +55,11 @@ canvas {
    align-items: center;
 }
 
+hr {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
 /*----------------------------------------   Header   ----------------------------------------*/
 header {
    background-color: brown;
@@ -97,10 +102,12 @@ main {
 .info-screen {
    display: flex;
    justify-content: space-around;
+   flex-direction: column;
    width: 95%;
    background-color: black;
-   height: 60px;
+   height: 100%;
    border-radius: 10px;
+   padding: 10px;
 }
 
 .controlls {
@@ -127,6 +134,11 @@ main {
    cursor: pointer;
    width: 30px;
    height: 30px;
+}
+
+.explanation {
+   font-size: 16px;
+   color: yellow;
 }
 
 .game-over-screen {
