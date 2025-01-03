@@ -172,6 +172,9 @@ class Endboss extends MovableObject {
     animate() {
         let i = 0;
 
+        /**
+         * This interval controls the animation cycle based on certain conditions.
+         */
         setStopableInterval(() => {
             if (i < 10) {
                 this.playAnimation(this.IMAGES_ALERT);
@@ -186,49 +189,85 @@ class Endboss extends MovableObject {
             }
         }, 200);
 
+        /**
+         * This interval handles the boss's movement based on a condition.
+         */
         setStopableInterval(() => {
-            if (this.hadFirstContact) {
-                setTimeout(() => {
-                    if (this.x >= world.character.x) {
-                        this.moveLeft();
-                    }
-                }, 2000);
+            if (this.bossMoveLeft()) {
+                this.moveLeft();
             }
         }, 1000 / 60);
 
         this.soundPlayed = false;
-        setStopableInterval(() => {
-            if (this.isHurt()) {
-                if (!this.soundPlayed && !isMuted) {
-                    this.isChickenHitSound();
-                    this.soundPlayed = true;
-                }
-                this.playAnimation(this.IMAGES_HURT);
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else {
-                this.soundPlayed = false;
-            }
-        }, 200);
+        /**
+         * Ensures the hurt animation is played at regular intervals when the boss is hurt.
+         */
+        setStopableInterval(() => this.hurtAnimation(), 200);
 
         this.chickenFriedSoundPlayed = false;
+        /**
+         * Plays the dead animation and triggers game-over logic when the boss dies.
+         */
         setStopableInterval(() => {
             if (this.isDead()) {
-                this.speed = 0;
-                this.playAnimation(this.IMAGES_DEAD);
-                this.loadImage('./assets/img/4_enemie_boss_chicken/5_dead/G26.png');
-
-                if (!this.chickenFriedSoundPlayed && !isMuted) {
-                    this.isChickenFriedSound();
-                    this.chickenFriedSoundPlayed = true;
-                }
-                if (!this.gameOverTriggered) {
-                    this.gameOverTriggered = true;
-                    setTimeout(() => {
-                        winGame();
-                        this.isWinSound();
-                    }, 4000);
-                }
+                this.deadAnimation();
             }
         }, 200);
+    }
+
+    /**
+    * * Determines whether the boss should start moving left based on first contact.
+    * @returns {boolean} True if the boss should move left.
+    */
+    bossMoveLeft() {
+        return this.hadFirstContact
+    }
+
+    /**
+    * Moves the boss character to the left if conditions are met.
+    */
+    moveLeft() {
+        setTimeout(() => {
+            if (this.x >= world.character.x) {
+                super.moveLeft();
+            }
+        }, 2000);
+    }
+
+    /**
+    * Plays the hurt animation if the boss is hurt and manages sound.
+    */
+    hurtAnimation() {
+        if (this.isHurt()) {
+            if (!this.soundPlayed && !isMuted) {
+                this.isChickenHitSound();
+                this.soundPlayed = true;
+            }
+            this.playAnimation(this.IMAGES_HURT);
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else {
+            this.soundPlayed = false;
+        }
+    }
+
+    /**
+    * Plays the dead animation and triggers the game over logic when the boss dies.
+    */
+    deadAnimation() {
+        this.speed = 0;
+        this.playAnimation(this.IMAGES_DEAD);
+        this.loadImage('./assets/img/4_enemie_boss_chicken/5_dead/G26.png');
+
+        if (!this.chickenFriedSoundPlayed && !isMuted) {
+            this.isChickenFriedSound();
+            this.chickenFriedSoundPlayed = true;
+        }
+        if (!this.gameOverTriggered) {
+            this.gameOverTriggered = true;
+            setTimeout(() => {
+                winGame();
+                this.isWinSound();
+            }, 4000);
+        }
     }
 }

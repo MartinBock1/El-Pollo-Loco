@@ -354,7 +354,7 @@ class Character extends MovableObject {
 
     /**
     * Makes the character jump and resets the idle count and current animation frame.
-    */ 
+    */
     jump() {
         super.jump();
         this.idleCount = 0;
@@ -392,7 +392,9 @@ class Character extends MovableObject {
             this.gameOverTriggered = true;
             setTimeout(() => {
                 showGameOver();
-                this.isLooseSound();
+                if (!isMuted) {
+                    this.isLooseSound();
+                }
             }, 500);
         }
     }
