@@ -168,6 +168,10 @@ class World {
                         this.chickenCrushSound.volume = 0.1;
                         this.level.enemies.splice(index, 1);
                     }
+                } else if (enemy instanceof Endboss) {
+                    this.character.x -= 50;
+                    this.character.hit();
+                    this.statusBarHealth.setPercentage(this.character.energy);
                 } else {
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
