@@ -272,7 +272,6 @@ function winGame() {
  */
 function restartGame() {    
     stopMusic();    
-    console.log(isMuted);
     world = new World(canvas, keyboard);
     world.level.enemies = [];
     world.character.gameOver = false;
