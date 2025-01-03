@@ -90,14 +90,19 @@ window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 
 /**
- * Initializes the game, checks for orientation, and binds event listeners to buttons.
+ * Initializes the game environment, including checking the orientation,
+ * setting up the start screen, and managing the mute state.
+ * - Retrieves the mute state from localStorage and applies it.
+ * - Sets up event listeners for the start button and mute buttons.
+ * - Displays the start screen and updates the mute icon accordingly.
  */
 function init() {
     checkOrientation();
+    storeMuteStatus();
     orientationHint = document.getElementById('orientation-hint');
     startScreen = document.getElementById('start-screen');
     startButton = document.getElementById('start-button');
-    startScreen.style.display = 'flex';
+    startScreen.style.display = 'flex';  
     document.getElementById('start-button').addEventListener('click', startGame);
     document.getElementById('mute').addEventListener('click', toggleMute);
     document.getElementById('mute-responsive').addEventListener('click', toggleMute);
@@ -105,12 +110,24 @@ function init() {
     bindBtsPressEvents();
 }
 
+function storeMuteStatus() {
+    let savedMuteStatus = localStorage.getItem('isMuted');
+    if (savedMuteStatus !== null) {
+        isMuted = savedMuteStatus === 'true';
+    } else {
+        isMuted = false;
+    }
+}
+
 /**
  * Toggles the mute state for the background music.
- * Stops the music if it's currently playing, or restarts it if muted.
+ * - If muted, it stops the music.
+ * - If not muted, it restarts the music from the beginning.
+ * The mute state is stored in the localStorage to persist between sessions.
  */
 function toggleMute() {
     isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
     if (isMuted) {
         stopMusic();
     } else {
@@ -154,15 +171,27 @@ function restartMusic() {
 }
 
 /**
- * Starts the game by hiding the start screen and initializing the world and music.
+ * Starts the game by initializing the game world, checking and applying the mute status,
+ * and starting the background music if unmuted.
+ * - Retrieves the mute status from localStorage and updates the mute state accordingly.
+ * - Sets up the game world, hides the start screen, and plays the background music if not muted.
  */
 function startGame() {
+    let savedMuteStatus = localStorage.getItem('isMuted');
+    if (savedMuteStatus !== null) {
+        isMuted = savedMuteStatus === 'true';
+    } else {
+        isMuted = false;
+    }
+    updateMuteIcon();
     startScreen.style.display = 'none';
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.level.enemies.push(new Endboss());
+    if(!isMuted) {
+        backgroundMusic.play();
+    }
     backgroundMusic.loop = true;
-    backgroundMusic.play();
     backgroundMusic.volume = 0.02;
 }
 
@@ -243,6 +272,7 @@ function winGame() {
  */
 function restartGame() {    
     stopMusic();    
+    console.log(isMuted);
     world = new World(canvas, keyboard);
     world.level.enemies = [];
     world.character.gameOver = false;
