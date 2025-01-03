@@ -228,7 +228,7 @@ class Endboss extends MovableObject {
     */
     moveLeft() {
         setTimeout(() => {
-            if (this.x >= world.character.x && this.x >= world.character.world.level.level_start_x) {
+            if (this.x >= world.character.x) {
                 super.moveLeft();
             }
         }, 2000);

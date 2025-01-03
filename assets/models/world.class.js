@@ -169,7 +169,7 @@ class World {
                         this.level.enemies.splice(index, 1);
                     }
                 } else if (enemy instanceof Endboss) {
-                    this.character.x -= 50;
+                    this.character.x -= 30;
                     this.character.hit();
                     this.statusBarHealth.setPercentage(this.character.energy);
                 } else {

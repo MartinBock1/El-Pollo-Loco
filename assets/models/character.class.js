@@ -217,10 +217,6 @@ class Character extends MovableObject {
         setStopableInterval(() => {
             this.walkCharacter();
             this.jumpCharacter();
-
-            if (this.x <= world.level.level_start_x) {
-                this.x = world.level.level_start_x;
-            }
         }, 1000 / 60);
 
         this.soundPlayed = false;
