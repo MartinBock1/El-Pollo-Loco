@@ -199,29 +199,15 @@ class Character extends MovableObject {
     }
 
     /**
-    * Starts the animation loop for the character's actions.
-    * Responsible for idle, walking, jumping, hurt, and dead animations.
+    * Handles all the character's animations including idle, movement, jumping, hurt, and death.
+    * Intervals are set for each type of animation.
     */
     animate() {
         /**
         * Interval for handling idle and long idle animation.
         * When no movement keys are pressed, the character alternates between idle and long idle.
          */
-        setStopableInterval(() => {
-            if (!this.isDead() && !this.gameOver && !this.gameWon) {
-                if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-                    if (this.idleCount < 100) {
-                        this.playAnimation(this.IMAGES_IDLE);
-                        this.idleCount++;
-                    } else {
-                        this.playAnimation(this.IMAGES_LONG_IDLE);
-                        if (!isMuted) {
-                            this.isSnoringSound();
-                        }
-                    }
-                }
-            }
-        }, 1000 / 8);
+        setStopableInterval(() => this.idleCharacter(), 1000 / 8);
 
         /**
         * Interval for handling the movement and walking animations.
@@ -229,78 +215,19 @@ class Character extends MovableObject {
         * The jumping action is handled separately.
         */
         setStopableInterval(() => {
-            if (!this.isDead()) {
-                if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
-                    this.walkingSound.pause();
-                }
-
-                if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                    this.moveRight();
-                    this.otherDirection = false;
-                    if (!isMuted) {
-                        this.isWalkingSound();
-                    }
-                }
-
-                if (this.world.keyboard.LEFT && this.x > -600) {
-                    this.moveLeft();
-                    this.otherDirection = true;
-                    if (!isMuted) {
-                        this.isWalkingSound();
-                    }
-                }
-
-                if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                    this.jump();
-                    this.idleCount = 0;
-                    this.currentImage = 0;
-                }
-
-                if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
-                    this.world.keyboard.RIGHT && this.world.keyboard.SPACE
-                ) {
-                    this.walkingSound.pause();
-                }
-
-                this.world.camera_x = -this.x + 100;
-            }
+            this.walkCharacter();
+            this.jumpCharacter();
         }, 1000 / 60);
-        
+
         this.soundPlayed = false;
+
         /**
         * Interval for handling the character's death and hurt animations.
         * If the character is dead, the death animation plays, and the game over screen is triggered.
         * If the character is hurt, the hurt animation plays.
-        */       
+        */
         setStopableInterval(() => {
-            if (this.isDead()) {
-                if (!this.soundPlayed && !isMuted) {
-                    this.isPepeDeathSound();
-                    this.soundPlayed = true;
-                }
-                this.playAnimation(this.IMAGES_DEAD);
-                this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
-                if (!this.gameOverTriggered) {
-                    this.gameOverTriggered = true;
-                    setTimeout(() => {
-                        showGameOver();
-                        this.isLooseSound();
-                    }, 500);
-                }
-
-            } else if (this.isHurt()) {
-                if (!isMuted) {
-                    this.isPepeHurtSound();
-                }
-                this.playAnimation(this.IMAGES_HURT);
-            } else {
-                if (!this.isAboveGround()) {
-                    if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                        this.playAnimation(this.IMAGES_WALKING);
-                        this.idleCount = 0;
-                    }
-                }
-            }
+            this.playCharacter();
         }, 50);
 
         /**
@@ -312,5 +239,183 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
             }
         }, 1000 / 9);
+    }
+
+    /**
+    * Handles the idle animation of the character.
+    * The character alternates between idle and long idle based on the idle count.
+    * Plays snoring sound after long idle if not muted.
+    */
+    idleCharacter() {
+        if (!this.isDead() && !this.gameOver && !this.gameWon) {
+            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
+                if (this.idleCount < 100) {
+                    this.playAnimation(this.IMAGES_IDLE);
+                    this.idleCount++;
+                } else {
+                    this.playAnimation(this.IMAGES_LONG_IDLE);
+                    if (!isMuted) {
+                        this.isSnoringSound();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+    * Handles the walking animation and movement.
+    * Pauses the walking sound if no movement keys are pressed.
+    * Updates the camera position based on the character's position.
+    */
+    walkCharacter() {
+        if (!this.isDead()) {
+            if (!this.world.keyboard.LEFT && !this.world.keyboard.RIGHT) {
+                this.walkingSound.pause();
+            }
+
+            if (this.canMoveRight()) {
+                this.moveRight();
+            }
+
+            if (this.canMoveLeft()) {
+                this.moveLeft();
+            }
+
+            this.world.camera_x = -this.x + 100;
+        }
+    }
+
+    /**
+    * Checks if the character can move to the right.
+    * @returns {boolean} True if the character can move right, false otherwise.
+    */
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+    }
+
+    /**
+    * Moves the character to the right and plays walking sound if not muted.
+    */
+    moveRight() {
+        super.moveRight();
+        this.otherDirection = false;
+        if (!isMuted) {
+            this.isWalkingSound();
+        }
+    }
+
+    /**
+    * Checks if the character can move to the left.
+    * @returns {boolean} True if the character can move left, false otherwise.
+    */
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > -600;
+    }
+
+    /**
+    * Moves the character to the left and plays walking sound if not muted.
+    */
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = true;
+        if (!isMuted) {
+            this.isWalkingSound();
+        }
+    }
+
+    /**
+    * Handles the jumping action and animation.
+    * Pauses walking sound while the character is jumping.
+    * Updates the camera position based on the character's position.
+    */
+    jumpCharacter() {
+        if (!this.isDead()) {
+            if (this.canJump()) {
+                this.jump();
+            }
+
+            if (this.world.keyboard.LEFT && this.world.keyboard.SPACE ||
+                this.world.keyboard.RIGHT && this.world.keyboard.SPACE
+            ) {
+                this.walkingSound.pause();
+            }
+
+            this.world.camera_x = -this.x + 100;
+        }
+    }
+
+    /**
+     * Checks if the character can jump.
+     * @returns {boolean} True if the character can jump, false otherwise.
+     */
+    canJump() {
+        return this.world.keyboard.SPACE && !this.isAboveGround();
+    }
+
+    /**
+    * Makes the character jump and resets the idle count and current animation frame.
+    */ 
+    jump() {
+        super.jump();
+        this.idleCount = 0;
+        this.currentImage = 0;
+    }
+
+    /**
+    * Handles the character's animations based on the character's state (dead, hurt, or walking).
+    * Calls the respective animation based on whether the character is dead, hurt, or walking.
+    */
+    playCharacter() {
+        if (this.isDead()) {
+            this.deadAnimation();
+        } else if (this.isHurt()) {
+            this.hurtAnimation();
+        } else {
+            if (!this.isAboveGround()) {
+                this.walkAnimation();
+            }
+        }
+    }
+
+    /**
+    * Handles the death animation.
+    * Plays the death sound and triggers the game over screen if not already triggered.
+    */
+    deadAnimation() {
+        if (!this.soundPlayed && !isMuted) {
+            this.isPepeDeathSound();
+            this.soundPlayed = true;
+        }
+        this.playAnimation(this.IMAGES_DEAD);
+        this.loadImage('./assets/img/2_character_pepe/5_dead/D-57.png');
+        if (!this.gameOverTriggered) {
+            this.gameOverTriggered = true;
+            setTimeout(() => {
+                showGameOver();
+                this.isLooseSound();
+            }, 500);
+        }
+    }
+
+    /**
+    * Handles the hurt animation.
+    * Plays the hurt sound if not muted.
+    */
+    hurtAnimation() {
+        if (!isMuted) {
+            this.isPepeHurtSound();
+        }
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
+    /**
+    * Plays the walking animation when the character is moving.
+    * Resets the idle count when walking starts.
+    */
+    walkAnimation() {
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+            this.idleCount = 0;
+        }
     }
 }
