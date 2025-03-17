@@ -1,3 +1,6 @@
+let year = new Date().getFullYear();
+document.getElementById('year').textContent = year;
+
 /**
  * Represents the canvas element used for rendering the game world.
  * @type {HTMLCanvasElement}
