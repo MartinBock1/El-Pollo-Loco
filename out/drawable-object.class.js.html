@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: drawable-object.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: drawable-object.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Class representing a drawable object in the game.
+ * This class provides basic methods for loading, drawing, and handling images,
+ * as well as drawing frames for debugging and collision detection.
+ */
+class DrawableObject {
+    /**
+     * The x-coordinate of the object.
+     * @type {number}
+     */
+    x = 120;
+
+    /**
+     * The y-coordinate of the object.
+     * @type {number}
+     */
+    y = 250;
+
+    /**
+    * The height of the object.
+    * @type {number}
+    */
+    height = 150;
+
+    /**
+     * The width of the object.
+     * @type {number}
+     */
+    width = 100;
+
+    /**
+     * The image associated with the object.
+     * @type {HTMLImageElement}
+     */
+    img;
+
+    /**
+     * A cache to store loaded images by their paths.
+     * @type {Object.&lt;string, HTMLImageElement>}
+     */
+    imageCache = {};
+
+    /**
+    * The index of the current image in the image cache (used for animation).
+    * @type {number}
+    */
+    currentImage = 0;    
+
+    /**
+     * Loads an image from the specified path and assigns it to the object's `img` property.
+     * @param {string} path - The path to the image to be loaded.
+     */
+    loadImage(path) {
+        this.img = new Image();
+        this.img.src = path;
+    }
+
+    /**
+     * Draws the image of the object onto the provided canvas context.
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw the image on.
+     */
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);        
+    }
+
+    /**
+     * Draws a blue frame around the object for debugging purposes.
+     * This frame is drawn only if the object is an instance of Character, Chicken, ChickenSmall, Coin, or Bottle.
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw the frame on.
+     */
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Coin || this instanceof Bottle) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    /**
+     * Draws a red offset frame around the object for debugging purposes.
+     * This frame is drawn only if the object is an instance of Character, Chicken, ChickenSmall, Coin, or Bottle.
+     * The frame takes the object's offset into account.
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw the offset frame on.
+     */
+    drawOffsetFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof ChickenSmall || this instanceof Coin || this instanceof Bottle) {
+            ctx.beginPath();
+            ctx.lineWidth = '3';
+            ctx.strokeStyle = 'red';
+            ctx.rect(
+                this.x + this.offset.left,
+                this.y + this.offset.top,
+                this.width - this.offset.left - this.offset.right,
+                this.height - this.offset.top - this.offset.bottom);
+            ctx.stroke();
+        }
+    }
+
+    /**
+     * Loads an array of images and stores them in the image cache.
+     * @param {string[]} arr - An array of image paths to be loaded.
+     */
+    loadImages(arr) {
+        arr.forEach((path) => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="Statusbar.html">Statusbar</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#animate">animate</a></li><li><a href="global.html#bindBtsPressEvents">bindBtsPressEvents</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 13:17:21 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

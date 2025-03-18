@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This script gets the current year and updates the text content of an HTML element with the id "year".
+ */
+let year = new Date().getFullYear();
+document.getElementById('year').textContent = year;
+
+/**
+ * Represents the canvas element used for rendering the game world.
+ * @type {HTMLCanvasElement}
+ */
+let canvas;
+
+/**
+ * Represents the game world, including the character, enemies, and level.
+ * @type {World}
+ */
+let world;
+
+/**
+ * Represents the keyboard input device.
+ * @type {Keyboard}
+ */
+let keyboard = new Keyboard();
+
+/**
+ * Represents the start screen element.
+ * @type {HTMLElement}
+ */
+let startScreen;
+
+/**
+ * Represents the start button element.
+ * @type {HTMLElement}
+ */
+let startButton;
+
+/**
+ * Represents the orientation hint element.
+ * @type {HTMLElement}
+ */
+let orientationHint;
+
+/**
+ * The background music audio element for the game.
+ * @type {HTMLAudioElement}
+ */
+let backgroundMusic = new Audio('./assets/audio/music.mp3');
+
+/**
+ * Stores all active interval IDs used in the game, allowing them to be stopped.
+ * @type {Array&lt;number>}
+ */
+let intervalIds = [];
+
+/**
+ * Boolean flag to track whether the music is muted.
+ * @type {boolean}
+ */
+let isMuted = false;
+
+
+/**
+ * Checks the window's orientation and adjusts the start screen accordingly.
+ * - Displays an orientation hint when the screen is in portrait mode.
+ * - Disables the start button when in portrait mode and enables it in landscape mode.
+ * 
+ * Also sets up event listeners for the impressum button and close impressum button:
+ * - Displays the impressum overlay when the impressum button is clicked.
+ * - Hides the impressum overlay when the close button is clicked.
+ */
+function checkOrientation() {
+    let orientationHint = document.getElementById('orientation-hint');
+    let startButton = document.getElementById('start-button');
+    let impressumButton = document.getElementById("impressum-button");
+    let impressumOverlay = document.getElementById("impressum-overlay");
+    let closeImpressumButton = document.getElementById("close-impressum");
+
+    impressumButton.addEventListener("click", function () {
+        impressumOverlay.style.display = "flex";
+    });
+
+    closeImpressumButton.addEventListener("click", function () {
+        impressumOverlay.style.display = "none";
+    });
+
+    if (window.innerHeight > window.innerWidth) {
+        orientationHint.style.display = 'flex';
+        startButton.disabled = true;
+    } else {
+        orientationHint.style.display = 'none';
+        startButton.disabled = false;
+    }
+}
+
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
+/**
+ * Initializes the game environment, including checking the orientation,
+ * setting up the start screen, and managing the mute state.
+ * - Retrieves the mute state from localStorage and applies it.
+ * - Sets up event listeners for the start button and mute buttons.
+ * - Displays the start screen and updates the mute icon accordingly.
+ */
+function init() {
+    checkOrientation();
+    storeMuteStatus();
+    orientationHint = document.getElementById('orientation-hint');
+    startScreen = document.getElementById('start-screen');
+    startButton = document.getElementById('start-button');
+    startScreen.style.display = 'flex';  
+    document.getElementById('start-button').addEventListener('click', startGame);
+    document.getElementById('mute').addEventListener('click', toggleMute);
+    document.getElementById('mute-responsive').addEventListener('click', toggleMute);
+    updateMuteIcon();
+    bindBtsPressEvents();
+}
+
+function storeMuteStatus() {
+    let savedMuteStatus = localStorage.getItem('isMuted');
+    if (savedMuteStatus !== null) {
+        isMuted = savedMuteStatus === 'true';
+    } else {
+        isMuted = false;
+    }
+}
+
+/**
+ * Toggles the mute state for the background music.
+ * - If muted, it stops the music.
+ * - If not muted, it restarts the music from the beginning.
+ * The mute state is stored in the localStorage to persist between sessions.
+ */
+function toggleMute() {
+    isMuted = !isMuted;
+    localStorage.setItem('isMuted', isMuted);
+    if (isMuted) {
+        stopMusic();
+    } else {
+        restartMusic();
+    }
+    updateMuteIcon();
+}
+
+/**
+ * Updates the mute icon based on the current mute state.
+ * This function checks the `isMuted` variable and updates the mute icon accordingly.
+ * The mute icon will display either a "volume_off" icon (muted) or a "volume_mute" icon (unmuted).
+ * The icon is updated for both the regular and responsive versions of the mute button.
+ */
+function updateMuteIcon() {
+    let muteIcon = document.getElementById('mute');
+    let muteIconResponsive = document.getElementById('mute-responsive');
+
+    if (isMuted) {
+        muteIcon.src = './assets/icons/volume_off.png';
+        muteIconResponsive.src = './assets/icons/volume_off.png';
+    } else {
+        muteIcon.src = './assets/icons/volume_mute.png';
+        muteIconResponsive.src = './assets/icons/volume_mute.png';
+    }
+}
+
+/**
+ * Stops the background music and resets its playback position to the start.
+ */
+function stopMusic() {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+}
+
+/**
+ * Restarts the background music, playing it from the beginning.
+ */
+function restartMusic() {
+    backgroundMusic.play();
+}
+
+/**
+ * Starts the game by initializing the game world, checking and applying the mute status,
+ * and starting the background music if unmuted.
+ * - Retrieves the mute status from localStorage and updates the mute state accordingly.
+ * - Sets up the game world, hides the start screen, and plays the background music if not muted.
+ */
+function startGame() {
+    let savedMuteStatus = localStorage.getItem('isMuted');
+    if (savedMuteStatus !== null) {
+        isMuted = savedMuteStatus === 'true';
+    } else {
+        isMuted = false;
+    }
+    updateMuteIcon();
+    startScreen.style.display = 'none';
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
+    world.level.enemies.push(new Endboss());
+    if(!isMuted) {
+        backgroundMusic.play();
+    }
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.02;
+}
+
+/**
+ * Enters fullscreen mode for the canvas element.
+ */
+function fullscreen() {
+    let fullscreen = document.getElementById('canvas');
+    enterFullscreen(fullscreen);
+}
+
+/**
+ * Requests fullscreen for a specified element.
+ * @param {HTMLElement} element The element to enter fullscreen mode.
+ */
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+    }
+}
+
+/**
+ * Exits fullscreen mode for the document.
+ */
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+
+/**
+ * Sets an interval that can be stopped later using its ID.
+ * @param {Function} fn The function to be executed at intervals.
+ * @param {number} time The time in milliseconds between each execution.
+ */
+function setStopableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+}
+
+/**
+ * Displays the game over screen and stops the game music and intervals.
+ */
+function showGameOver() {
+    stopMusic();
+    stopIntervalIds();
+    let gameOverScreen = document.createElement('div');
+    gameOverScreen.classList.add('game-over-screen');
+    gameOverScreen.innerHTML = showGameOverTemplate();
+    document.body.appendChild(gameOverScreen);
+    world.character.gameOver = true;
+}
+
+/**
+ * Displays the win game screen and stops the game music and intervals.
+ */
+function winGame() {
+    stopMusic();
+    stopIntervalIds();
+    let winGameScreen = document.createElement('div');
+    winGameScreen.classList.add('game-over-screen');
+    winGameScreen.innerHTML = winGameTemplate();
+    document.body.appendChild(winGameScreen);
+    world.character.gameWon = true;
+}
+
+/**
+ * Restarts the game without reloading the page.
+ * - Resets the game state including the world, enemies, and game status.
+ * - Removes any active game over or win screens.
+ * - Displays the start screen to allow the player to restart the game.
+ */
+function restartGame() {    
+    stopMusic();    
+    world = new World(canvas, keyboard);
+    world.level.enemies = [];
+    world.character.gameOver = false;
+    world.character.gameWon = false;
+    let gameOverScreen = document.querySelector('.game-over-screen');
+    if (gameOverScreen) {
+        gameOverScreen.remove();
+    }
+    let winGameScreen = document.querySelector('.game-over-screen');
+    if (winGameScreen) {
+        winGameScreen.remove();
+    }
+    startScreen.style.display = 'flex';    
+}
+
+/**
+ * Stops all active intervals using their stored interval IDs.
+ */
+function stopIntervalIds() {
+    intervalIds.forEach(clearInterval);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#backgroundMusic">backgroundMusic</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkOrientation">checkOrientation</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#exitFullscreen">exitFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#intervalIds">intervalIds</a></li><li><a href="global.html#isMuted">isMuted</a></li><li><a href="global.html#keyboard">keyboard</a></li><li><a href="global.html#orientationHint">orientationHint</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#restartMusic">restartMusic</a></li><li><a href="global.html#setStopableInterval">setStopableInterval</a></li><li><a href="global.html#showGameOver">showGameOver</a></li><li><a href="global.html#startButton">startButton</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#stopIntervalIds">stopIntervalIds</a></li><li><a href="global.html#stopMusic">stopMusic</a></li><li><a href="global.html#toggleMute">toggleMute</a></li><li><a href="global.html#updateMuteIcon">updateMuteIcon</a></li><li><a href="global.html#winGame">winGame</a></li><li><a href="global.html#world">world</a></li><li><a href="global.html#year">year</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 13:16:56 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
