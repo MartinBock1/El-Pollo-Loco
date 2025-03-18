@@ -1,3 +1,6 @@
+/**
+ * This script gets the current year and updates the text content of an HTML element with the id "year".
+ */
 let year = new Date().getFullYear();
 document.getElementById('year').textContent = year;
 
