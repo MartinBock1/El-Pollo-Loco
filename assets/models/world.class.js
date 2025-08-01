@@ -216,25 +216,58 @@ class World {
     }
 
     /**
-    * Draws all objects in the game world to the canvas, including the background, clouds, enemies, and the character.
-    */
+     * The main rendering loop of the game, called on every frame via `requestAnimationFrame`.
+     * This method is responsible for clearing the canvas and drawing all game objects in a specific, layered order.
+     * It handles:
+     * 1. Drawing parallax background layers.
+     * 2. Applying a camera translation to create a scrolling world.
+     * 3. Drawing all dynamic world objects (enemies, items, etc.).
+     * 4. Resetting the translation to draw fixed UI elements (HUD).
+     * 5. Drawing the main character within the scrolled world.
+     * 6. Scheduling the next frame to create a continuous animation.
+     * The complex sequence of translations is necessary to correctly layer parallax, scrolling, and fixed elements.
+     */
     draw() {
+        // Step 1: Clear the entire canvas to remove artifacts from the previous frame.
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
-        // The order in which objects are added to the map is important for rendering!
+
+        // Step 2: Draw the background objects. These are drawn before any camera translation
+        // because their parallax effect is calculated independently inside `addToMap`.
         this.addObjectsToMap(this.level.backgroundObjects);
+        
+        // Step 3: Apply the main camera's horizontal translation. This shifts the coordinate system
+        // for all subsequent drawings, creating the illusion of a scrolling world.
+        this.ctx.translate(this.camera_x, 0);
+
+        // Step 4: Draw all world objects that should move with the camera.
+        // The order here is important for layering (e.g., clouds are behind enemies).
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
-        this.ctx.translate(-this.camera_x, 0);
-        // ----- Space for fixed objects ----- //              
-        this.drawStatusBars()
-        this.ctx.translate(this.camera_x, 0);
-        this.addToMap(this.character);
+
+        // Step 5: Reset the camera translation. This brings the coordinate system's origin
+        // back to the top-left corner of the canvas, which is necessary for drawing fixed objects.
         this.ctx.translate(-this.camera_x, 0);
 
+        // ----- Space for fixed objects (HUD) ----- //
+        // Step 6: Draw the status bars. Since the translation was reset, they will be rendered
+        // at a fixed position on the screen and will not scroll with the world.
+        this.drawStatusBars();
+
+        // Step 7: Re-apply the camera translation to draw the character in the correct world position.
+        this.ctx.translate(this.camera_x, 0);
+
+        // Step 8: Draw the main character.
+        this.addToMap(this.character);
+
+        // Step 9: Reset the translation a final time to leave the canvas context in a clean state
+        // for the next draw cycle.
+        this.ctx.translate(-this.camera_x, 0);
+
+        // Step 10: Schedule the `draw` function to be called again before the next browser repaint.
+        // This creates the smooth animation loop.
         requestAnimationFrame(() => {
             this.draw();
         });
@@ -274,7 +307,18 @@ class World {
             this.flipImage(mo);
         }
 
-        mo.draw(this.ctx);
+        if (mo instanceof BackgroundObject) {
+            // Wir berechnen die effektive X-Position des Hintergrundbildes manuell.
+            // Die globale `camera_x` Verschiebung wird mit dem parallaxFactor des Objekts multipliziert.
+            let x = mo.x + this.camera_x * mo.parallaxFactor;
+            this.ctx.drawImage(mo.img, x, mo.y, mo.width, mo.height);
+        } else {
+            // Alle anderen Objekte werden normal gezeichnet.
+            // Ihre Position wird bereits durch das globale `ctx.translate` korrekt verschoben.
+            mo.draw(this.ctx);
+        }
+
+        // mo.draw(this.ctx);
         // mo.drawFrame(this.ctx);
         // mo.drawOffsetFrame(this.ctx);
 
